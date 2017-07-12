@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/guanzhu"
+            android:icon="@drawable/guanzhu"
+            android:title="我的关注">
+        </item>
+        <item
+            android:id="@+id/collect"
+            android:icon="@drawable/shoucang"
+            android:title="我的收藏" />
+        <item
+            android:id="@+id/xiangce"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="我的相册" />
+        <item
+            android:id="@+id/history"
+            android:icon="@drawable/zhuji"
+            android:title="我的足迹" />
+        <item
+            android:id="@+id/report"
+            android:icon="@drawable/ic_menu_send"
+            android:title="用户反馈" />
+        <item
+            android:id="@+id/SystemSetting"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="系统设置" />
+    </group>
+</menu>

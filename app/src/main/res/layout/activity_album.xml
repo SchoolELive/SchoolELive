@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:weightSum="1">
+    <!--Top bar-->
+    <include layout="@layout/include_toolbar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-90px"
+        android:text="我的相册"
+        android:textColor="#ffffff"
+        android:textSize="50px"
+        android:textStyle="bold" />
+
+    <com.xiaoyu.schoolelive.custom.CustomUserAlbum
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:photo_day="7"
+        app:photo_month="7"
+        app:photo_year="2017">
+    </com.xiaoyu.schoolelive.custom.CustomUserAlbum>
+</LinearLayout>

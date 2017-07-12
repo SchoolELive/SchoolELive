@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:orientation="vertical"
+    android:layout_height="fill_parent">
+    <!-- 中间动态加载View -->
+    <ScrollView
+        android:measureAllChildren="true"
+        android:id="@+id/containerBody"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+    </ScrollView>
+    <LinearLayout
+        android:background="@android:color/black"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <!-- 功能模块按钮1 -->
+        <ImageView
+            android:id="@+id/btnModule1"
+            android:src="@android:drawable/ic_dialog_dialer"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <!-- 功能模块按钮2 -->
+        <ImageView
+            android:id="@+id/btnModule2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="3dp"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_dialog_info" />
+        <!-- 功能模块按钮3 -->
+        <ImageView
+            android:id="@+id/btnModule3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="3dp"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_dialog_alert" />
+    </LinearLayout>
+</LinearLayout>
