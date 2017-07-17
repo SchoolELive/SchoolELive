@@ -34,7 +34,7 @@ public class SystemSettingActivity extends BaseSlideBack {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("系统设置");
 
-        listView = (ListView)findViewById(R.id.listview);
+        listView = (ListView)findViewById(R.id.systemSetting_listview);
         final List<String> list = new ArrayList<String>();
         list.add("账号设置");
         list.add("消息推送");
