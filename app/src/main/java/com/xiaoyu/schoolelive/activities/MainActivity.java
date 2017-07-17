@@ -46,11 +46,9 @@ public class MainActivity extends BaseMainSlide{
         fragmentManager = getSupportFragmentManager();
         //开启一个Fragment事务
         fragmentTransaction = fragmentManager.beginTransaction();
-
         homeFragment = new HomeFragment();
         fragmentTransaction.add(R.id.main_menu_content, homeFragment,"home");
         fragmentTransaction.commit();
-
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 

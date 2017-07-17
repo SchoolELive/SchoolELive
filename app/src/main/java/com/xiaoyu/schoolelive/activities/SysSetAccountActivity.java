@@ -11,6 +11,5 @@ public class SysSetAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sys_set_account);
 
-
     }
 }

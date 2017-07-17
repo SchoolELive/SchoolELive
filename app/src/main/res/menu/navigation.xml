@@ -21,7 +21,7 @@
         android:title="@string/title_partjob"/>
     <item
         android:id="@+id/navigation_sysinform"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_menu_send"
         android:title="@string/title_sysinform" />
 
 </menu>
