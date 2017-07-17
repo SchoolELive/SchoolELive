@@ -20,12 +20,9 @@
         <activity android:name="com.xiaoyu.schoolelive.activities.HistoryCollectActivity" />
         <activity android:name="com.xiaoyu.schoolelive.activities.UserCenterActivity" />
         <activity android:name="com.xiaoyu.schoolelive.base.BaseSlideBack" />
-        <!-- <service android:name=".service.MainService" /> -->
         <activity android:name="com.xiaoyu.schoolelive.activities.UserInfoActivity" />
         <activity android:name="com.xiaoyu.schoolelive.activities.MySpinnerActivity" />
         <activity android:name="com.xiaoyu.schoolelive.activities.UserReportActivity" />
-         <activity android:name="com.xiaoyu.schoolelive.activities.GroupActivity"></activity>
-        <activity android:name="com.xiaoyu.schoolelive.activities.CoolapsingToolBarActivity" />
         <activity android:name="com.xiaoyu.schoolelive.activities.AlbumImageDetailActivity" />
         <activity android:name="com.xiaoyu.schoolelive.activities.UserAlbumActivity" />
         <activity android:name="com.xiaoyu.schoolelive.activities.FindActivity" />
@@ -39,9 +36,8 @@
             android:name="android.hardware.camera2"
             android:required="true" />
 
-        <activity android:name="com.xiaoyu.schoolelive.activities.MainMenuView1" />
-        <activity android:name="com.xiaoyu.schoolelive.activities.MainMenuView2" />
-        <activity android:name="com.xiaoyu.schoolelive.activities.MainMenuView3"></activity>
+        <activity android:name="com.xiaoyu.schoolelive.activities.UserFocusActivity"></activity>
+        <activity android:name="com.xiaoyu.schoolelive.activities.SysSetAccountActivity"></activity>
     </application>
 
 </manifest>

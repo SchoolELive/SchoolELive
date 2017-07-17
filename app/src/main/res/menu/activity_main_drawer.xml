@@ -3,7 +3,7 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/guanzhu"
+            android:id="@+id/focus"
             android:icon="@drawable/guanzhu"
             android:title="我的关注">
         </item>
@@ -12,7 +12,7 @@
             android:icon="@drawable/shoucang"
             android:title="我的收藏" />
         <item
-            android:id="@+id/xiangce"
+            android:id="@+id/gallery"
             android:icon="@drawable/ic_menu_gallery"
             android:title="我的相册" />
         <item

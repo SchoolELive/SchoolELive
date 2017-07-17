@@ -3,12 +3,13 @@ package com.xiaoyu.schoolelive.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBar;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -16,11 +17,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageButton;
-import android.widget.ScrollView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
+import com.xiaoyu.schoolelive.custom.CustomImageDialogView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,17 +30,12 @@ import java.io.IOException;
 
 import xiaoyu.com.schoolelive.R;
 
-import com.xiaoyu.schoolelive.custom.CustomImageDialogView;
-
 /**
  * Created by Administrator on 2017/7/11.
  */
 
 public class UserCenterActivity extends BaseSlideBack {
-    private ImageButton btn_myphoto;
-    private ScrollView scrollView;
     Bitmap bitmap = null;
-
 
     /* 头像文件 */
     private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
@@ -54,25 +50,31 @@ public class UserCenterActivity extends BaseSlideBack {
     private static int output_X = 600;
     private static int output_Y = 600;
 
+    private ImageView imageView;
     final String[] items = new String[]{"拍照", "从手机相册选择",
             "从e生活相册选择", "查看头像"};
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //设置全屏
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_user_center);
+        setContentView(R.layout.user_center);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.user_center_toolbar);
+        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout)findViewById(R.id.user_center_layout);
+        imageView = (ImageView)findViewById(R.id.user_center_imageview);
+
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("个人中心");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
+        collapsingToolbar.setTitle("紫炎");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        collapsingToolbar.setExpandedTitleColor(Color.WHITE);
+        collapsingToolbar.setCollapsedTitleTextColor(Color.BLACK);
 
-        scrollView = (ScrollView)findViewById(R.id.user_center_scrollView);
-        btn_myphoto=(ImageButton)findViewById(R.id.myphoto);
-        //点击头像处理逻辑
-        btn_myphoto.setOnClickListener(new View.OnClickListener() {
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LayoutInflater layoutInflater = LayoutInflater.from(UserCenterActivity.this);
@@ -96,7 +98,7 @@ public class UserCenterActivity extends BaseSlideBack {
                                 choseHeadImageFromApp();
                                 break;
                             case 3:
-                                bitmap = ((BitmapDrawable)btn_myphoto.getDrawable()).getBitmap();
+                                bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
                                 CustomImageDialogView.Builder dialogBuild = new CustomImageDialogView.Builder(UserCenterActivity.this);
                                 dialogBuild.setImage(bitmap);
                                 CustomImageDialogView img_dialog = dialogBuild.create();
@@ -116,7 +118,6 @@ public class UserCenterActivity extends BaseSlideBack {
                 dialog.getWindow().setAttributes(params);
             }
         });
-
     }
     // 从本地相册选取图片作为头像
     private void choseHeadImageFromGallery() {
@@ -228,7 +229,7 @@ public class UserCenterActivity extends BaseSlideBack {
         Bundle extras = intent.getExtras();
         if (extras != null) {
             Bitmap photo = extras.getParcelable("data");
-            btn_myphoto.setImageBitmap(photo);
+            imageView.setImageBitmap(photo);
             //新建文件夹 先选好路径 再调用mkdir函数 现在是根目录下面的Ask文件夹
             File nf = new File(Environment.getExternalStorageDirectory() + "/Ask");
             nf.mkdir();
@@ -292,23 +293,14 @@ public class UserCenterActivity extends BaseSlideBack {
         getMenuInflater().inflate(R.menu.menu_change_info, menu);
         return true;
     }
-    //标题栏菜单点击逻辑
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
                 finish();
                 return true;
-            case R.id.changeinfo:
-                Intent intent = new Intent(UserCenterActivity.this,UserInfoActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.refresh:
-                intent = new Intent(UserCenterActivity.this,UserCenterActivity.class);
-                finish();
-                startActivity(intent);
-                break;
-
         }
         return super.onOptionsItemSelected(item);
     }
 }
+

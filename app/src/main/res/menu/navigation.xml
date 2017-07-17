@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_business"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/title_business" />
+    <item
+        android:id="@+id/navigation_secondhand"
+        android:icon="@drawable/ic_menu_share"
+        android:title="@string/title_secondhand"
+        />
+    <item
+        android:id="@+id/navigation_partjob"
+        android:icon="@drawable/ic_menu_gallery"
+        android:title="@string/title_partjob"/>
+    <item
+        android:id="@+id/navigation_sysinform"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/title_sysinform" />
+
+</menu>

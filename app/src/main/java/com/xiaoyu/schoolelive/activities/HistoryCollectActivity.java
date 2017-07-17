@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TabHost;
+import android.widget.Toast;
 
 import xiaoyu.com.schoolelive.R;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
@@ -24,7 +25,7 @@ public class HistoryCollectActivity extends BaseSlideBack {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("足迹//收藏");
+        actionBar.setTitle("  足迹  |  收藏  ");
 
         //找到TabHost的标签集合
         tabHost = (TabHost) this.findViewById(R.id.tabhost);
@@ -44,14 +45,11 @@ public class HistoryCollectActivity extends BaseSlideBack {
         tabSpec.setContent(R.id.page2);
         tabHost.addTab(tabSpec);
 
-
+        //判断主页所传的值，对应显示选项卡
         Intent intent = getIntent();
         String str = intent.getStringExtra("str");
-        if (str == "history") {
-            if (tabHost.getCurrentTab() == 1){
-                tabHost.setCurrentTab(0);
-            }
-        } else {
+        if (str.equals("history")) {
+        } else if(str.equals("collect")){
             if (tabHost.getCurrentTab() == 0){
                 tabHost.setCurrentTab(1);
             }
