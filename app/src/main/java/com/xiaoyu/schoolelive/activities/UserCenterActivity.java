@@ -52,7 +52,7 @@ public class UserCenterActivity extends BaseSlideBack {
 
     private ImageView imageView;
     final String[] items = new String[]{"拍照", "从手机相册选择",
-            "从e生活相册选择", "查看头像"};
+            "从e生活相册选择", "查看头像","编辑资料"};
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_center);
@@ -104,6 +104,10 @@ public class UserCenterActivity extends BaseSlideBack {
                                 CustomImageDialogView img_dialog = dialogBuild.create();
                                 img_dialog.setCanceledOnTouchOutside(true);// 点击外部区域关闭
                                 img_dialog.show();
+                                break;
+                            case 4:
+                                Intent intent = new Intent(UserCenterActivity.this,UserInfoActivity.class);
+                                startActivity(intent);
                                 break;
                         }
                     }

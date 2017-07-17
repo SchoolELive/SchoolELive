@@ -6,7 +6,7 @@ import android.os.Bundle;
 import xiaoyu.com.schoolelive.R;
 
 public class SysSetAccountActivity extends AppCompatActivity {
-    //
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
