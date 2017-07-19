@@ -36,8 +36,10 @@
             android:name="android.hardware.camera2"
             android:required="true" />
 
-        <activity android:name="com.xiaoyu.schoolelive.activities.UserFocusActivity"></activity>
-        <activity android:name="com.xiaoyu.schoolelive.activities.SysSetAccountActivity"></activity>
+        <activity android:name="com.xiaoyu.schoolelive.activities.UserFocusActivity" />
+        <activity android:name="com.xiaoyu.schoolelive.activities.SysSetAccountActivity" />
+        <activity android:name="com.xiaoyu.schoolelive.activities.SysSetInformActivity" />
+        <activity android:name="com.xiaoyu.schoolelive.activities.SysSetShareActivity"></activity>
     </application>
 
 </manifest>

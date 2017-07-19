@@ -2,6 +2,9 @@ package com.xiaoyu.schoolelive.base;
 
 import android.graphics.Color;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,22 +15,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import xiaoyu.com.schoolelive.R;
-
 /**
  * Created by Administrator on 2017/7/11.
  */
-
-public class BaseMainSlide extends AppCompatActivity{// implements View.OnClickListener{
+public class BaseMainSlide extends AppCompatActivity implements View.OnClickListener{
 
     //手指上下滑动时的最小速度
     private static final int YSPEED_MIN = 1000;
 
     //手指左右滑动时的最小距离
-    private static final int XDISTANCE_MIN = 360;
-//    //手指左右滑动时的最大距离
-//    private static final int XDISTANCE_MAX = 400;
+    private static final int XDISTANCE_MIN = 200;
+
     //手指向上滑或下滑时的最小距离
-    private static final int YDISTANCE_MIN = 100;
+    private static final int YDISTANCE_MIN = 300;
 
     //记录手指按下时的横坐标。
     private float xDown;
@@ -60,7 +60,6 @@ public class BaseMainSlide extends AppCompatActivity{// implements View.OnClickL
     private View home_story_view;
 
     private static int count = 0;
-
     //初始化定义首页导航栏
     public void homeCreate(){
         home_hot_tv = (TextView)findViewById(R.id.home_hot_tv);
@@ -83,14 +82,18 @@ public class BaseMainSlide extends AppCompatActivity{// implements View.OnClickL
         home_know_content = (LinearLayout)findViewById(R.id.home_know_content);
         home_story_content = (LinearLayout)findViewById(R.id.home_story_content);
     }
+
     //初始化首页导航栏style
     public void inithome(){
         home_hot_tv.setTextColor(Color.BLUE);
         home_hot_view.setBackgroundColor(Color.WHITE);
+
         home_new_tv.setTextColor(Color.BLUE);
         home_new_view.setBackgroundColor(Color.WHITE);
+
         home_know_tv.setTextColor(Color.BLUE);
         home_know_view.setBackgroundColor(Color.WHITE);
+
         home_story_tv.setTextColor(Color.BLUE);
         home_story_view.setBackgroundColor(Color.WHITE);
     }
@@ -103,6 +106,7 @@ public class BaseMainSlide extends AppCompatActivity{// implements View.OnClickL
     }
 
     public boolean dispatchTouchEvent(MotionEvent event) {
+        homeCreate();
         createVelocityTracker(event);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -110,16 +114,16 @@ public class BaseMainSlide extends AppCompatActivity{// implements View.OnClickL
                 yDown = event.getRawY();
                 break;
             case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_UP:
                 xMove = event.getRawX();
                 yMove = event.getRawY();
                 //滑动的距离
-                int distanceX = (int) (xMove - xDown);
+                final int distanceX = (int) (xMove - xDown);
                 int distanceFX = (int)(xDown - xMove);
                 int distanceY = (int) (yMove - yDown);
                 //获取顺时速度
                 int ySpeed = getScrollVelocity();
-
-                homeCreate();
                 //关闭Activity需满足以下条件：
                 //1.x轴滑动的距离>XDISTANCE_MIN
                 //2.y轴滑动的距离在YDISTANCE_MIN范围内
@@ -154,7 +158,6 @@ public class BaseMainSlide extends AppCompatActivity{// implements View.OnClickL
                         }
                     }
                 }
-
                 if (distanceFX > XDISTANCE_MIN && (distanceY < YDISTANCE_MIN && distanceY > -YDISTANCE_MIN) && ySpeed < YSPEED_MIN) {
                     if (count == 0){
                         hidehomeall();
@@ -180,8 +183,6 @@ public class BaseMainSlide extends AppCompatActivity{// implements View.OnClickL
                     }else if(count == 3){
                     }
                 }
-                break;
-            case MotionEvent.ACTION_UP:
                 recycleVelocityTracker();
                 break;
             default:
@@ -189,7 +190,6 @@ public class BaseMainSlide extends AppCompatActivity{// implements View.OnClickL
         }
         return super.dispatchTouchEvent(event);
     }
-
     /**
      * 创建VelocityTracker对象，并将触摸界面的滑动事件加入到VelocityTracker当中。
      *
@@ -201,7 +201,6 @@ public class BaseMainSlide extends AppCompatActivity{// implements View.OnClickL
         }
         mVelocityTracker.addMovement(event);
     }
-
     /**
      * 回收VelocityTracker对象。
      */
@@ -217,7 +216,6 @@ public class BaseMainSlide extends AppCompatActivity{// implements View.OnClickL
         int velocity = (int) mVelocityTracker.getYVelocity();
         return Math.abs(velocity);
     }
-
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.home_hot_tv:

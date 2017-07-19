@@ -75,7 +75,6 @@ public class UserCenterActivity extends BaseSlideBack {
         collapsingToolbar.setCollapsedTitleTextColor(Color.BLACK);
 
         imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View v) {
                 LayoutInflater layoutInflater = LayoutInflater.from(UserCenterActivity.this);
                 //自定义对话框标题栏
@@ -85,7 +84,6 @@ public class UserCenterActivity extends BaseSlideBack {
                 builder.setTitle("选择");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     //注册点击事件
-                    @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:

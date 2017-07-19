@@ -54,13 +54,15 @@ public class SystemSettingActivity extends BaseSlideBack {
                         startActivity(intent);
                         break;
                     case 1://消息推送
-
+                        intent = new Intent(SystemSettingActivity.this,SysSetInformActivity.class);
+                        startActivity(intent);
                         break;
                     case 2://主题设置
 
                         break;
                     case 3://推荐分享
-
+                        intent = new Intent(SystemSettingActivity.this,SysSetShareActivity.class);
+                        startActivity(intent);
                         break;
                     case 4://用户使用协议说明
 

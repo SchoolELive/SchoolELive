@@ -81,7 +81,6 @@ public class AlbumImageDetailActivity extends BaseSlideBack {
             ImageLoader.getInstance().displayImage(mDatas.get(mPosition), imageView);
             //
         }
-
         //此处可以加动画效果
 
     }

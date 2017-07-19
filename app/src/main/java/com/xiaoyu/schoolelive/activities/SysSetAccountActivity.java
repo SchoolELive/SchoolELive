@@ -1,14 +1,19 @@
 package com.xiaoyu.schoolelive.activities;
 
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
 
@@ -42,7 +47,34 @@ public class SysSetAccountActivity extends BaseSlideBack {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0://密码修改
+                        LayoutInflater layoutInflater = LayoutInflater.from(SysSetAccountActivity.this);
+                        //自定义对话框标题栏
+                        View mTitleView = layoutInflater.inflate(R.layout.custom_changepass_dialog, null);
 
+                        View mView = layoutInflater.inflate(R.layout.change_password_content,null);
+                        //创建对话框
+                        AlertDialog.Builder builder = new AlertDialog.Builder(SysSetAccountActivity.this);
+
+                        builder.setCustomTitle(mTitleView);
+                        builder.setView(mView);
+                        final AlertDialog dialog = builder.show();
+                        //设置宽度和高度
+                        WindowManager.LayoutParams params =
+                                dialog.getWindow().getAttributes();
+                        params.width = 1200;
+                        params.height =800;
+                        dialog.getWindow().setAttributes(params);
+
+//                        Button true_button = (Button)findViewById(R.id.changepass_true_button);
+//                        Button false_button = (Button)findViewById(R.id.changepass_false_button);
+//                        true_button.setOnClickListener(new View.OnClickListener() {
+//                            public void onClick(View v) {
+//                            }
+//                        });
+//                        false_button.setOnClickListener(new View.OnClickListener() {
+//                            public void onClick(View v) {
+//                            }
+//                        });
                         break;
                     case 1://切换账号
 

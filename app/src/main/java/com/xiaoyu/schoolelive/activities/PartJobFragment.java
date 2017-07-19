@@ -14,6 +14,7 @@ import xiaoyu.com.schoolelive.R;
 public class PartJobFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
     }
     @Override

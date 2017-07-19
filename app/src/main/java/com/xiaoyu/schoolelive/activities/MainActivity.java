@@ -26,7 +26,6 @@ public class MainActivity extends BaseMainSlide{
     private DrawerLayout drawer;
     //标题栏
     private Toolbar toolbar;
-
     //底部菜单的fragment
     private HomeFragment homeFragment;
     private BusinessFragment businessFragment;
@@ -59,7 +58,6 @@ public class MainActivity extends BaseMainSlide{
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.icon_main_home);
-
         //悬浮按钮
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -118,32 +116,40 @@ public class MainActivity extends BaseMainSlide{
         });
     }
 
+
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(MenuItem item) {
+            fragmentAllRemove();
             //在程序中加入Fragment
             fragmentManager = getSupportFragmentManager();
             //开启一个Fragment事务
             fragmentTransaction = fragmentManager.beginTransaction();
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    getSupportActionBar().setTitle("主页");
                     homeFragment = new HomeFragment();
                     fragmentTransaction.replace(R.id.main_menu_content, homeFragment).commit();
                     return true;
                 case R.id.navigation_business:
+                    getSupportActionBar().setTitle("商家");
                     businessFragment = new BusinessFragment();
                     fragmentTransaction.replace(R.id.main_menu_content, businessFragment).commit();
                     return true;
                 case R.id.navigation_secondhand:
+                    getSupportActionBar().setTitle("旧货");
                     secondHandFragment = new SecondHandFragment();
                     fragmentTransaction.replace(R.id.main_menu_content, secondHandFragment).commit();
                     return true;
                 case R.id.navigation_partjob:
+                    getSupportActionBar().setTitle("兼职");
                     partJobFragment = new PartJobFragment();
                     fragmentTransaction.replace(R.id.main_menu_content, partJobFragment).commit();
                     return true;
                 case R.id.navigation_sysinform:
+                    getSupportActionBar().setTitle("通知");
                     sysInformFragment = new SysInformFragment();
                     fragmentTransaction.replace(R.id.main_menu_content, sysInformFragment).commit();
                     return true;
@@ -152,6 +158,23 @@ public class MainActivity extends BaseMainSlide{
         }
 
     };
+    public void fragmentAllRemove(){
+        if (homeFragment != null){
+            fragmentTransaction.hide(homeFragment);
+        }
+        if (businessFragment != null){
+            fragmentTransaction.hide(businessFragment);
+        }
+        if (secondHandFragment != null){
+            fragmentTransaction.hide(secondHandFragment);
+        }
+        if (partJobFragment != null){
+            fragmentTransaction.hide(partJobFragment);
+        }
+        if (sysInformFragment != null){
+            fragmentTransaction.hide(sysInformFragment);
+        }
+    }
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
