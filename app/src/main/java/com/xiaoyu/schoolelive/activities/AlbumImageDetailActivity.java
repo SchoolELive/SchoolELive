@@ -10,11 +10,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.ArrayList;
+
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
 import com.xiaoyu.schoolelive.util.SmoothImageViewUtil;
-
-import java.util.ArrayList;
 
 import static com.xiaoyu.schoolelive.activities.UserCenterActivity.CODE_APP_REQUEST;
 
@@ -51,7 +52,7 @@ public class AlbumImageDetailActivity extends BaseSlideBack {
 
         //选择头像
         if (getIntent().getIntExtra("motive", 0) == CODE_APP_REQUEST) {
-            setContentView(R.layout.activity_album_headimage_sel);
+            setContentView(R.layout.acctivity_album_headimage_sel);
             imageView = (SmoothImageViewUtil) findViewById(R.id.detail_image);
             ImageLoader.getInstance().displayImage(mDatas.get(mPosition), imageView);
             ImageButton btn_cancel = (ImageButton) findViewById(R.id.cancel);

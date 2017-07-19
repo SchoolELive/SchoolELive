@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
+
 import com.xiaoyu.schoolelive.R;
 
 /**

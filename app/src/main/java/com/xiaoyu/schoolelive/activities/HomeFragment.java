@@ -7,10 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xiaoyu.schoolelive.base.BaseMainSlide;
-import com.xiaoyu.schoolelive.base.BaseSlideBack;
-
-import xiaoyu.com.schoolelive.R;
+import com.xiaoyu.schoolelive.R;
 /**
  * Created by Administrator on 2017/7/13.
  */

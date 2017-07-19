@@ -8,7 +8,7 @@ import android.view.SubMenu;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import xiaoyu.com.schoolelive.R;
+import com.xiaoyu.schoolelive.R;
 
 public class SysSetShareActivity extends AppCompatActivity {
     static final int ITEM_OPTION = 0x0001;
