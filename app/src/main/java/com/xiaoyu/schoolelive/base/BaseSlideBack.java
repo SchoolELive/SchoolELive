@@ -11,7 +11,7 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.widget.TabHost;
 
-import xiaoyu.com.schoolelive.R;
+import com.xiaoyu.schoolelive.R;
 
 /**
  * Created by Administrator on 2017/7/11.

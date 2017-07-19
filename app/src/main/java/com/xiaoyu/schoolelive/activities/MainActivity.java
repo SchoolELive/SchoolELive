@@ -17,7 +17,7 @@ import android.view.View;
 import android.widget.ImageView;
 import com.xiaoyu.schoolelive.base.BaseMainSlide;
 
-import xiaoyu.com.schoolelive.R;
+import com.xiaoyu.schoolelive.R;
 
 
 public class MainActivity extends BaseMainSlide{

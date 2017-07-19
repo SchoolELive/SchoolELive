@@ -1,10 +1,5 @@
 package com.xiaoyu.schoolelive.data;
 
-import android.media.Image;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.xiaoyu.schoolelive.custom.CircleImageView;
 /**
  * Created by Administrator on 2017/7/16.
  */

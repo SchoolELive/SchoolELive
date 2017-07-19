@@ -20,7 +20,7 @@ import com.xiaoyu.schoolelive.base.BaseSlideBack;
 import java.util.ArrayList;
 import java.util.List;
 
-import xiaoyu.com.schoolelive.R;
+import com.xiaoyu.schoolelive.R;
 
 public class SysSetAccountActivity extends BaseSlideBack {
 

@@ -11,7 +11,7 @@ import com.xiaoyu.schoolelive.custom.CircleImageView;
 import com.xiaoyu.schoolelive.data.UserFocusData;
 import java.util.List;
 
-import xiaoyu.com.schoolelive.R;
+import com.xiaoyu.schoolelive.R;
 
 /**
  * Created by Administrator on 2017/7/16.

@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
 
-import xiaoyu.com.schoolelive.R;
+import com.xiaoyu.schoolelive.R;
 
 
 /**

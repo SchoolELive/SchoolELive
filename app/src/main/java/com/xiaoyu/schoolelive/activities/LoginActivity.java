@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
 
-import xiaoyu.com.schoolelive.R;
+import com.xiaoyu.schoolelive.R;
 
 public class LoginActivity extends BaseSlideBack {
     private Button btn_login;

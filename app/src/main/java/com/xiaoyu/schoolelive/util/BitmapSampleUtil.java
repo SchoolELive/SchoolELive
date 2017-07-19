@@ -2,7 +2,7 @@ package com.xiaoyu.schoolelive.util;
 
 import java.util.Random;
 
-import xiaoyu.com.schoolelive.R;
+import com.xiaoyu.schoolelive.R;
 
 /**
  * Created by Administrator on 2017/7/11.

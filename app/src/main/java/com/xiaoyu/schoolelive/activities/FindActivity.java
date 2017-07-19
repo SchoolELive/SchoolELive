@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
 
-import xiaoyu.com.schoolelive.R;
+import com.xiaoyu.schoolelive.R;
 
 /**
  * Created by Administrator on 2017/7/11.
