@@ -1,8 +1,8 @@
 package com.xiaoyu.schoolelive.util;
 
-import java.util.Random;
+import com.xiaoyu.schoolelive.R;
 
-import xiaoyu.com.schoolelive.R;
+import java.util.Random;
 
 /**
  * Created by Administrator on 2017/7/11.

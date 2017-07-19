@@ -32,6 +32,8 @@
         <attr name="msg_type" format="string" />
         <attr name="words_msg" format="string" />
         <attr name="icon_msg" format="integer|reference" />
+        <attr name="icon_msg2" format="integer|reference" />
+        <attr name="icon_msg3" format="integer|reference" />
         <attr name="zhuanfa_icon" format="integer|reference" />
         <attr name="comment_icon" format="integer|reference" />
         <attr name="like_icon" format="integer|reference" />
@@ -47,10 +49,10 @@
     </declare-styleable>
 
     <declare-styleable name="Custom_Bar">
-        <attr name="name_text" format="string"/>
-        <attr name="info_text" format="string"/>
-        <attr name="info_drawable" format="integer|reference"/>
-        <attr name="right_drawable" format="integer|reference"/>
+        <attr name="name_text" format="string" />
+        <attr name="info_text" format="string" />
+        <attr name="info_drawable" format="integer|reference" />
+        <attr name="right_drawable" format="integer|reference" />
     </declare-styleable>
 
     <declare-styleable name="CircleImageView">
@@ -59,4 +61,23 @@
         <attr name="civ_border_overlay" format="boolean" />
         <attr name="civ_fill_color" format="color" />
     </declare-styleable>
+
+    <!--<declare-styleable name="Custom_User_Pub_Msg">-->
+        <!--<attr name="pub_user_head" format="reference|integer" />-->
+        <!--<attr name="pub_nickname" format="string" />-->
+        <!--<attr name="pub_words_msg" format="string" />-->
+        <!--<attr name="pub_image_msg" format="integer|reference" />-->
+        <!--<attr name="pub_zhuanfa_count" format="string" />-->
+        <!--<attr name="pub_comment_count" format="string" />-->
+        <!--<attr name="pub_like_count" format="string" />-->
+    <!--</declare-styleable>-->
+
+    <!--<declare-styleable name="Custom_User_Cmt_Msg">-->
+        <!--<attr name="cmt_user_head" format="reference|integer" />-->
+        <!--<attr name="cmt_nickname" format="string" />-->
+        <!--<attr name="cmt_msg" format="string"/>-->
+        <!--<attr name="cmt_zhuanfa_count" format="string" />-->
+        <!--<attr name="cmt_comment_count" format="string" />-->
+        <!--<attr name="cmt_like_count" format="string" />-->
+    <!--</declare-styleable>-->
 </resources>

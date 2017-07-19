@@ -96,69 +96,9 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <include layout="@layout/include_user_msg_content"/>
 
-                <TextView
-                    android:id="@+id/icon_msg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"/>
-                <TextView
-                    android:id="@+id/words_msg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20px"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
-
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/zhuanfa_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5px" />
-
-                <TextView
-                    android:id="@+id/zhuanfa_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20px" />
-
-                <ImageButton
-                    android:id="@+id/comment_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5px" />
-
-                <TextView
-                    android:id="@+id/comment_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20px" />
-
-                <ImageButton
-                    android:id="@+id/like_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5px" />
-
-                <TextView
-                    android:id="@+id/like_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20px" />
-
-            </LinearLayout>
+            <include layout="@layout/include_user_msg_buttom"/>
 
         </LinearLayout>
     </LinearLayout>

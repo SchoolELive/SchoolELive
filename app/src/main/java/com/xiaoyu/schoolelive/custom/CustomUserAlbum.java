@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import xiaoyu.com.schoolelive.R;
+import com.xiaoyu.schoolelive.R;
 
 /**
  * Created by Administrator on 2017/7/11.

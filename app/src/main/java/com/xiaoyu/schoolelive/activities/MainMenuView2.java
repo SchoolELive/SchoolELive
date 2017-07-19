@@ -3,7 +3,7 @@ package com.xiaoyu.schoolelive.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import xiaoyu.com.schoolelive.R;
+import com.xiaoyu.schoolelive.R;
 
 
 public class MainMenuView2 extends AppCompatActivity {

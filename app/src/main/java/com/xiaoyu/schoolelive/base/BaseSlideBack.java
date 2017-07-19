@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 
-import xiaoyu.com.schoolelive.R;
+import com.xiaoyu.schoolelive.R;
 
 /**
  * Created by Administrator on 2017/7/11.

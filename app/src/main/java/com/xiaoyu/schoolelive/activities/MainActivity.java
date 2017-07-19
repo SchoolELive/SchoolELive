@@ -15,7 +15,7 @@ import android.widget.ScrollView;
 
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
 
-import xiaoyu.com.schoolelive.R;
+import com.xiaoyu.schoolelive.R;
 
 public class MainActivity extends BaseSlideBack {
     private Intent intent;

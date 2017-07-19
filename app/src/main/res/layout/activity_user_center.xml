@@ -28,7 +28,7 @@
             android:text="昵称：" />
 
         <TextView
-            android:id="@+id/nickname"
+            android:id="@+id/user_center_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="NeekChaw_" />
@@ -57,12 +57,12 @@
         <!--android:layout_height="60px"-->
         <!--android:layout_marginTop="5px"-->
         <!--android:background="@drawable/cut_line" />-->
-<ScrollView
-    android:id="@+id/user_center_scrollView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <include
-        layout="@layout/user_msg_content"
-        />
-</ScrollView>
+<!--<ScrollView-->
+    <!--android:id="@+id/user_center_scrollView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
+    <!--<include-->
+        <!--layout="@layout/user_msg_content"-->
+        <!--/>-->
+<!--</ScrollView>-->
 </LinearLayout>

@@ -9,11 +9,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.xiaoyu.schoolelive.R;
+import com.xiaoyu.schoolelive.base.BaseSlideBack;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import xiaoyu.com.schoolelive.R;
-import com.xiaoyu.schoolelive.base.BaseSlideBack;
 
 /**
  * Created by Administrator on 2017/7/11.

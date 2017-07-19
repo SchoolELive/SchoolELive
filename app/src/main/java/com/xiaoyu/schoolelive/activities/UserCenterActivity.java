@@ -17,19 +17,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.xiaoyu.schoolelive.R;
+import com.xiaoyu.schoolelive.adapter.UserCenterAdapter;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
+import com.xiaoyu.schoolelive.custom.CustomImageDialogView;
+import com.xiaoyu.schoolelive.data.UserCenter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import xiaoyu.com.schoolelive.R;
-
-import com.xiaoyu.schoolelive.custom.CustomImageDialogView;
+import static com.xiaoyu.schoolelive.R.id.comment_list;
 
 /**
  * Created by Administrator on 2017/7/11.
@@ -40,6 +45,9 @@ public class UserCenterActivity extends BaseSlideBack {
     private ScrollView scrollView;
     Bitmap bitmap = null;
 
+    private ListView userCenterList;
+    private UserCenterAdapter userCenterAdapter;
+    private List<UserCenter> data;
 
     /* 头像文件 */
     private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
@@ -112,12 +120,23 @@ public class UserCenterActivity extends BaseSlideBack {
                 WindowManager.LayoutParams params =
                         dialog.getWindow().getAttributes();
                 params.width = 800;
-                params.height =1000;
                 dialog.getWindow().setAttributes(params);
             }
         });
 
     }
+
+    private void initView(){
+        // 初始化评论列表
+        userCenterList = (ListView) findViewById(comment_list);
+        // 初始化数据
+        data = new ArrayList<>();
+        // 初始化适配器
+        userCenterAdapter = new UserCenterAdapter(getApplicationContext(), data);
+        // 为评论列表设置适配器
+        userCenterList.setAdapter(userCenterAdapter);
+    }
+
     // 从本地相册选取图片作为头像
     private void choseHeadImageFromGallery() {
         Intent intentFromGallery = new Intent();

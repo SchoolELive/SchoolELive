@@ -6,4 +6,5 @@
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">24dp</dimen>
     <dimen name="base_padding">16dp</dimen>
+    <dimen name="bar_text_size">20dp</dimen>
 </resources>

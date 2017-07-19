@@ -16,8 +16,6 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.xiaoyu.schoolelive.base.BaseSlideBack;
-import com.xiaoyu.schoolelive.util.SquareCenterImageViewUtil;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.memory.MemoryCache;
 import com.nostra13.universalimageloader.cache.memory.impl.LRULimitedMemoryCache;
@@ -26,14 +24,14 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.xiaoyu.schoolelive.R;
+import com.xiaoyu.schoolelive.base.BaseSlideBack;
+import com.xiaoyu.schoolelive.util.BitmapSampleUtil;
+import com.xiaoyu.schoolelive.util.SquareCenterImageViewUtil;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import xiaoyu.com.schoolelive.R;
-
-import com.xiaoyu.schoolelive.util.BitmapSampleUtil;
 
 import static com.xiaoyu.schoolelive.activities.UserCenterActivity.CODE_APP_REQUEST;
 

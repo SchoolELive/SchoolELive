@@ -6,22 +6,24 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import xiaoyu.com.schoolelive.R;
+import com.xiaoyu.schoolelive.R;
 
 /**
  * Created by Administrator on 2017/7/11.
  */
 
-public class CustomUserMsg extends LinearLayout {
+public class CustomUserCenterMsg extends LinearLayout {
     private TextView msg_year, msg_day, msg_month, msg_date, msg_type, words_msg,
-            zhuanfa_count, comment_count, like_count,icon_msg;
+            zhuanfa_count, comment_count, like_count;
 
     private ImageButton zhuanfa_icon, comment_icon, like_icon;
+    private ImageView icon_msg,icon_msg2,icon_msg3;
 
-    public CustomUserMsg(Context context, AttributeSet attrs) {
+    public CustomUserCenterMsg(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.custom_user_msg, this, true);
 
@@ -31,14 +33,16 @@ public class CustomUserMsg extends LinearLayout {
         msg_date = (TextView) findViewById(R.id.msg_date);
         msg_type = (TextView) findViewById(R.id.msg_type);
         words_msg = (TextView) findViewById(R.id.words_msg);
-        zhuanfa_count = (TextView) findViewById(R.id.zhuanfa_count);
-        comment_count = (TextView) findViewById(R.id.comment_count);
-        like_count = (TextView) findViewById(R.id.like_count);
-        icon_msg = (TextView)findViewById(R.id.icon_msg);
+        zhuanfa_count = (TextView) findViewById(R.id.pub_zhuanfa_count);
+        comment_count = (TextView) findViewById(R.id.pub_comment_count);
+        like_count = (TextView) findViewById(R.id.pub_like_count);
+//        icon_msg = (ImageView)findViewById(R.id.icon_msg);
+//        icon_msg2 = (ImageView)findViewById(R.id.icon_msg2);
+//        icon_msg3 = (ImageView)findViewById(R.id.icon_msg3);
 
-        zhuanfa_icon = (ImageButton) findViewById(R.id.zhuanfa_icon);
-        comment_icon = (ImageButton) findViewById(R.id.comment_icon);
-        like_icon = (ImageButton) findViewById(R.id.like_icon);
+        zhuanfa_icon = (ImageButton) findViewById(R.id.pub_zhuanfa_icon);
+        comment_icon = (ImageButton) findViewById(R.id.pub_comment_icon);
+        like_icon = (ImageButton) findViewById(R.id.pub_like_icon);
 
         TypedArray typedArray = context.
                 obtainStyledAttributes(attrs, R.styleable.Custom_User_Msg);
@@ -78,6 +82,20 @@ public class CustomUserMsg extends LinearLayout {
             if (icon_msg_dw != -1) {
                 icon_msg.setVisibility(VISIBLE);
                 icon_msg.setBackgroundResource(icon_msg_dw);
+            }
+
+            int icon_msg_dw2 = typedArray.
+                    getResourceId(R.styleable.Custom_User_Msg_icon_msg2, -1);
+            if (icon_msg_dw2 != -1) {
+                icon_msg2.setVisibility(VISIBLE);
+                icon_msg2.setBackgroundResource(icon_msg_dw2);
+            }
+
+            int icon_msg_dw3 = typedArray.
+                    getResourceId(R.styleable.Custom_User_Msg_icon_msg3, -1);
+            if (icon_msg_dw3 != -1) {
+                icon_msg3.setVisibility(VISIBLE);
+                icon_msg3.setBackgroundResource(icon_msg_dw3);
             }
 
             //定义转发数量
