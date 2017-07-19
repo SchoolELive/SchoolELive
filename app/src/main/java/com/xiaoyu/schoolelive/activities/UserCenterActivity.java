@@ -55,7 +55,7 @@ public class UserCenterActivity extends BaseSlideBack {
             "从e生活相册选择", "查看头像","编辑资料"};
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_center);
+        setContentView(R.layout.activity_user_center);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.user_center_toolbar);
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout)findViewById(R.id.user_center_layout);
