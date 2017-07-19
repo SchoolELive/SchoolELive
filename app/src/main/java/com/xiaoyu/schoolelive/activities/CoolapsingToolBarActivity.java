@@ -33,7 +33,9 @@ public class CoolapsingToolBarActivity extends BaseSlideBack {
                 onBackPressed();
             }
         });
+        //展开时的文字颜色
         collapsingToolbar.setExpandedTitleColor(Color.WHITE);
+        //折叠时的文字颜色
         collapsingToolbar.setCollapsedTitleTextColor(Color.BLACK);
     }
 

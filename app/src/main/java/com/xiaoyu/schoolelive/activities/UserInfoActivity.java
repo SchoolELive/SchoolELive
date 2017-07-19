@@ -94,7 +94,7 @@ public class UserInfoActivity extends BaseSlideBack implements View.OnClickListe
                 break;
             case R.id.custom_sex:
                 new AlertDialog.Builder(this)
-                        .setTitle("------")
+                        .setTitle("请选择您的性别")
                         .setIcon(R.drawable.side_nav_bar)
                         .setSingleChoiceItems(new String[]{"男","女"},0,null)
                         .setPositiveButton("确定",null)

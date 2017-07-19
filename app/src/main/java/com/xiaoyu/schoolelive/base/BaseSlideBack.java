@@ -1,10 +1,15 @@
 package com.xiaoyu.schoolelive.base;
 
+import android.graphics.Color;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
+import android.view.View;
+import android.widget.TabHost;
 
 import com.xiaoyu.schoolelive.R;
 
@@ -18,7 +23,7 @@ public class BaseSlideBack extends AppCompatActivity {
     private static final int YSPEED_MIN = 1000;
 
     //手指向右滑动时的最小距离
-    private static final int XDISTANCE_MIN = 300;
+    private static final int XDISTANCE_MIN = 500;
 
     //手指向上滑或下滑时的最小距离
     private static final int YDISTANCE_MIN = 100;
@@ -51,6 +56,7 @@ public class BaseSlideBack extends AppCompatActivity {
                 yMove = event.getRawY();
                 //滑动的距离
                 int distanceX = (int) (xMove - xDown);
+                int distanceFX = (int)(xDown - xMove);
                 int distanceY = (int) (yMove - yDown);
                 //获取顺时速度
                 int ySpeed = getScrollVelocity();
@@ -59,13 +65,15 @@ public class BaseSlideBack extends AppCompatActivity {
                 //2.y轴滑动的距离在YDISTANCE_MIN范围内
                 //3.y轴上（即上下滑动的速度）<XSPEED_MIN，如果大于，则认为用户意图是在上下滑动而非左滑结束Activity
                 if (distanceX > XDISTANCE_MIN && (distanceY < YDISTANCE_MIN && distanceY > -YDISTANCE_MIN) && ySpeed < YSPEED_MIN) {
-
                     DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-                    if (drawerLayout == null){
+                    BottomNavigationView bnv = (BottomNavigationView)findViewById(R.id.navigation);
+                    if (drawerLayout == null && bnv == null){
                         finish();
-                    }else if (drawerLayout.isDrawerOpen(GravityCompat.START)){
-                    }else{
-                        drawerLayout.openDrawer(GravityCompat.START);
+                    }else {
+                        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+                        }else{
+                            drawerLayout.openDrawer(GravityCompat.START);
+                        }
                     }
                 }
                 break;
@@ -104,4 +112,5 @@ public class BaseSlideBack extends AppCompatActivity {
         int velocity = (int) mVelocityTracker.getYVelocity();
         return Math.abs(velocity);
     }
+
 }

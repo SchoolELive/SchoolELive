@@ -1,6 +1,7 @@
 package com.xiaoyu.schoolelive.activities;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ public class FindActivity extends BaseSlideBack {
     private EditText editText;
     private ImageButton backButton;
     private Button findButton;
+    private boolean isFirst = true;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find);
@@ -37,6 +39,15 @@ public class FindActivity extends BaseSlideBack {
             public void onClick(View v) {
                 String str = editText.getText().toString();
                 Toast.makeText(FindActivity.this,str,Toast.LENGTH_LONG).show();
+            }
+        });
+        editText.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                if (isFirst){
+                    editText.setText("");
+                    isFirst = !isFirst ;
+                }
+                return false;
             }
         });
     }

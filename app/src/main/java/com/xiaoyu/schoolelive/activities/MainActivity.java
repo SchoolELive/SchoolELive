@@ -1,7 +1,11 @@
 package com.xiaoyu.schoolelive.activities;
 
 import android.content.Intent;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -11,20 +15,42 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ScrollView;
-
-import com.xiaoyu.schoolelive.base.BaseSlideBack;
+import com.xiaoyu.schoolelive.base.BaseMainSlide;
 
 import com.xiaoyu.schoolelive.R;
 
-public class MainActivity extends BaseSlideBack {
+
+public class MainActivity extends BaseMainSlide{
     private Intent intent;
+    private static boolean boo = false;
+    //侧滑栏
     private DrawerLayout drawer;
+    //标题栏
     private Toolbar toolbar;
-    private ScrollView container = null;
+    //底部菜单的fragment
+    private HomeFragment homeFragment;
+    private BusinessFragment businessFragment;
+    private PartJobFragment partJobFragment;
+    private SecondHandFragment secondHandFragment;
+    private SysInformFragment sysInformFragment;
+
+    private BottomNavigationView navigation;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //在程序中加入Fragment
+        fragmentManager = getSupportFragmentManager();
+        //开启一个Fragment事务
+        fragmentTransaction = fragmentManager.beginTransaction();
+        homeFragment = new HomeFragment();
+        fragmentTransaction.add(R.id.main_menu_content, homeFragment,"home");
+        fragmentTransaction.commit();
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
         //标题栏
@@ -32,37 +58,46 @@ public class MainActivity extends BaseSlideBack {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.icon_main_home);
+        if (!boo){
+            actionBar.setHomeAsUpIndicator(R.drawable.icon_main_home);
+        }else{
+            //显示已登录用户的头像
+        }
 
         //悬浮按钮
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View view) {
-//                intent = new Intent(MainActivity.this,UserReportActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                intent = new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(intent);
+            }
+        });
         //获取侧滑栏的头部
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
         View view = navigationView.inflateHeaderView(R.layout.include_nav_header_main);
         ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
                 intent = new Intent(MainActivity.this,UserCenterActivity.class);
                 startActivity(intent);
             }
         });
         //侧滑栏菜单点击逻辑
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            public boolean onNavigationItemSelected(MenuItem item) {
-                switch (item.getItemId()){
+            public boolean onNavigationItemSelected(MenuItem i) {
+                switch (i.getItemId()){
+                    case R.id.focus:
+                        intent = new Intent(MainActivity.this,UserFocusActivity.class);
+                        startActivity(intent);
+                        break;
                     case R.id.collect:
                         intent = new Intent();
                         intent.putExtra("str","collect");
                         intent.setClass(MainActivity.this,HistoryCollectActivity.class);
                         startActivity(intent);
                         break;
-                    case R.id.xiangce:
+                    case R.id.gallery:
                         intent = new Intent(MainActivity.this,UserAlbumActivity.class);
                         startActivity(intent);
                         break;
@@ -85,61 +120,67 @@ public class MainActivity extends BaseSlideBack {
                 return true;
             }
         });
-
-        //动态改变主界面
-
-//        GroupActivity groupAc= new GroupActivity();
-//        container = (ScrollView) findViewById(R.id.containerBody);
-//        //模块1
-//        ImageView btnModule1 = (ImageView) findViewById(R.id.btnModule1);
-//        btnModule1.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                //移除所有子视图
-//                container.removeAllViews();
-//                //通过LocalActivityManager通过startAtivity(String id,Intent intent)可以于指定的Activity绑定
-//                //并且返回一个Window。LocalActivityManager可以同时管理多个Activity
-//                container.addView(getLocalActivityManager().startActivity(
-//                        "Module1",
-//                        new Intent(MainActivity.this, MainMenuView1.class)
-//                                //Intent.FLAG_ACTIVITY_CLEAR_TOP:如果在当前的Task中，有要启动的Activity
-//                                //那么就把该Activity之前的所有Activity都关掉，并把此Activity置前以避免创建Activity的实例
-//                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-//                        //返回一个View，然后通过与指定容器的addView(View)方法，实现不同的效果
-//                        .getDecorView());
-//            }
-//
-//        });
-//        // 模块2
-//        ImageView btnModule2 = (ImageView) findViewById(R.id.btnModule2);
-//        btnModule2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //移除所有子视图
-//                container.removeAllViews();
-//                container.addView(getLocalActivityManager().startActivity(
-//                        "Module2",
-//                        new Intent(MainActivity.this, MainMenuView2.class)
-//                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-//                        .getDecorView());
-//            }
-//        });
-//
-//        // 模块3
-//        ImageView btnModule3 = (ImageView) findViewById(R.id.btnModule3);
-//        btnModule3.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                //移除所有子视图
-//                container.removeAllViews();
-//                container.addView(getLocalActivityManager().startActivity(
-//                        "Module3",
-//                        new Intent(MainActivity.this, MainMenuVie3.class)
-//                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-//                        .getDecorView());
-//            }
-//        });
     }
 
-    @Override
+
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(MenuItem item) {
+            fragmentAllRemove();
+            //在程序中加入Fragment
+            fragmentManager = getSupportFragmentManager();
+            //开启一个Fragment事务
+            fragmentTransaction = fragmentManager.beginTransaction();
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    getSupportActionBar().setTitle("主页");
+                    homeFragment = new HomeFragment();
+                    fragmentTransaction.replace(R.id.main_menu_content, homeFragment).commit();
+                    return true;
+                case R.id.navigation_business:
+                    getSupportActionBar().setTitle("商家");
+                    businessFragment = new BusinessFragment();
+                    fragmentTransaction.replace(R.id.main_menu_content, businessFragment).commit();
+                    return true;
+                case R.id.navigation_secondhand:
+                    getSupportActionBar().setTitle("旧货");
+                    secondHandFragment = new SecondHandFragment();
+                    fragmentTransaction.replace(R.id.main_menu_content, secondHandFragment).commit();
+                    return true;
+                case R.id.navigation_partjob:
+                    getSupportActionBar().setTitle("兼职");
+                    partJobFragment = new PartJobFragment();
+                    fragmentTransaction.replace(R.id.main_menu_content, partJobFragment).commit();
+                    return true;
+                case R.id.navigation_sysinform:
+                    getSupportActionBar().setTitle("通知");
+                    sysInformFragment = new SysInformFragment();
+                    fragmentTransaction.replace(R.id.main_menu_content, sysInformFragment).commit();
+                    return true;
+            }
+            return false;
+        }
+
+    };
+    public void fragmentAllRemove(){
+        if (homeFragment != null){
+            fragmentTransaction.hide(homeFragment);
+        }
+        if (businessFragment != null){
+            fragmentTransaction.hide(businessFragment);
+        }
+        if (secondHandFragment != null){
+            fragmentTransaction.hide(secondHandFragment);
+        }
+        if (partJobFragment != null){
+            fragmentTransaction.hide(partJobFragment);
+        }
+        if (sysInformFragment != null){
+            fragmentTransaction.hide(sysInformFragment);
+        }
+    }
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -147,7 +188,6 @@ public class MainActivity extends BaseSlideBack {
             super.onBackPressed();
         }
     }
-    @Override
     //导入菜单项
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -158,7 +198,12 @@ public class MainActivity extends BaseSlideBack {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                drawer.openDrawer(GravityCompat.START);
+                if (!boo){
+                    intent = new Intent(MainActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                }else{
+                    drawer.openDrawer(GravityCompat.START);
+                }
                 return true;
             case R.id.findButton:
                 intent = new Intent(MainActivity.this,FindActivity.class);
