@@ -72,6 +72,8 @@ public class UserCenterActivity extends BaseSlideBack {
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.user_center_layout);
         imageView = (ImageView) findViewById(R.id.user_center_imageview);
 
+        initView();
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
