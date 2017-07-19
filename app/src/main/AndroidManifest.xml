@@ -78,7 +78,6 @@
         <activity android:name=".activities.UserInfoActivity" />
         <activity android:name=".activities.MySpinnerActivity" />
         <activity android:name=".activities.UserReportActivity" />
-        <activity android:name=".activities.GroupActivity" />
         <activity android:name=".activities.CoolapsingToolBarActivity" />
         <activity android:name=".activities.AlbumImageDetailActivity" />
         <activity android:name=".activities.UserAlbumActivity" />
@@ -99,9 +98,6 @@
             android:name="android.hardware.camera2"
             android:required="true" />
 
-        <activity android:name=".activities.MainMenuView1" />
-        <activity android:name=".activities.MainMenuView2" />
-        <activity android:name=".activities.MainMenuView3" />
     </application>
 
 </manifest>

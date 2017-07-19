@@ -18,17 +18,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.xiaoyu.schoolelive.R;
+import com.xiaoyu.schoolelive.adapter.UserCenterAdapter;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
 import com.xiaoyu.schoolelive.custom.CustomImageDialogView;
+import com.xiaoyu.schoolelive.data.UserCenter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import xiaoyu.com.schoolelive.R;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/11.
@@ -36,6 +42,10 @@ import xiaoyu.com.schoolelive.R;
 
 public class UserCenterActivity extends BaseSlideBack {
     Bitmap bitmap = null;
+
+    private ListView usercenter_list;
+    private UserCenterAdapter userCenterAdapter;
+    private List<UserCenter> data;
 
     /* 头像文件 */
     private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
@@ -52,14 +62,15 @@ public class UserCenterActivity extends BaseSlideBack {
 
     private ImageView imageView;
     final String[] items = new String[]{"拍照", "从手机相册选择",
-            "从e生活相册选择", "查看头像","编辑资料"};
+            "从e生活相册选择", "查看头像", "编辑资料"};
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_center);
+        setContentView(R.layout.activity_user_center);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.user_center_toolbar);
-        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout)findViewById(R.id.user_center_layout);
-        imageView = (ImageView)findViewById(R.id.user_center_imageview);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.user_center_toolbar);
+        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.user_center_layout);
+        imageView = (ImageView) findViewById(R.id.user_center_imageview);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -96,7 +107,7 @@ public class UserCenterActivity extends BaseSlideBack {
                                 choseHeadImageFromApp();
                                 break;
                             case 3:
-                                bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                                bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
                                 CustomImageDialogView.Builder dialogBuild = new CustomImageDialogView.Builder(UserCenterActivity.this);
                                 dialogBuild.setImage(bitmap);
                                 CustomImageDialogView img_dialog = dialogBuild.create();
@@ -104,7 +115,7 @@ public class UserCenterActivity extends BaseSlideBack {
                                 img_dialog.show();
                                 break;
                             case 4:
-                                Intent intent = new Intent(UserCenterActivity.this,UserInfoActivity.class);
+                                Intent intent = new Intent(UserCenterActivity.this, UserInfoActivity.class);
                                 startActivity(intent);
                                 break;
                         }
@@ -116,11 +127,51 @@ public class UserCenterActivity extends BaseSlideBack {
                 WindowManager.LayoutParams params =
                         dialog.getWindow().getAttributes();
                 params.width = 800;
-                params.height =1000;
+                params.height = 1000;
                 dialog.getWindow().setAttributes(params);
             }
         });
+
+
     }
+
+    private void initView() {
+
+        // 初始化评论列表
+        usercenter_list = (ListView) findViewById(R.id.usercenter_list);
+        // 初始化数据
+        data = new ArrayList<>();
+        // 初始化适配器
+        userCenterAdapter = new UserCenterAdapter(this, data);
+        // 为评论列表设置适配器
+        usercenter_list.setAdapter(userCenterAdapter);
+
+        addMsg();
+    }
+
+    public void addMsg() {
+        UserCenter userCenter = new UserCenter();
+        userCenter.setMsg_content("这是校园e生活第一条动态");
+        userCenter.setMsg_type("#个人中心#");
+        //获取年月日
+        SimpleDateFormat year = new SimpleDateFormat("yyyy" + "年");
+        Date curYear = new Date(System.currentTimeMillis());
+        String str = year.format(curYear);
+        userCenter.setMsg_year(str);
+
+        SimpleDateFormat month = new SimpleDateFormat("MM" + "月");
+        Date curMonth = new Date(System.currentTimeMillis());
+        String str2 = month.format(curMonth);
+        userCenter.setMsg_month(str2);
+
+        SimpleDateFormat day = new SimpleDateFormat("dd");
+        Date curDay = new Date(System.currentTimeMillis());
+        String str3 = day.format(curDay);
+        userCenter.setMsg_month(str3);
+
+        userCenterAdapter.addCenterMsg(userCenter);
+    }
+
     // 从本地相册选取图片作为头像
     private void choseHeadImageFromGallery() {
         Intent intentFromGallery = new Intent();
@@ -289,15 +340,17 @@ public class UserCenterActivity extends BaseSlideBack {
             return false;
         }
     }
+
     //导入菜单项
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_change_info, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 return true;
