@@ -82,7 +82,6 @@ public class AlbumImageDetailActivity extends BaseSlideBack {
             //
         }
         //此处可以加动画效果
-
     }
 
     @Override

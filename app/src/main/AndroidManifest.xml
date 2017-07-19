@@ -40,6 +40,8 @@
         <activity android:name="com.xiaoyu.schoolelive.activities.SysSetAccountActivity" />
         <activity android:name="com.xiaoyu.schoolelive.activities.SysSetInformActivity" />
         <activity android:name="com.xiaoyu.schoolelive.activities.SysSetShareActivity"></activity>
+        <activity android:name="com.xiaoyu.schoolelive.activities.RegistActivity"/>
+        <activity android:name="com.xiaoyu.schoolelive.activities.LoginActivity"/>
     </application>
 
 </manifest>

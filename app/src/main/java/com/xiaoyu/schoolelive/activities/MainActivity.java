@@ -22,6 +22,7 @@ import xiaoyu.com.schoolelive.R;
 
 public class MainActivity extends BaseMainSlide{
     private Intent intent;
+    private static boolean boo = false;
     //侧滑栏
     private DrawerLayout drawer;
     //标题栏
@@ -57,12 +58,17 @@ public class MainActivity extends BaseMainSlide{
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.icon_main_home);
+        if (!boo){
+            actionBar.setHomeAsUpIndicator(R.drawable.icon_main_home);
+        }else{
+            //显示已登录用户的头像
+        }
+
         //悬浮按钮
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                intent = new Intent(MainActivity.this,UserFocusActivity.class);
+                intent = new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -192,7 +198,12 @@ public class MainActivity extends BaseMainSlide{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                drawer.openDrawer(GravityCompat.START);
+                if (!boo){
+                    intent = new Intent(MainActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                }else{
+                    drawer.openDrawer(GravityCompat.START);
+                }
                 return true;
             case R.id.findButton:
                 intent = new Intent(MainActivity.this,FindActivity.class);
