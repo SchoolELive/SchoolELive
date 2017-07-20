@@ -21,7 +21,8 @@ import com.xiaoyu.schoolelive.R;
 
 
 public class MainActivity extends BaseMainSlide{
-    private Intent intent;
+    private Intent intent,intent_getUid;
+    private long uid;//用户的id
     private static boolean boo = false;
     //侧滑栏
     private DrawerLayout drawer;
@@ -78,12 +79,18 @@ public class MainActivity extends BaseMainSlide{
         ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                drawer.closeDrawer(GravityCompat.START);
+                //drawer.closeDrawer(GravityCompat.START);
                 intent = new Intent(MainActivity.this,UserCenterActivity.class);
+                intent.putExtra("uid",uid);
                 startActivity(intent);
             }
         });
         //侧滑栏菜单点击逻辑
+
+        intent_getUid = getIntent();
+        uid = intent_getUid.getLongExtra("uid",0);
+
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             public boolean onNavigationItemSelected(MenuItem i) {
                 switch (i.getItemId()){
@@ -198,12 +205,12 @@ public class MainActivity extends BaseMainSlide{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                if (!boo){
-                    intent = new Intent(MainActivity.this,LoginActivity.class);
-                    startActivity(intent);
-                }else{
+//                if (!boo){
+//                    intent = new Intent(MainActivity.this,LoginActivity.class);
+//                    startActivity(intent);
+//                }else{
                     drawer.openDrawer(GravityCompat.START);
-                }
+//                }
                 return true;
             case R.id.findButton:
                 intent = new Intent(MainActivity.this,FindActivity.class);

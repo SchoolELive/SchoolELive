@@ -73,9 +73,9 @@ public class UserCenterAdapter extends BaseAdapter {
         holder.user_year.setText(data.get(i).getMsg_year());
         holder.user_month.setText(data.get(i).getMsg_month());
         holder.user_day.setText(data.get(i).getMsg_day());
-        holder.user_comment_count.setText(data.get(i).getComment_count());
-        holder.user_share_count.setText(data.get(i).getShare_count());
-        holder.user_like_count.setText(data.get(i).getLike_count());
+        //holder.user_comment_count.setText(data.get(i).getComment_count());
+//        holder.user_share_count.setText(data.get(i).getShare_count());
+        //holder.user_like_count.setText(data.get(i).getLike_count());
 
         holder.btn_user_like.setTag(i);
         holder.btn_user_comment.setTag(i);

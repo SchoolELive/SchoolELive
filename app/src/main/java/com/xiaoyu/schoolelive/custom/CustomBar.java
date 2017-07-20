@@ -16,7 +16,6 @@ import com.xiaoyu.schoolelive.R;
  */
 
 public class CustomBar extends RelativeLayout {
-
     private TextView info_menu_name;
     private TextView info_menu_info;
     private ImageView info_menu_right;
@@ -55,23 +54,12 @@ public class CustomBar extends RelativeLayout {
         }
     }
 
-    public TextView getInfo_menu_name() {
-        return info_menu_name;
-    }
-    public void setInfo_menu_info(TextView info_menu_info) {
-        this.info_menu_info = info_menu_info;
-    }
-    public void setInfo_menu_name(TextView info_menu_name) {
-        this.info_menu_name = info_menu_name;
-    }
-    public void setInfo_menu_right(ImageView info_menu_right) {
-        this.info_menu_right = info_menu_right;
+    public void setInfo_menu_info(String info) {
+        //this.info_menu_info = info_menu_info;
+        this.info_menu_info.setText(info);
     }
     public TextView getInfo_menu_info() {
         return info_menu_info;
-    }
-    public ImageView getInfo_menu_right() {
-        return info_menu_right;
     }
 }
 
