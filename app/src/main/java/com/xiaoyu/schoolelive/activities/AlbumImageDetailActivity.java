@@ -10,12 +10,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-
-import java.util.ArrayList;
-
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
 import com.xiaoyu.schoolelive.util.SmoothImageViewUtil;
+
+import java.util.ArrayList;
 
 import static com.xiaoyu.schoolelive.activities.UserCenterActivity.CODE_APP_REQUEST;
 
