@@ -110,6 +110,7 @@ public class PublishAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
+
             }
         });
 
