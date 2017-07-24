@@ -26,13 +26,12 @@ import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.adapter.CommentAdapter;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
 import com.xiaoyu.schoolelive.data.Comment;
+import com.xiaoyu.schoolelive.util.ShowShareUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import cn.sharesdk.onekeyshare.OnekeyShare;
 
 /**
  * Created by NeekChaw on 2017-07-13.
@@ -43,6 +42,7 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
 
     final String[] baseItems = new String[]{"关注", "举报", "复制内容"};
     final String[] againstItems = new String[]{"泄露隐私", "人身攻击", "淫秽色情", "垃圾广告", "敏感信息", "其他"};
+
 
     boolean IS_AGAINST = true;//初始状态，还未举报
     boolean IS_FOCUS = true;//初始状态，还未关注
@@ -131,11 +131,9 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
         pub_date = (TextView) findViewById(R.id.pub_date);
         pub_nickname = (TextView) findViewById(R.id.pub_nickname);
 
-//        Bundle bundle = getIntent().getExtras();
-//        pub_share_count.setText(bundle.getInt("tmp_share"));
-//        pub_comment_count.setText(bundle.getInt("tmp_comment"));
-//        pub_like_count.setText(bundle.getInt("tmp_like"));
-
+        pub_share_count.setText(intent.getIntExtra("tmp_share_count",0)+"");
+        pub_comment_count.setText(intent.getIntExtra("tmp_comment_count",0)+"");
+        pub_like_count.setText(intent.getIntExtra("tmp_like_count",0)+"");
         pub_content.setText(intent.getStringExtra("tmp_content"));
         pub_nickname.setText(intent.getStringExtra("tmp_name"));
         pub_head.setImageResource(intent.getIntExtra("tmp_head", DEFAULT_HEAD));
@@ -194,7 +192,7 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
                 }
                 break;
             case R.id.pub_zhuanfa_icon:
-                showShare();
+                ShowShareUtil.showShare(this);
                 break;
             case R.id.pub_icon_more:
                 showDialog();
@@ -238,34 +236,6 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
         }
     }
 
-    //分享界面
-    private void showShare() {
-        OnekeyShare oks = new OnekeyShare();
-        //关闭sso授权
-        oks.disableSSOWhenAuthorize();
-
-        // 分享时Notification的图标和文字  2.5.9以后的版本不     调用此方法
-        //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
-        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-        oks.setTitle(this.getString(R.string.app_name));
-        // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl("http://sharesdk.cn");
-        // text是分享文本，所有平台都需要这个字段
-        oks.setText("我是分享文本");
-        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
-        // url仅在微信（包括好友和朋友圈）中使用
-        oks.setUrl("http://sharesdk.cn");
-        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-        oks.setComment("我是测试评论文本");
-        // site是分享此内容的网站名称，仅在QQ空间使用
-        oks.setSite(this.getString(R.string.app_name));
-        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl("http://sharesdk.cn");
-
-        // 启动分享GUI
-        oks.show(this);
-    }
 
     private void showDialog() {
         LayoutInflater layoutInflater = LayoutInflater.from(this);

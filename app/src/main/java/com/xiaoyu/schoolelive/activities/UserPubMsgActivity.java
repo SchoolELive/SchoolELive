@@ -42,12 +42,7 @@ public class UserPubMsgActivity extends BaseSlideBack implements View.OnClickLis
     private Button comment_send;
     private LinearLayout rl_enroll;
     private RelativeLayout rl_comment;
-    //
-//    private ImageButton btn_pub_like, btn_pub_comment, btn_put_share;
-//    private ImageView pub_user_head;
-//    private TextView pub_ymd, pub_date, pub_content,
-//            pub_like_count, pub_comment_count, pub_share_count, pub_user_name;
-    //
+
     private ListView publish_list;
     private PublishAdapter adapterPublish;
     private List<Publish> data;
@@ -69,15 +64,6 @@ public class UserPubMsgActivity extends BaseSlideBack implements View.OnClickLis
         rl_comment = (RelativeLayout) findViewById(R.id.rl_comment);
         chat = (ImageView) findViewById(R.id.chat);
 
-        //初始化消息动态控件
-//        pub_user_head = (ImageView) findViewById(R.id.user_head);
-//        pub_user_name = (TextView) findViewById(R.id.pub_nickname);
-//        pub_content = (TextView) findViewById(R.id.words_msg);
-//        pub_ymd = (TextView) findViewById(R.id.pub_ymd);
-//        pub_date = (TextView) findViewById(R.id.pub_date);
-//        pub_comment_count = (TextView) findViewById(R.id.pub_comment_count);
-//        pub_like_count = (TextView) findViewById(R.id.pub_like_count);
-//        pub_share_count = (TextView) findViewById(R.id.pub_zhuanfa_count);
 
         // 初始化评论列表
         publish_list = (ListView) findViewById(R.id.pub_list);
@@ -105,17 +91,16 @@ public class UserPubMsgActivity extends BaseSlideBack implements View.OnClickLis
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Publish publish = data.get(position);
-                Intent intent = new Intent(getApplication(), UserPubMsgDetailActivity.class);
+                Intent intent = new Intent(UserPubMsgActivity.this, UserPubMsgDetailActivity.class);
                 intent.putExtra("tmp_name", publish.getName());
                 intent.putExtra("tmp_ymd", publish.getYmd());
                 intent.putExtra("tmp_date", publish.getDate());
                 intent.putExtra("tmp_content", publish.getContent());
                 intent.putExtra("tmp_head", publish.getHead());
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("tmp_like_count", publish.getLike_count());
-//                bundle.putInt("tmp_comment_count", publish.getComment_count());
-//                bundle.putInt("tmp_share_count", publish.getShare_count());
-//                intent.putExtras(bundle);
+                intent.putExtra("tmp_like_count", publish.getLike_count());
+                intent.putExtra("tmp_comment_count", publish.getComment_count());
+                intent.putExtra("tmp_share_count", publish.getShare_count());
+
                 startActivity(intent);
             }
         });
