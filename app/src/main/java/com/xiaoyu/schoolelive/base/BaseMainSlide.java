@@ -2,9 +2,6 @@ package com.xiaoyu.schoolelive.base;
 
 import android.graphics.Color;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -21,10 +18,10 @@ import com.xiaoyu.schoolelive.R;
 public class BaseMainSlide extends AppCompatActivity implements View.OnClickListener{
 
     //手指上下滑动时的最小速度
-    private static final int YSPEED_MIN = 1000;
+    private static final int YSPEED_MIN = 2000;
 
     //手指左右滑动时的最小距离
-    private static final int XDISTANCE_MIN = 200;
+    private static final int XDISTANCE_MIN = 100;
 
     //手指向上滑或下滑时的最小距离
     private static final int YDISTANCE_MIN = 300;
@@ -59,6 +56,7 @@ public class BaseMainSlide extends AppCompatActivity implements View.OnClickList
     private View home_know_view;
     private View home_story_view;
 
+
     private static int count = 0;
     //初始化定义首页导航栏
     public void homeCreate(){
@@ -82,9 +80,9 @@ public class BaseMainSlide extends AppCompatActivity implements View.OnClickList
         home_know_content = (LinearLayout)findViewById(R.id.home_know_content);
         home_story_content = (LinearLayout)findViewById(R.id.home_story_content);
     }
-
     //初始化首页导航栏style
     public void inithome(){
+
         home_hot_tv.setTextColor(Color.BLUE);
         home_hot_view.setBackgroundColor(Color.WHITE);
 

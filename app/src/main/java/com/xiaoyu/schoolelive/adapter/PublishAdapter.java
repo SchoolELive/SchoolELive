@@ -29,7 +29,6 @@ public class PublishAdapter extends BaseAdapter {
     Context context;
     List<Publish> data;
 
-
     final String[] baseItems = new String[]{"关注", "举报", "复制内容"};
     final String[] againstItems = new String[]{"泄露隐私", "人身攻击", "淫秽色情", "垃圾广告", "敏感信息", "其他"};
 
@@ -37,7 +36,6 @@ public class PublishAdapter extends BaseAdapter {
         this.context = c;
         this.data = data;
     }
-
 
     @Override
     public int getCount() {
@@ -108,11 +106,8 @@ public class PublishAdapter extends BaseAdapter {
         holder.btn_pub_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
             }
         });
-
         holder.btn_pub_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

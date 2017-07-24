@@ -5,13 +5,14 @@
     android:layout_height="match_parent"
     android:background="#DFE1E0"
     android:orientation="vertical">
+
     <include
         layout="@layout/include_toolbar"/>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="3dp"
         android:background="#ffffff"
         android:orientation="horizontal">
         <TextView
@@ -28,7 +29,7 @@
 
     <LinearLayout
         android:background="#ffffff"
-        android:layout_margin="5dp"
+        android:layout_margin="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -47,8 +48,8 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_margin="3dp"
         android:background="#ffffff"
-        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

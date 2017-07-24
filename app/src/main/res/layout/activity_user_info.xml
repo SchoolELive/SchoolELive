@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     android:orientation="vertical"
     android:background="@drawable/side_nav_bar"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <include
+        layout="@layout/include_toolbar"/>
     <com.xiaoyu.schoolelive.custom.CustomBar
         android:id="@+id/custom_photo"
         android:layout_width="match_parent"
@@ -25,6 +25,7 @@
         app:info_text="点击设置昵称"
         app:right_drawable="@drawable/menu_right_dw"
         />
+
     <com.xiaoyu.schoolelive.custom.CustomBar
         android:id="@+id/custom_about"
         android:layout_width="match_parent"
