@@ -48,7 +48,6 @@ public class HomeFragment extends Fragment {
             publish.setContent(bundle.getString("tmp_content"));
             publish.setYmd(bundle.getString("tmp_ymd"));
             publish.setDate(bundle.getString("tmp_date"));
-
             for (int i = 0; i < 5; i++){
                 pub.setHead(getHead());
                 pub.setName("asdasdsa");

@@ -109,7 +109,6 @@ public  class UserInfo extends BaseSlideBack implements View.OnClickListener {
     private Handler handler;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_user_info);
         //标题栏
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -146,7 +146,6 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
     public void setListener() {
         hide_down.setOnClickListener(this);
         comment_send.setOnClickListener(this);
-
         btn_pub_like.setOnClickListener(this);
         btn_pub_comment.setOnClickListener(this);
         btn_pub_share.setOnClickListener(this);
