@@ -116,7 +116,6 @@ public  class UserInfo extends BaseSlideBack implements View.OnClickListener {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("编辑资料");
-
         handler = new MyHandler();
         custom_photo = (CustomBar) findViewById(R.id.custom_photo);//图像对象
         custom_photo.setOnClickListener(this);
