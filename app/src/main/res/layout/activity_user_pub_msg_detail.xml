@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </com.xiaoyu.schoolelive.custom.CustomUserPubMsg>
-
     <include layout="@layout/include_comment_bar"/>
     <include layout="@layout/include_comment_list" />
 

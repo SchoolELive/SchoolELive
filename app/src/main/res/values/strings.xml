@@ -77,4 +77,6 @@
     <string name="title_secondhand">旧货</string>
     <string name="title_partjob">兼职</string>
     <string name="title_sysinform">通知</string>
+
+    <string name="textNum">140</string>
 </resources>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:id="@+id/home_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <include
@@ -104,21 +106,21 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <include
-        android:id="@+id/home_hot_content"
-        layout="@layout/activity_home_hot"
-        android:visibility="visible"/>
-    <include
-        android:id="@+id/home_new_content"
-        layout="@layout/activity_home_new"
-        android:visibility="invisible"/>
-    <include
-        android:id="@+id/home_know_content"
-        layout="@layout/activity_home_know"
-        android:visibility="invisible"/>
-    <include
-        android:id="@+id/home_story_content"
-        layout="@layout/activity_home_story"
-        android:visibility="invisible"/>
+        <include
+            android:id="@+id/home_hot_content"
+            layout="@layout/activity_home_hot"
+            android:visibility="visible"/>
+        <include
+            android:id="@+id/home_new_content"
+            layout="@layout/activity_home_new"
+            android:visibility="invisible"/>
+        <include
+            android:id="@+id/home_know_content"
+            layout="@layout/activity_home_know"
+            android:visibility="invisible"/>
+        <include
+            android:id="@+id/home_story_content"
+            layout="@layout/activity_home_story"
+            android:visibility="invisible"/>
     </RelativeLayout>
 </LinearLayout>

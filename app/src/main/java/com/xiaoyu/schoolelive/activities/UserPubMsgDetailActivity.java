@@ -47,11 +47,9 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
     boolean IS_AGAINST = true;//初始状态，还未举报
     boolean IS_FOCUS = true;//初始状态，还未关注
     //底部评论控件
-    private ImageView comment;
     private TextView hide_down;
     private EditText comment_content;
     private Button comment_send;
-    private LinearLayout rl_enroll;
     private RelativeLayout rl_comment;
     //主题与评论相关控件
     private ImageButton btn_pub_comment, btn_pub_like, btn_pub_share;
@@ -104,11 +102,9 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
         comment_list.setAdapter(adapterComment);
 
         //初始化底部控件
-        comment = (ImageView) findViewById(R.id.comment);
         hide_down = (TextView) findViewById(R.id.hide_down);
         comment_content = (EditText) findViewById(R.id.comment_content);
         comment_send = (Button) findViewById(R.id.comment_send);
-        rl_enroll = (LinearLayout) findViewById(R.id.rl_enroll);
         rl_comment = (RelativeLayout) findViewById(R.id.rl_comment);
 
         setListener();
@@ -148,7 +144,6 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
      * 设置监听
      */
     public void setListener() {
-        comment.setOnClickListener(this);
         hide_down.setOnClickListener(this);
         comment_send.setOnClickListener(this);
 
@@ -163,22 +158,21 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pub_comment_icon:
-            case R.id.comment:
-                // 弹出输入法
-                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                // 显示评论框
-                rl_enroll.setVisibility(View.GONE);
-                rl_comment.setVisibility(View.VISIBLE);
-                break;
-            case R.id.hide_down:
-                // 隐藏评论框
-                rl_enroll.setVisibility(View.VISIBLE);
-                rl_comment.setVisibility(View.GONE);
-                // 隐藏输入法，然后暂存当前输入框的内容，方便下次使用
-                InputMethodManager im = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                im.hideSoftInputFromWindow(comment_content.getWindowToken(), 0);
-                break;
+//            case R.id.comment:
+//                // 弹出输入法
+//                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+//                // 显示评论框
+//                rl_enroll.setVisibility(View.GONE);
+//                rl_comment.setVisibility(View.VISIBLE);
+//                break;
+//            case R.id.hide_down:
+//                // 隐藏评论框
+//                rl_comment.setVisibility(View.GONE);
+//                // 隐藏输入法，然后暂存当前输入框的内容，方便下次使用
+//                InputMethodManager im = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                im.hideSoftInputFromWindow(comment_content.getWindowToken(), 0);
+//                break;
             case R.id.comment_send:
                 sendComment();
                 break;
@@ -235,6 +229,10 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
             Toast.makeText(getApplicationContext(), "评论成功！", Toast.LENGTH_SHORT).show();
             pub_comment_count.setText(Integer.valueOf(pub_comment_count.getText().toString()) + 1 + "");
             all_cmt_count.setText(pub_comment_count.getText());
+
+            // 隐藏输入法，然后暂存当前输入框的内容，方便下次使用
+            InputMethodManager im = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            im.hideSoftInputFromWindow(comment_content.getWindowToken(), 0);
         }
     }
 

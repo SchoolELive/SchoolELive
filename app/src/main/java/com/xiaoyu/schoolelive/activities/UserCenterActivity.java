@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -69,7 +70,7 @@ public class UserCenterActivity extends BaseSlideBack {
         setContentView(R.layout.activity_user_center);
 
         Intent get_uid = getIntent();
-      uid =   get_uid.getLongExtra("uid",0);
+        uid =  get_uid.getLongExtra("uid",0);
 
         //设置折叠式标题栏
         Toolbar toolbar = (Toolbar) findViewById(R.id.user_center_toolbar);
@@ -124,7 +125,6 @@ public class UserCenterActivity extends BaseSlideBack {
                                 Intent intent = new Intent(UserCenterActivity.this, UserInfo.class);
                                 intent.putExtra("uid",uid);
                                 startActivity(intent);
-
                                 break;
                         }
                     }

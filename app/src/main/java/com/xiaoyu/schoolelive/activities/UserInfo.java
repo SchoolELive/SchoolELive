@@ -5,11 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.GravityCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
 import com.xiaoyu.schoolelive.custom.CustomBar;
 import com.xiaoyu.schoolelive.util.HttpUtil;
@@ -24,7 +29,6 @@ import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import com.xiaoyu.schoolelive.R;
 
 
 public  class UserInfo extends BaseSlideBack implements View.OnClickListener {
@@ -105,10 +109,15 @@ public  class UserInfo extends BaseSlideBack implements View.OnClickListener {
     private Handler handler;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // ActionBar actionBar = getSupportActionBar();
-        //actionBar.setDisplayHomeAsUpEnabled(true);
-        //actionBar.setIcon(R.drawable.side_nav_bar);
+
         setContentView(R.layout.activity_user_info);
+        //标题栏
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("编辑资料");
+
         handler = new MyHandler();
         custom_photo = (CustomBar) findViewById(R.id.custom_photo);//图像对象
         custom_photo.setOnClickListener(this);
@@ -326,6 +335,14 @@ public  class UserInfo extends BaseSlideBack implements View.OnClickListener {
             }
 
         });
-
+    }
+    //标题栏菜单点击逻辑
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
