@@ -59,7 +59,7 @@ public class UserCenterActivity extends BaseSlideBack {
     // 裁剪后图片的宽(X)和高(Y),480 X 480的正方形。
     private static int output_X = 600;
     private static int output_Y = 600;
-
+    private long uid;
     private ImageView imageView;
     final String[] items = new String[]{"拍照", "从手机相册选择",
             "从e生活相册选择", "查看头像", "编辑资料"};
@@ -68,6 +68,10 @@ public class UserCenterActivity extends BaseSlideBack {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_center);
 
+        Intent get_uid = getIntent();
+      uid =   get_uid.getLongExtra("uid",0);
+
+        //设置折叠式标题栏
         Toolbar toolbar = (Toolbar) findViewById(R.id.user_center_toolbar);
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.user_center_layout);
         imageView = (ImageView) findViewById(R.id.user_center_imageview);
@@ -117,8 +121,10 @@ public class UserCenterActivity extends BaseSlideBack {
                                 img_dialog.show();
                                 break;
                             case 4:
-                                Intent intent = new Intent(UserCenterActivity.this, UserInfoActivity.class);
+                                Intent intent = new Intent(UserCenterActivity.this, UserInfo.class);
+                                intent.putExtra("uid",uid);
                                 startActivity(intent);
+
                                 break;
                         }
                     }
