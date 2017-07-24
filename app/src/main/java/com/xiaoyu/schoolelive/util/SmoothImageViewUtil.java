@@ -64,7 +64,9 @@ public class SmoothImageViewUtil extends android.support.v7.widget.AppCompatImag
         mOriginalHeight = height;
         mOriginalLocationX = locationX;
         mOriginalLocationY = locationY;
-        // 因为是屏幕坐标，所以要转换为该视图内的坐标，因为我所用的该视图是MATCH_PARENT，所以不用定位该视图的位置,如果不是的话，还需要定位视图的位置，然后计算mOriginalLocationX和mOriginalLocationY
+        // 因为是屏幕坐标，所以要转换为该视图内的坐标，因为我所用的该视图是MATCH_PARENT，
+        // 所以不用定位该视图的位置,如果不是的话，还需要定位视图的位置，
+        // 然后计算mOriginalLocationX和mOriginalLocationY
         mOriginalLocationY = mOriginalLocationY - getStatusBarHeight(getContext());
     }
 
@@ -353,8 +355,10 @@ public class SmoothImageViewUtil extends android.support.v7.widget.AppCompatImag
             @Override
             public void onAnimationEnd(Animator animation) {
                 /*
-                 * 如果是进入的话，当然是希望最后停留在center_crop的区域。但是如果是out的话，就不应该是center_crop的位置了
-                 * ， 而应该是最后变化的位置，因为当out的时候结束时，不回复视图是Normal，要不然会有一个突然闪动回去的bug
+                 * 如果是进入的话，当然是希望最后停留在center_crop的区域。
+                 * 但是如果是out的话，就不应该是center_crop的位置了
+                 * ， 而应该是最后变化的位置，因为当out的时候结束时，
+                 * 不回复视图是Normal，要不然会有一个突然闪动回去的bug
                  */
                 // TODO 这个可以根据实际需求来修改
                 if (state == STATE_TRANSFORM_IN) {

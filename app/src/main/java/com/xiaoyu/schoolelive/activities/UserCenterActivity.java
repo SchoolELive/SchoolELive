@@ -246,7 +246,6 @@ public class UserCenterActivity extends BaseSlideBack {
                 Toast.makeText(getApplication(), "这是APP", Toast.LENGTH_SHORT).show();
                 Uri imgUri = Uri.parse(intent.getStringExtra("image_uri"));
                 cropRawPhoto(imgUri);
-
                 break;
             case CODE_RESULT_REQUEST:
                 if (intent != null) {
@@ -335,6 +334,7 @@ public class UserCenterActivity extends BaseSlideBack {
         }
         return null;
     }
+
 
     /**
      * 检查设备是否存在SDCard的工具方法
