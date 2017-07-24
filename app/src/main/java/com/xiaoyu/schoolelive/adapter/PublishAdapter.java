@@ -106,11 +106,8 @@ public class PublishAdapter extends BaseAdapter {
         holder.btn_pub_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
             }
         });
-
         holder.btn_pub_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

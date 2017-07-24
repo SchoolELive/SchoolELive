@@ -137,7 +137,6 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
         pub_date.setText(intent.getStringExtra("tmp_date"));
 
     }
-
     /**
      * 设置监听
      */

@@ -42,7 +42,6 @@ public class HomeFragment extends Fragment {
         }else{
             date = new ArrayList<Publish>();
             adapterPublish = new PublishAdapter(getContext(),date);
-
             publish.setHead(getHead());
             publish.setName(bundle.getString("tmp_name"));
             publish.setContent(bundle.getString("tmp_content"));

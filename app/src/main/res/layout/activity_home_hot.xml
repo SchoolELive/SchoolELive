@@ -5,10 +5,6 @@
     android:background="@drawable/side_nav_bar"
     android:layout_margin="5dp"
     android:layout_height="match_parent">
-    <!--<TextView-->
-        <!--android:id="@+id/hhhttt"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content" />-->
     <include
         layout="@layout/include_publish_list"/>
 </LinearLayout>

@@ -122,5 +122,6 @@
             android:id="@+id/home_story_content"
             layout="@layout/activity_home_story"
             android:visibility="invisible"/>
+
     </RelativeLayout>
 </LinearLayout>

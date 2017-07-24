@@ -158,6 +158,7 @@ public class MainActivity extends BaseMainSlide{
             }
         });
     }
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override

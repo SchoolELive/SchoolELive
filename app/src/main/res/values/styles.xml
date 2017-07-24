@@ -90,4 +90,5 @@
         <!--<attr name="cmt_comment_count" format="string" />-->
         <!--<attr name="cmt_like_count" format="string" />-->
     <!--</declare-styleable>-->
+
 </resources>

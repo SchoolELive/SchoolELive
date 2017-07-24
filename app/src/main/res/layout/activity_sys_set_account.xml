@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.xiaoyu.schoolelive.activities.SysSetAccountActivity">
+
     <include
         android:id="@+id/sysset_account_ToolBar"
         layout="@layout/include_toolbar" />

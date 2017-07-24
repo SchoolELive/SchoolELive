@@ -18,10 +18,10 @@ import com.xiaoyu.schoolelive.R;
 public class BaseMainSlide extends AppCompatActivity implements View.OnClickListener{
 
     //手指上下滑动时的最小速度
-    private static final int YSPEED_MIN = 1000;
+    private static final int YSPEED_MIN = 2000;
 
     //手指左右滑动时的最小距离
-    private static final int XDISTANCE_MIN = 200;
+    private static final int XDISTANCE_MIN = 100;
 
     //手指向上滑或下滑时的最小距离
     private static final int YDISTANCE_MIN = 300;

@@ -118,7 +118,6 @@ public class UserAddMsgActivity extends BaseSlideBack {
             intent.putExtra("tmp_date",str2);
             intent.putExtra("tmp_content",add_msg_textContent.getText().toString());
             startActivity(intent);
-
             new Thread(new Runnable(){
                 @Override
                 public void run() {

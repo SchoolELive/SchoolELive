@@ -7,7 +7,6 @@
     android:layout_height="match_parent">
     <include
         layout="@layout/include_toolbar"/>
-
     <com.xiaoyu.schoolelive.custom.CustomBar
         android:id="@+id/custom_photo"
         android:layout_width="match_parent"
@@ -26,6 +25,7 @@
         app:info_text="点击设置昵称"
         app:right_drawable="@drawable/menu_right_dw"
         />
+
     <com.xiaoyu.schoolelive.custom.CustomBar
         android:id="@+id/custom_about"
         android:layout_width="match_parent"

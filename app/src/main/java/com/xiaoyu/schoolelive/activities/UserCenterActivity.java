@@ -139,8 +139,6 @@ public class UserCenterActivity extends BaseSlideBack {
                 dialog.getWindow().setAttributes(params);
             }
         });
-
-
     }
 
     private void initView() {
