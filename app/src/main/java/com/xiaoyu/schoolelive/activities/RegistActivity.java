@@ -5,14 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.xiaoyu.schoolelive.util.HttpUtil;
@@ -50,7 +50,6 @@ public class RegistActivity extends AppCompatActivity {
             }
         }
     }
-    private ImageButton btn_back;
     private EditText rg_uid;//帐号
     private EditText rg_pwd;//密码
     private Button btn_regist;//注册按钮
@@ -59,26 +58,20 @@ public class RegistActivity extends AppCompatActivity {
     private Handler handler;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //设置无标题
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //设置全屏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_regist);
+
+        //标题栏
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("注册");
+
         rg_uid = (EditText) findViewById(R.id.rg_uid);
         rg_pwd =  (EditText) findViewById(R.id.rg_pwd);
 
         handler = new MyHandler();
         btn_regist = (Button)findViewById(R.id.btn_regist);
-        btn_back = (ImageButton) findViewById(R.id.btn_bar_back);
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(RegistActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
         btn_regist.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 register2();
@@ -112,7 +105,15 @@ public class RegistActivity extends AppCompatActivity {
             }
         });
     }
-
+    //标题栏菜单点击逻辑
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+               finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
 
 

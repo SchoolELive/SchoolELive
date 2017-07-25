@@ -7,5 +7,7 @@
     android:layout_height="match_parent"
     tools:context="com.xiaoyu.schoolelive.activities.SysSetShareActivity"
     android:orientation="vertical">
+    <include
+        layout="@layout/include_toolbar"/>
 
 </LinearLayout>

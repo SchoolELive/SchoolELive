@@ -8,8 +8,8 @@
 
     <com.xiaoyu.schoolelive.custom.CircleImageView
         android:id="@+id/user_head"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
          />
 
     <LinearLayout

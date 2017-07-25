@@ -1,10 +1,10 @@
 package com.xiaoyu.schoolelive.activities;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -12,98 +12,32 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
-
-
-
-import com.xiaoyu.schoolelive.adapter.PublishAdapter;
 import com.xiaoyu.schoolelive.base.BaseMainSlide;
-
 import com.xiaoyu.schoolelive.R;
-import com.xiaoyu.schoolelive.data.Publish;
 
-
-import java.util.List;
 
 
 public class MainActivity extends BaseMainSlide{
     private Intent intent,intent_getUid;
     private long uid;//用户的id
     private static boolean boo = false;
-    //侧滑栏
     private DrawerLayout drawer;
-    //标题栏
     private Toolbar toolbar;
-    //底部菜单的fragment
-    private HomeFragment homeFragment;
+    private HomeFragment homeFragment = new HomeFragment();
     private BusinessFragment businessFragment = new BusinessFragment();
     private PartJobFragment partJobFragment = new PartJobFragment();
     private SecondHandFragment secondHandFragment = new SecondHandFragment();
     private SysInformFragment sysInformFragment = new SysInformFragment();
-
     private BottomNavigationView navigation;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
-
-    private ListView publish_list;
-    private List<Publish> data;
-    private PublishAdapter adapterPublish;
-
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        intent = getIntent();
-
-        String str_name = intent.getStringExtra("tmp_name");
-        String str_ymd = intent.getStringExtra("tmp_ymd");
-        String str_date = intent.getStringExtra("tmp_date");
-        String str_content = intent.getStringExtra("tmp_content");
-
-        //在程序中加入Fragment
-        fragmentManager = getSupportFragmentManager();
-        //开启一个Fragment事务
-        fragmentTransaction = fragmentManager.beginTransaction();
-        homeFragment = new HomeFragment();
-
-        if (intent != null ){
-            Bundle bundle = new Bundle();
-            bundle.putString("tmp_name",str_name);
-            bundle.putString("tmp_ymd",str_ymd);
-            bundle.putString("tmp_date",str_date);
-            bundle.putString("tmp_content",str_content);
-            homeFragment.setArguments(bundle);
-        }
-
-        fragmentTransaction.add(R.id.main_menu_content, homeFragment,"home");
-        fragmentTransaction.commit();
-        navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
-        //标题栏
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        if (!boo){
-            actionBar.setHomeAsUpIndicator(R.drawable.icon_main_home);
-        }else{
-            //显示已登录用户的头像
-        }
-        //悬浮按钮
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                intent = new Intent(MainActivity.this,UserAddMsgActivity.class);
-                startActivity(intent);
-            }
-        });
+    private String str_name,str_ymd,str_date,str_content;
+    //引入侧滑栏布局
+    public void mainInitSlidView(){
         //获取侧滑栏的头部
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
         View view = navigationView.inflateHeaderView(R.layout.include_nav_header_main);
@@ -116,9 +50,6 @@ public class MainActivity extends BaseMainSlide{
                 startActivity(intent);
             }
         });
-
-        intent_getUid = getIntent();
-        uid = intent_getUid.getLongExtra("uid",0);
 
         //侧滑栏菜单点击逻辑
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -158,45 +89,106 @@ public class MainActivity extends BaseMainSlide{
             }
         });
     }
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(MenuItem item) {
-            fragmentAllRemove();
-            //在程序中加入Fragment
-            fragmentManager = getSupportFragmentManager();
-            //开启一个Fragment事务
-            fragmentTransaction = fragmentManager.beginTransaction();
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    getSupportActionBar().setTitle("主页");
-                    fragmentTransaction.replace(R.id.main_menu_content, homeFragment,"home").commit();
-                    return true;
-                case R.id.navigation_business:
-                    getSupportActionBar().setTitle("商家");
-                    fragmentTransaction.replace(R.id.main_menu_content, businessFragment,"business").commit();
-                    return true;
-                case R.id.navigation_secondhand:
-                    getSupportActionBar().setTitle("旧货");
-                    fragmentTransaction.replace(R.id.main_menu_content, secondHandFragment,"secondhand").commit();
-                    return true;
-                case R.id.navigation_partjob:
-                    getSupportActionBar().setTitle("兼职");
-                    fragmentTransaction.replace(R.id.main_menu_content, partJobFragment,"partjob").commit();
-                    return true;
-                case R.id.navigation_sysinform:
-                    getSupportActionBar().setTitle("通知");
-                    fragmentTransaction.replace(R.id.main_menu_content, sysInformFragment,"inform").commit();
-                    return true;
+    //引入悬浮按钮
+    public void mainInitFloatBar(){
+        //实例化悬浮按钮并绑定事件
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                intent = new Intent(MainActivity.this,UserAddMsgActivity.class);
+                startActivity(intent);
             }
-            return false;
+        });
+    }
+    //引入标题栏
+    private void mainInitToolBar(){
+        //标题栏
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        //判断用户是否登录，
+        if (!boo){
+            //显示未登录图像
+            actionBar.setHomeAsUpIndicator(R.drawable.icon_main_home);
+        }else{
+            //显示已登录用户的头像
         }
+    }
+    //在程序中加入默认Fragment
+    public void mainAddFragment(){
+        fragmentManager = getSupportFragmentManager();
+        //开启一个Fragment事务
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.main_menu_content, homeFragment,"home");
+        fragmentTransaction.commit();
+    }
+    //引入底部菜单
+    public void mainInitBottomBar(){
+        //实例化BottomNavigationView菜单
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        //BottomNavigationView菜单点击逻辑
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                mainFragmentAllRemove();
+                //在程序中加入Fragment
+                fragmentManager = getSupportFragmentManager();
+                //开启一个Fragment事务
+                fragmentTransaction = fragmentManager.beginTransaction();
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
+                        getSupportActionBar().setTitle("主页");
+                        fragmentTransaction.replace(R.id.main_menu_content, homeFragment,"home").commit();
+                        return true;
+                    case R.id.navigation_business:
+                        getSupportActionBar().setTitle("商家");
+                        fragmentTransaction.replace(R.id.main_menu_content, businessFragment,"business").commit();
+                        return true;
+                    case R.id.navigation_secondhand:
+                        getSupportActionBar().setTitle("旧货");
+                        fragmentTransaction.replace(R.id.main_menu_content, secondHandFragment,"secondhand").commit();
+                        return true;
+                    case R.id.navigation_partjob:
+                        getSupportActionBar().setTitle("兼职");
+                        fragmentTransaction.replace(R.id.main_menu_content, partJobFragment,"partjob").commit();
+                        return true;
+                    case R.id.navigation_sysinform:
+                        getSupportActionBar().setTitle("通知");
+                        fragmentTransaction.replace(R.id.main_menu_content, sysInformFragment,"inform").commit();
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+    //得到所有Intent过来的数据
+    public void mainGetAllIntent(){
+        intent = getIntent();
+        str_name = intent.getStringExtra("tmp_name");
+        str_ymd = intent.getStringExtra("tmp_ymd");
+        str_date = intent.getStringExtra("tmp_date");
+        str_content = intent.getStringExtra("tmp_content");
 
-    };
-    public void fragmentAllRemove(){
+        //得到用户的Id
+        intent_getUid = getIntent();
+        uid = intent_getUid.getLongExtra("uid",0);
+    }
+    //处理获取的Intent数据
+    public void mainDealIntent(){
+        //判断Intent
+        if (intent != null ){
+            Bundle bundle = new Bundle();
+            bundle.putString("tmp_name",str_name);
+            bundle.putString("tmp_ymd",str_ymd);
+            bundle.putString("tmp_date",str_date);
+            bundle.putString("tmp_content",str_content);
+            homeFragment.setArguments(bundle);
+        }
+    }
+    //隐藏所有的Fragment
+    public void mainFragmentAllRemove(){
         if (homeFragment != null){
-              fragmentTransaction.hide(homeFragment);
+            fragmentTransaction.hide(homeFragment);
         }
         if (businessFragment != null){
             fragmentTransaction.hide(businessFragment);
@@ -241,5 +233,25 @@ public class MainActivity extends BaseMainSlide{
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        drawer = (DrawerLayout)findViewById(R.id.drawer_layout);
+        //引入侧滑栏布局
+        mainInitSlidView();
+        //引入悬浮按钮
+        mainInitFloatBar();
+        //引入标题栏
+        mainInitToolBar();
+        //在程序中加入默认Fragment
+        mainAddFragment();
+        //引入底部菜单
+        mainInitBottomBar();
+        //得到所有Intent过来的数据
+        mainGetAllIntent();
+        //处理获取的Intent数据
+        mainDealIntent();
     }
 }

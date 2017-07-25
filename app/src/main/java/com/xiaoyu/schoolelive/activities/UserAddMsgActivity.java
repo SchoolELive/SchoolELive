@@ -37,11 +37,12 @@ public class UserAddMsgActivity extends BaseSlideBack {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_add_msg);
 
-        //标题栏
+        //标题栏，显示默认返回，设置标题
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("发布");
 
         initView();
         textNumEvent();
@@ -100,8 +101,6 @@ public class UserAddMsgActivity extends BaseSlideBack {
         if (add_msg_textContent.getText().toString().equals("")) {
             Toast.makeText(getApplicationContext(), "动态不能为空！", Toast.LENGTH_SHORT).show();
         } else {
-            // 生成数据
-            publish = new Publish();
             //获取年月日
             SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd");
             Date curYMD = new Date(System.currentTimeMillis());
@@ -110,22 +109,20 @@ public class UserAddMsgActivity extends BaseSlideBack {
             SimpleDateFormat date = new SimpleDateFormat("  HH:mm");
             Date curDate = new Date(System.currentTimeMillis());
             String str2 = date.format(curDate);
-
+            //将数据发送到MainActivity
             Intent intent =new Intent (UserAddMsgActivity.this, MainActivity.class);
-
             intent.putExtra("tmp_name", "发布者：***");
             intent.putExtra("tmp_ymd", str);
             intent.putExtra("tmp_date",str2);
             intent.putExtra("tmp_content",add_msg_textContent.getText().toString());
             startActivity(intent);
+            //用子线程关闭
             new Thread(new Runnable(){
                 @Override
                 public void run() {
                     finish();
                 }
             }).start();
-
-
         }
     }
 }

@@ -3,6 +3,8 @@ package com.xiaoyu.schoolelive.adapter;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +38,6 @@ public class PublishAdapter extends BaseAdapter {
         this.context = c;
         this.data = data;
     }
-
     @Override
     public int getCount() {
         return data.size();
@@ -85,7 +86,6 @@ public class PublishAdapter extends BaseAdapter {
         holder.publish_head.setImageResource(data.get(i).getHead());
         holder.publish_date.setText(data.get(i).getDate());
         holder.publish_ymd.setText(data.get(i).getYmd());
-
 
         //实现监听事件
         //点赞
@@ -136,7 +136,6 @@ public class PublishAdapter extends BaseAdapter {
         data.add(publish);
         notifyDataSetChanged();
     }
-
 
     private void showDialog(final ViewHolder holder) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -232,7 +231,6 @@ public class PublishAdapter extends BaseAdapter {
                     Toast.LENGTH_SHORT).show();
         }
     }
-
     /**
      * 静态类，便于GC回收
      */

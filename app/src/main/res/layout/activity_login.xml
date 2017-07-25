@@ -7,7 +7,7 @@
     android:weightSum="1">
 
     <!--Top bar-->
-    <include layout="@layout/top_bar" />
+    <include layout="@layout/include_toolbar" />
 
     <TextView
         android:layout_width="wrap_content"

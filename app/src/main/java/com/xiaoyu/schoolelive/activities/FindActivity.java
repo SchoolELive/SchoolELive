@@ -37,8 +37,11 @@ public class FindActivity extends BaseSlideBack {
 
         findButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String str = editText.getText().toString();
-                Toast.makeText(FindActivity.this,str,Toast.LENGTH_LONG).show();
+                if (editText.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "不能为空！", Toast.LENGTH_SHORT).show();
+                }else{
+
+                }
             }
         });
         editText.setOnTouchListener(new View.OnTouchListener() {
@@ -50,5 +53,7 @@ public class FindActivity extends BaseSlideBack {
                 return false;
             }
         });
+
+
     }
 }
