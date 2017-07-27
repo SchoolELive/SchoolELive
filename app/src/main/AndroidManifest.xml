@@ -106,7 +106,6 @@
         <uses-feature
             android:name="android.hardware.camera2"
             android:required="true" />
-
         <activity android:name=".activities.UserAddMsgActivity"></activity>
     </application>
 

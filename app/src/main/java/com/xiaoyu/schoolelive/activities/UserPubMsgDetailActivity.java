@@ -87,11 +87,8 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
         all_like_count.setText(pub_like_count.getText());
         all_cmt_count.setText(pub_comment_count.getText());
     }
-
     private void initView() {
-
         initPublish();
-
         // 初始化评论列表
         comment_list = (ListView) findViewById(R.id.comment_list);
         // 初始化数据
@@ -231,8 +228,6 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
             im.hideSoftInputFromWindow(comment_content.getWindowToken(), 0);
         }
     }
-
-
     private void showDialog() {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         //自定义对话框标题栏

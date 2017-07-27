@@ -2,6 +2,8 @@ package com.xiaoyu.schoolelive.base;
 
 import android.graphics.Color;
 
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -19,28 +21,21 @@ public class BaseMainSlide extends AppCompatActivity implements View.OnClickList
 
     //手指上下滑动时的最小速度
     private static final int YSPEED_MIN = 2000;
-
     //手指左右滑动时的最小距离
-    private static final int XDISTANCE_MIN = 100;
-
+    private static final int XDISTANCE_MIN = 150;
     //手指向上滑或下滑时的最小距离
     private static final int YDISTANCE_MIN = 300;
-
     //记录手指按下时的横坐标。
     private float xDown;
-
     //记录手指按下时的纵坐标。
     private float yDown;
-
     //记录手指移动时的横坐标。
     private float xMove;
-
     //记录手指移动时的纵坐标。
     private float yMove;
-
     //用于计算手指滑动的速度。
     private VelocityTracker mVelocityTracker;
-
+    //顶部小菜单栏控件
     private LinearLayout home_hot_content;
     private LinearLayout home_new_content;
     private LinearLayout home_know_content;
@@ -56,8 +51,8 @@ public class BaseMainSlide extends AppCompatActivity implements View.OnClickList
     private View home_know_view;
     private View home_story_view;
 
+    private static int count = 0;//判断正在显示的位置
 
-    private static int count = 0;
     //初始化定义首页导航栏
     public void homeCreate(){
         home_hot_tv = (TextView)findViewById(R.id.home_hot_tv);
@@ -103,6 +98,7 @@ public class BaseMainSlide extends AppCompatActivity implements View.OnClickList
         home_story_content.setVisibility(View.GONE);
     }
 
+    //手势事件
     public boolean dispatchTouchEvent(MotionEvent event) {
         homeCreate();
         createVelocityTracker(event);
@@ -128,6 +124,7 @@ public class BaseMainSlide extends AppCompatActivity implements View.OnClickList
                 //3.y轴上（即上下滑动的速度）<XSPEED_MIN，如果大于，则认为用户意图是在上下滑动而非左滑结束Activity
                 if (distanceX > XDISTANCE_MIN && (distanceY < YDISTANCE_MIN && distanceY > -YDISTANCE_MIN) && ySpeed < YSPEED_MIN) {
                     if(count == 3){
+                        //隐藏布局并初始化样式
                         hidehomeall();
                         inithome();
                         home_know_content.setVisibility(View.VISIBLE);
@@ -135,6 +132,7 @@ public class BaseMainSlide extends AppCompatActivity implements View.OnClickList
                         home_know_view.setBackgroundColor(Color.BLUE);
                         count--;
                     }else if(count == 2){
+                        //隐藏布局并初始化样式
                         hidehomeall();
                         inithome();
                         home_new_content.setVisibility(View.VISIBLE);
@@ -142,6 +140,7 @@ public class BaseMainSlide extends AppCompatActivity implements View.OnClickList
                         home_new_view.setBackgroundColor(Color.BLUE);
                         count--;
                     }else if(count == 1){
+                        //隐藏布局并初始化样式
                         hidehomeall();
                         inithome();
                         home_hot_content.setVisibility(View.VISIBLE);
@@ -158,6 +157,7 @@ public class BaseMainSlide extends AppCompatActivity implements View.OnClickList
                 }
                 if (distanceFX > XDISTANCE_MIN && (distanceY < YDISTANCE_MIN && distanceY > -YDISTANCE_MIN) && ySpeed < YSPEED_MIN) {
                     if (count == 0){
+                        //隐藏布局并初始化样式
                         hidehomeall();
                         inithome();
                         home_new_content.setVisibility(View.VISIBLE);
@@ -165,6 +165,7 @@ public class BaseMainSlide extends AppCompatActivity implements View.OnClickList
                         home_new_view.setBackgroundColor(Color.BLUE);
                         count++;
                     }else if(count == 1){
+                        //隐藏布局并初始化样式
                         hidehomeall();
                         inithome();
                         home_know_content.setVisibility(View.VISIBLE);
@@ -172,6 +173,7 @@ public class BaseMainSlide extends AppCompatActivity implements View.OnClickList
                         home_know_view.setBackgroundColor(Color.BLUE);
                         count++;
                     }else if(count == 2){
+                        //隐藏布局并初始化样式
                         hidehomeall();
                         inithome();
                         home_story_content.setVisibility(View.VISIBLE);
@@ -188,32 +190,25 @@ public class BaseMainSlide extends AppCompatActivity implements View.OnClickList
         }
         return super.dispatchTouchEvent(event);
     }
-    /**
-     * 创建VelocityTracker对象，并将触摸界面的滑动事件加入到VelocityTracker当中。
-     *
-     * @param event
-     */
+    //创建VelocityTracker对象，并将触摸界面的滑动事件加入到VelocityTracker当中。@param event
     private void createVelocityTracker(MotionEvent event) {
         if (mVelocityTracker == null) {
             mVelocityTracker = VelocityTracker.obtain();
         }
         mVelocityTracker.addMovement(event);
     }
-    /**
-     * 回收VelocityTracker对象。
-     */
+    //回收VelocityTracker对象。
     private void recycleVelocityTracker() {
         mVelocityTracker.recycle();
         mVelocityTracker = null;
     }
-    /**
-     * @return 滑动速度，以每秒钟移动了多少像素值为单位。
-     */
+    //@return 滑动速度，以每秒钟移动了多少像素值为单位。
     private int getScrollVelocity() {
         mVelocityTracker.computeCurrentVelocity(1000);
         int velocity = (int) mVelocityTracker.getYVelocity();
         return Math.abs(velocity);
     }
+    //顶部小菜单栏点击事件
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.home_hot_tv:
