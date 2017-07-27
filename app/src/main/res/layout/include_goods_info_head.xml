@@ -6,64 +6,71 @@
     android:layout_marginTop="10dp"
     android:orientation="horizontal">
 
-    <com.xiaoyu.schoolelive.custom.CircleImageView
-        android:id="@+id/saler_head"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        />
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/goods_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="12dp"
-            android:orientation="vertical">
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:background="@drawable/icon_top28"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:text="顶"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/saler_nickname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"/>
+        <TextView
+            android:id="@+id/goods_hot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:background="@drawable/icon_hot28"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:text="热"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/saler_ymd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"/>
-
-                <TextView
-                    android:id="@+id/saler_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"/>
-
-            </LinearLayout>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/goods_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:background="@drawable/icon_new28"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:text="新"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="right"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|right">
 
-            <ImageButton
-                android:id="@+id/saler_icon_more"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:src="@drawable/icon_overflowdots" />
-        </LinearLayout>
+                android:text="1597"
+                android:textStyle="bold"
+                android:id="@+id/goods_attention_count"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 人围观"
+                android:layout_marginRight="@dimen/ui_10_dip"/>
+
+            <ImageView
+                android:id="@+id/goods_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_overflowdots"/>
+
     </LinearLayout>
+
 </LinearLayout>

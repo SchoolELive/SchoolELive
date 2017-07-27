@@ -54,6 +54,7 @@ public class MainActivity extends BaseMainSlide{
     private List<Publish> data;
     private PublishAdapter adapterPublish;
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

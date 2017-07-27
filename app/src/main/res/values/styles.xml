@@ -35,23 +35,23 @@
         <item name="android:windowIsFloating">true</item>
     </style>
 
-    <!--<declare-styleable name="Custom_User_Msg">-->
-        <!--<attr name="msg_year" format="string" />-->
-        <!--<attr name="msg_day" format="string" />-->
-        <!--<attr name="msg_month" format="string" />-->
-        <!--<attr name="msg_date" format="string" />-->
-        <!--<attr name="msg_type" format="string" />-->
-        <!--<attr name="words_msg" format="string" />-->
-        <!--<attr name="icon_msg" format="integer|reference" />-->
-        <!--<attr name="icon_msg2" format="integer|reference" />-->
-        <!--<attr name="icon_msg3" format="integer|reference" />-->
-        <!--<attr name="zhuanfa_icon" format="integer|reference" />-->
-        <!--<attr name="comment_icon" format="integer|reference" />-->
-        <!--<attr name="like_icon" format="integer|reference" />-->
-        <!--<attr name="zhuanfa_count" format="string" />-->
-        <!--<attr name="comment_count" format="string" />-->
-        <!--<attr name="like_count" format="string" />-->
-    <!--</declare-styleable>-->
+    <declare-styleable name="Custom_User_Msg">
+        <attr name="msg_year" format="string" />
+        <attr name="msg_day" format="string" />
+        <attr name="msg_month" format="string" />
+        <attr name="msg_date" format="string" />
+        <attr name="msg_type" format="string" />
+        <attr name="words_msg" format="string" />
+        <attr name="icon_msg" format="integer|reference" />
+        <attr name="icon_msg2" format="integer|reference" />
+        <attr name="icon_msg3" format="integer|reference" />
+        <attr name="zhuanfa_icon" format="integer|reference" />
+        <attr name="comment_icon" format="integer|reference" />
+        <attr name="like_icon" format="integer|reference" />
+        <attr name="zhuanfa_count" format="string" />
+        <attr name="comment_count" format="string" />
+        <attr name="like_count" format="string" />
+    </declare-styleable>
 
     <declare-styleable name="Custom_User_Album">
         <attr name="photo_year" format="string" />
