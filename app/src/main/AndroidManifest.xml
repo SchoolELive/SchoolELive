@@ -90,6 +90,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activities.MySpinnerActivity" />
         <activity android:name=".activities.RegistActivity" />
         <activity android:name=".activities.SysSetAccountActivity" />

@@ -247,7 +247,6 @@ public class UserAddMsgActivity extends BaseSlideBack {
             if (!s.equals(IMG_ADD_TAG)) {
                 holder.checkBox.setVisibility(View.VISIBLE);
                 holder.imageView.setImageBitmap(ImageTool.createImageThumbnail(s));
-
             } else {
                 holder.checkBox.setVisibility(View.GONE);
                 if (list.size() < IMG_COUNT) {

@@ -5,8 +5,6 @@
     android:orientation="vertical">
 
     <include layout="@layout/include_goods_info_head" />
-
     <include layout="@layout/include_goods_info_content" />
-
     <include layout="@layout/include_goods_info_yj_buttom" />
 </LinearLayout>
