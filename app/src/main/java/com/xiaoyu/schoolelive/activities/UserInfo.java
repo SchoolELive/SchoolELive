@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
 import com.xiaoyu.schoolelive.custom.CustomBar;
+import com.xiaoyu.schoolelive.util.ConstantUtil;
 import com.xiaoyu.schoolelive.util.HttpUtil;
 
 import org.json.JSONArray;
@@ -155,7 +156,7 @@ public  class UserInfo extends BaseSlideBack implements View.OnClickListener {
                                         .add("field","name")//字段
                                         .add("values",str)//值
                                         .build();
-                                HttpUtil.sendHttpRequest("http://115.159.217.226/xiaoyu/update_info.php", requestBody, new Callback() {
+                                HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH+"update_info.php", requestBody, new Callback() {
                                     public void onFailure(Call call, IOException e) {
                                     }
                                     public void onResponse(Call call, Response response) throws IOException {
@@ -189,7 +190,7 @@ public  class UserInfo extends BaseSlideBack implements View.OnClickListener {
                                         .add("field","signature")//字段
                                         .add("values",signature)//值
                                         .build();
-                                HttpUtil.sendHttpRequest("http://115.159.217.226/xiaoyu/update_info.php", requestBody, new Callback() {
+                                HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH+"update_info.php", requestBody, new Callback() {
                                     public void onFailure(Call call, IOException e) {
                                     }
                                     public void onResponse(Call call, Response response) throws IOException {
@@ -222,7 +223,7 @@ public  class UserInfo extends BaseSlideBack implements View.OnClickListener {
                                         .add("field","real_name")//字段
                                         .add("values",real_name)//值
                                         .build();
-                                HttpUtil.sendHttpRequest("http://115.159.217.226/xiaoyu/update_info.php", requestBody, new Callback() {
+                                HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH+"update_info.php", requestBody, new Callback() {
                                     public void onFailure(Call call, IOException e) {
                                     }
                                     public void onResponse(Call call, Response response) throws IOException {
@@ -263,7 +264,7 @@ public  class UserInfo extends BaseSlideBack implements View.OnClickListener {
                                             .add("field","sex")//字段
                                             .add("values", String.valueOf(sex_status))//值
                                             .build();
-                                    HttpUtil.sendHttpRequest("http://115.159.217.226/xiaoyu/update_info.php", requestBody, new Callback() {
+                                    HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH+"update_info.php", requestBody, new Callback() {
                                         public void onFailure(Call call, IOException e) {
                                         }
                                         public void onResponse(Call call, Response response) throws IOException {
@@ -305,7 +306,7 @@ public  class UserInfo extends BaseSlideBack implements View.OnClickListener {
         RequestBody requestBody = new FormBody.Builder()
                 .add("uid", String.valueOf(Uid))//uid
                 .build();
-        HttpUtil.sendHttpRequest("http://115.159.217.226/xiaoyu/query_data.php", requestBody, new Callback() {
+        HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH+"query_data.php", requestBody, new Callback() {
             public void onFailure(Call call, IOException e) {
             }
             public void onResponse(Call call, Response response) throws IOException {
@@ -342,5 +343,6 @@ public  class UserInfo extends BaseSlideBack implements View.OnClickListener {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+
     }
 }

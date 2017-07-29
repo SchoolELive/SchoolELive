@@ -30,6 +30,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
+import com.xiaoyu.schoolelive.util.ConstantUtil;
 import com.xiaoyu.schoolelive.util.HttpUtil;
 
 public class LoginActivity extends BaseSlideBack implements View.OnClickListener {
@@ -131,7 +132,7 @@ public class LoginActivity extends BaseSlideBack implements View.OnClickListener
                     .add("uid", String.valueOf(uid))
                     .add("password",password)
                     .build();
-            HttpUtil.sendHttpRequest("http://115.159.217.226/xiaoyu/login.php", requestBody, new okhttp3.Callback() {
+            HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH+"login.php", requestBody, new okhttp3.Callback() {
                 public void onFailure(Call call, IOException e) {
                     Log.e("error",e.getMessage());
                 }

@@ -53,9 +53,10 @@ public class PublishAdapter extends BaseAdapter {
         return i;
     }
 
+
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
-        final ViewHolder holder;
+         final ViewHolder holder;
         // 重用convertView
         if (convertView == null) {
             holder = new ViewHolder();
@@ -130,9 +131,9 @@ public class PublishAdapter extends BaseAdapter {
         return convertView;
     }
 
-
     //发布动态
     public void addPublish(Publish publish) {
+
         data.add(publish);
         notifyDataSetChanged();
     }
@@ -234,7 +235,7 @@ public class PublishAdapter extends BaseAdapter {
     /**
      * 静态类，便于GC回收
      */
-    public static class ViewHolder {
+    public class ViewHolder {
         TextView publish_name;
         TextView publish_content;
         ImageView publish_head;

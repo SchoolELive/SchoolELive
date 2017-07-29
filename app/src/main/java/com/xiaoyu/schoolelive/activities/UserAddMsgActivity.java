@@ -1,5 +1,6 @@
 package com.xiaoyu.schoolelive.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,15 +29,34 @@ import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.adapter.PublishAdapter;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
 import com.xiaoyu.schoolelive.data.Publish;
+import com.xiaoyu.schoolelive.util.BitmapUtils;
+import com.xiaoyu.schoolelive.util.ConstantUtil;
 import com.xiaoyu.schoolelive.util.ImageTool;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static com.mob.tools.utils.ResHelper.getFileSize;
 import static java.lang.System.currentTimeMillis;
+import static java.lang.System.in;
 
 public class UserAddMsgActivity extends BaseSlideBack {
 
@@ -51,6 +72,22 @@ public class UserAddMsgActivity extends BaseSlideBack {
     private GVAdapter adapter;
     private List<String> list;
 
+    public static long getFileSize(File file) throws Exception {
+        long size = 0;
+        if (file.exists()) {
+            FileInputStream fis = null;
+            fis = new FileInputStream(file);
+            size = fis.available();
+        } else {
+            file.createNewFile();
+            Log.e("获取文件大小", "文件不存在!");
+        }
+        return size;
+    }
+
+
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_add_msg);
@@ -59,7 +96,6 @@ public class UserAddMsgActivity extends BaseSlideBack {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
         initView();
         initData();
         textNumEvent();
@@ -125,49 +161,88 @@ public class UserAddMsgActivity extends BaseSlideBack {
         if (add_msg_textContent.getText().toString().equals("")) {
             Toast.makeText(getApplicationContext(), "动态不能为空！", Toast.LENGTH_SHORT).show();
         } else {
-            // 生成数据
-            publish = new Publish();
-            //获取年月日
-            SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd");
-            Date curYMD = new Date(currentTimeMillis());
-            String str = ymd.format(curYMD);
-            //获取时间
-            SimpleDateFormat date = new SimpleDateFormat("  HH:mm");
-            Date curDate = new Date(currentTimeMillis());
-            String str2 = date.format(curDate);
-
-            Intent intent = new Intent(UserAddMsgActivity.this, MainActivity.class);
-
-            intent.putExtra("tmp_name", "发布者：***");
-            intent.putExtra("tmp_ymd", str);
-            intent.putExtra("tmp_date", str2);
-            intent.putExtra("tmp_content", add_msg_textContent.getText().toString());
-            startActivity(intent);
+//            // 生成数据
+//            publish = new Publish();
+//            //获取年月日
+//            SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd");
+//            Date curYMD = new Date(currentTimeMillis());
+//            String str = ymd.format(curYMD);
+//            //获取时间
+//            SimpleDateFormat date = new SimpleDateFormat("  HH:mm");
+//            Date curDate = new Date(currentTimeMillis());
+//            String str2 = date.format(curDate);
+//
+//            Intent intent = new Intent(UserAddMsgActivity.this, MainActivity.class);
+//
+//            intent.putExtra("tmp_name", "发布者：***");
+//            intent.putExtra("tmp_ymd", str);
+//            intent.putExtra("tmp_date", str2);
+//            intent.putExtra("tmp_content", add_msg_textContent.getText().toString());
+//            startActivity(intent);
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    finish();
+//                }
+//            }).start();
+            final ProgressDialog progressDialog = new ProgressDialog(UserAddMsgActivity.this);
+            progressDialog.setMessage("发帖中...");
+            progressDialog.setCancelable(true);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    finish();
+                    upLoad();
+                    progressDialog.dismiss();//发帖完成消除progressDialog
                 }
             }).start();
+            Intent intent = new Intent(UserAddMsgActivity.this,MainActivity.class);
+            startActivity(intent);
 
+         }
 
-        }
     }
 
     /**
      * 图片上传函数
      */
     private void upLoad() {
-        Bitmap bitmap;
-        Bitmap bmpCompressed;
+
+        final String url = ConstantUtil.SERVICE_PATH + "upload.php";
+        MultipartBody.Builder mbody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        Bitmap bitmap = null;
         for (int i = 0; i < list.size() - 1; i++) {
-            bitmap = BitmapFactory.decodeFile(list.get(i));
-            bmpCompressed = Bitmap.createScaledBitmap(bitmap, 640, 480, true);
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            bmpCompressed.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-            byte[] data = bos.toByteArray();
-            Toast.makeText(UserAddMsgActivity.this, "发送成功" + data.toString(), Toast.LENGTH_SHORT).show();
+            File file = new File(list.get(i));//得到选择的图片
+            String str =   BitmapUtils.compressImageUpload(file.getPath());//得到压缩过的文件路径
+            File compress_file = new File(str);//得到新文件
+            mbody.addFormDataPart("image"+i,file.getName(),RequestBody.create(MediaType.parse("application/octet-stream"),compress_file));//添加到mbody中
         }
+        RequestBody requestBody = mbody.build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+        final okhttp3.OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
+        OkHttpClient okHttpClient  = httpBuilder
+                //设置超时
+                .connectTimeout(1000, TimeUnit.MINUTES)
+                .readTimeout(1000, TimeUnit.MINUTES)
+                .writeTimeout(1000, TimeUnit.MINUTES)
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("aa", "uploadMultiFile() e=" + e);
+            }
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.i("bb", "uploadMultiFile() response=" + response.body().string());
+                BitmapUtils.deleteCacheFile();//清除缓存
+
+            }
+        });
+
+
 
     }
 
