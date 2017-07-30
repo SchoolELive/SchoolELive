@@ -108,6 +108,22 @@
             android:name="android.hardware.camera2"
             android:required="true" />
         <activity android:name=".activities.UserAddMsgActivity"></activity>
+        <activity android:name=".activities.GoodsInfoActivity" />
+
+        <activity
+            android:name="me.iwf.photopicker.PhotoPickerActivity"
+            android:theme="@style/customTheme" />
+
+        <activity
+            android:name="me.iwf.photopicker.PhotoPagerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity android:name="com.xiaoyu.schoolelive.activities.PreViewImgActivity" />
     </application>
 
 </manifest>

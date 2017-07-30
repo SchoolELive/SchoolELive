@@ -8,4 +8,5 @@
     <dimen name="base_padding">16dp</dimen>
     <dimen name="bar_text_size">20dp</dimen>
     <dimen name="ui_10_dip">10dp</dimen>
+    <dimen name="actionBarSize">56dip</dimen>
 </resources>

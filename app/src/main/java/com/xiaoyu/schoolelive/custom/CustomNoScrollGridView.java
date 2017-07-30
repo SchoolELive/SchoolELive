@@ -13,17 +13,17 @@ import android.widget.GridView;
  * by:Hankkin at：2015-08-05 11:31:06
  *
  */
-public class NoScrollGridView extends GridView {
+public class CustomNoScrollGridView extends GridView {
 
-    public NoScrollGridView(Context context) {
+    public CustomNoScrollGridView(Context context) {
         super(context);
     }
 
-    public NoScrollGridView(Context context, AttributeSet attrs) {
+    public CustomNoScrollGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public NoScrollGridView(Context context, AttributeSet attrs, int defStyle) {
+    public CustomNoScrollGridView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
