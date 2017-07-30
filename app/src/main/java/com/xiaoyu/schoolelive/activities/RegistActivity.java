@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.xiaoyu.schoolelive.util.ConstantUtil;
 import com.xiaoyu.schoolelive.util.HttpUtil;
 import com.xiaoyu.schoolelive.R;
 import java.io.IOException;
@@ -93,7 +94,7 @@ public class RegistActivity extends AppCompatActivity {
                 .add("uid", String.valueOf(rg_uid_content))
                 .add("password",rg_pwd_content)
                 .build();
-        HttpUtil.sendHttpRequest("http://115.159.217.226/xiaoyu/register.php", requestBody, new okhttp3.Callback() {
+        HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH+"register.php", requestBody, new okhttp3.Callback() {
             public void onFailure(Call call, IOException e) {
             }
             public void onResponse(Call call, Response response) throws IOException {
