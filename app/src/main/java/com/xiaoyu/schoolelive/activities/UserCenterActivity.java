@@ -27,7 +27,9 @@ import com.xiaoyu.schoolelive.adapter.UserCenterAdapter;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
 import com.xiaoyu.schoolelive.custom.CustomImageDialogView;
 import com.xiaoyu.schoolelive.data.UserCenter;
+import com.xiaoyu.schoolelive.util.HttpUtil;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -105,15 +107,15 @@ public class UserCenterActivity extends BaseSlideBack {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                choseHeadImageFromCameraCapture();
+                                choseHeadImageFromCameraCapture();//手机拍照选择图片
                                 break;
                             case 1:
-                                choseHeadImageFromGallery();
+                                choseHeadImageFromGallery();//相册中选择图片
                                 break;
                             case 2:
-                                choseHeadImageFromApp();
+                                choseHeadImageFromApp();//从app中选择图片
                                 break;
-                            case 3:
+                            case 3://查看图片
                                 bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
                                 CustomImageDialogView.Builder dialogBuild = new CustomImageDialogView.Builder(UserCenterActivity.this);
                                 dialogBuild.setImage(bitmap);
@@ -121,7 +123,7 @@ public class UserCenterActivity extends BaseSlideBack {
                                 img_dialog.setCanceledOnTouchOutside(true);// 点击外部区域关闭
                                 img_dialog.show();
                                 break;
-                            case 4:
+                            case 4://编辑资料
                                 Intent intent = new Intent(UserCenterActivity.this, UserInfo.class);
                                 intent.putExtra("uid",uid);
                                 startActivity(intent);
@@ -289,7 +291,13 @@ public class UserCenterActivity extends BaseSlideBack {
             Bitmap photo = extras.getParcelable("data");
             imageView.setImageBitmap(photo);
             //新建文件夹 先选好路径 再调用mkdir函数 现在是根目录下面的Ask文件夹
-            File nf = new File(Environment.getExternalStorageDirectory() + "/Ask");
+            try{
+                File image = saveFile(photo,"photo");
+                HttpUtil.uploadMultiFile(uid,image);//上传文件到服务器
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+           /* File nf = new File(Environment.getExternalStorageDirectory() + "/Ask");
             nf.mkdir();
             //在根目录下面的ASk文件夹下 创建okkk.jpg文件
             File f = new File(Environment.getExternalStorageDirectory() + "/Ask", "okkk.png");
@@ -298,7 +306,6 @@ public class UserCenterActivity extends BaseSlideBack {
             try {//打开输出流 将图片数据填入文件中
                 out = new FileOutputStream(f);
                 photo.compress(Bitmap.CompressFormat.PNG, 90, out);
-
                 try {
                     out.flush();
                     out.close();
@@ -307,7 +314,7 @@ public class UserCenterActivity extends BaseSlideBack {
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-            }
+            }*/
 
 
         }
@@ -363,5 +370,21 @@ public class UserCenterActivity extends BaseSlideBack {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public File saveFile(Bitmap bm, String fileName) throws IOException {//将Bitmap类型的图片转化成file类型，便于上传到服务器
+        String path = Environment.getExternalStorageDirectory() + "/photo";//用户图像
+        File dirFile = new File(path);
+        if(!dirFile.exists()){
+            dirFile.mkdir();
+        }
+        File myCaptureFile = new File(path + fileName+".PNG");
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+        bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+        bos.flush();
+        bos.close();
+        return myCaptureFile;
+
+    }
+
 }
 

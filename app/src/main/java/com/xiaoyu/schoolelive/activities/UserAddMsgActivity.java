@@ -1,6 +1,8 @@
 package com.xiaoyu.schoolelive.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -10,6 +12,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,16 +26,28 @@ import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.adapter.PhotoAdapter;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
 import com.xiaoyu.schoolelive.data.Publish;
+import com.xiaoyu.schoolelive.util.BitmapUtils;
+import com.xiaoyu.schoolelive.util.ConstantUtil;
 import com.xiaoyu.schoolelive.util.RecyclerItemClickListener;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import me.iwf.photopicker.PhotoPicker;
 import me.iwf.photopicker.PhotoPreview;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -50,6 +65,7 @@ public class UserAddMsgActivity extends BaseSlideBack {
 
     private ImageView iv_crop;
     private RecyclerView recyclerView;
+    private List<String> photos;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +78,10 @@ public class UserAddMsgActivity extends BaseSlideBack {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         initView();
+
         textNumEvent();
     }
+
 
     //初始化控件
     public void initView() {
@@ -112,7 +130,7 @@ public class UserAddMsgActivity extends BaseSlideBack {
             iv_crop.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
 
-            List<String> photos = null;
+            photos = null;
             if (data != null) {
                 photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
             }
@@ -182,33 +200,84 @@ public class UserAddMsgActivity extends BaseSlideBack {
         if (add_msg_textContent.getText().toString().equals("")) {
             Toast.makeText(getApplicationContext(), "动态不能为空！", Toast.LENGTH_SHORT).show();
         } else {
-            // 生成数据
-            publish = new Publish();
-            //获取年月日
-            SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd");
-            Date curYMD = new Date(currentTimeMillis());
-            String str = ymd.format(curYMD);
-            //获取时间
-            SimpleDateFormat date = new SimpleDateFormat("  HH:mm");
-            Date curDate = new Date(currentTimeMillis());
-            String str2 = date.format(curDate);
-
-            Intent intent = new Intent(UserAddMsgActivity.this, MainActivity.class);
-
-            intent.putExtra("tmp_name", "发布者：***");
-            intent.putExtra("tmp_ymd", str);
-            intent.putExtra("tmp_date", str2);
-            intent.putExtra("tmp_content", add_msg_textContent.getText().toString());
-            startActivity(intent);
+            final ProgressDialog progressDialog = new ProgressDialog(UserAddMsgActivity.this);
+            progressDialog.setMessage("发帖中...");
+            progressDialog.setCancelable(true);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    finish();
+                    upLoad();
+                    progressDialog.dismiss();//发帖完成消除progressDialog
                 }
             }).start();
+            Intent intent = new Intent(UserAddMsgActivity.this,MainActivity.class);
+            startActivity(intent);
+            // 生成数据
+//                       publish = new Publish();
+//            //获取年月日
+//            SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd");
+//            Date curYMD = new Date(currentTimeMillis());
+//            String str = ymd.format(curYMD);
+//            //获取时间
+//            SimpleDateFormat date = new SimpleDateFormat("  HH:mm");
+//            Date curDate = new Date(currentTimeMillis());
+//            String str2 = date.format(curDate);
+//
+//            Intent intent = new Intent(UserAddMsgActivity.this, MainActivity.class);
+//
+//            intent.putExtra("tmp_name", "发布者：***");
+//            intent.putExtra("tmp_ymd", str);
+//            intent.putExtra("tmp_date", str2);
+//            intent.putExtra("tmp_content", add_msg_textContent.getText().toString());
+//            startActivity(intent);
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    finish();
+//                }
+//            }).start();
 
 
         }
+    }
+
+    private void upLoad() {
+
+        final String url = ConstantUtil.SERVICE_PATH + "upload.php";
+        MultipartBody.Builder mbody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        for (int i = 0; i < photos.size(); i++) {
+            File file = new File(photos.get(i));//得到选择的图片
+            String str = BitmapUtils.compressImageUpload(file.getPath());//得到压缩过的文件路径
+            File compress_file = new File(str);//得到新文件
+            mbody.addFormDataPart("image" + i, compress_file.getName(), RequestBody.create(MediaType.parse("application/octet-stream"), compress_file));//添加到mbody中
+        }
+        RequestBody requestBody = mbody.build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+        final okhttp3.OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
+        OkHttpClient okHttpClient = httpBuilder
+                //设置超时
+                .connectTimeout(3000, TimeUnit.MINUTES)
+                .readTimeout(3000, TimeUnit.MINUTES)
+                .writeTimeout(3000, TimeUnit.MINUTES)
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("aa", "uploadMultiFile() e=" + e);
+            }
+
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.i("bb", "uploadMultiFile() response=" + response.body().string());
+                BitmapUtils.deleteCacheFile();//清除缓存
+            }
+        });
+
+
     }
 
 
