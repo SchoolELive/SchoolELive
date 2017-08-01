@@ -11,24 +11,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
+
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.adapter.PublishAdapter;
 import com.xiaoyu.schoolelive.data.Publish;
+import com.xiaoyu.schoolelive.util.ConstantUtil;
+import com.xiaoyu.schoolelive.util.HttpUtil;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xiaoyu.schoolelive.util.ConstantUtil;
-import com.xiaoyu.schoolelive.util.HttpUtil;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-
-
 
 
 public class HomeFragment extends Fragment {

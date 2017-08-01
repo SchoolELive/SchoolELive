@@ -25,6 +25,7 @@ public class PreViewGridAdapter extends BaseAdapter {
         this.mContext = mContext;
     }
 
+
     public int getCount() {
         return lstImageItem.size();
     }

@@ -34,12 +34,14 @@
             android:textColor="@color/red"
             android:textSize="@dimen/bar_text_size"/>
     </LinearLayout>
+    <include layout="@layout/include_goods_intro" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ui_10_dip">
 
-        <TextView
+        <Button
+            android:id="@+id/btn_ykj"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="买买买"

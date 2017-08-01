@@ -39,6 +39,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
   }
 
 
+
   @Override public PhotoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View itemView = null;
     switch (viewType) {

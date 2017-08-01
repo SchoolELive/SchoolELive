@@ -36,6 +36,7 @@ public class MainActivity extends BaseMainSlide{
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private String str_name,str_ymd,str_date,str_content;
+
     //引入侧滑栏布局
     public void mainInitSlidView(){
         //获取侧滑栏的头部
