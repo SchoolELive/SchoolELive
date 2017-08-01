@@ -75,11 +75,11 @@ public class RegistActivity extends AppCompatActivity {
         btn_regist = (Button)findViewById(R.id.btn_regist);
         btn_regist.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                register2();
+                register();
             }
         });
     }
-    private void register2(){
+    private void register(){
         if(rg_uid.getText().toString().isEmpty()||rg_pwd.getText().toString().isEmpty()){
             Toast.makeText(RegistActivity.this,"你还没有输入帐号或密码", Toast.LENGTH_SHORT).show();
             return;

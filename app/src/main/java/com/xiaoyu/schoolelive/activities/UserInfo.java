@@ -44,9 +44,11 @@ public  class UserInfo extends BaseSlideBack implements View.OnClickListener {
             String sex = b.getString("sex");
             switch (index){
                 case 0://初始化
+                    String photo = b.getString("photo");
                     String name = b.getString("name");
                     String real_name = b.getString("real_name");
                     String signature = b.getString("signature");
+                    custom_photo.setInfo_menu_info(photo);
                     custom_fname.setInfo_menu_info(name);
                     custom_about.setInfo_menu_info(signature);
                     custom_tname.setInfo_menu_info(real_name);
@@ -314,12 +316,14 @@ public  class UserInfo extends BaseSlideBack implements View.OnClickListener {
                 try{
                     JSONArray jsonArray = new JSONArray(info);
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    String photo = jsonObject.getString("photo");
                     String name = jsonObject.getString("name");
                     String signature = jsonObject.getString("signature");
                     String real_name = jsonObject.getString("real_name");
                     String sex = jsonObject.getString("sex");
                     Message msg = Message.obtain();
                     Bundle bundle = new Bundle();
+                    bundle.putString("photo",photo);
                     bundle.putInt("index",0);//0代表初始话数据
                     bundle.putString("name",name);
                     bundle.putString("signature",signature);

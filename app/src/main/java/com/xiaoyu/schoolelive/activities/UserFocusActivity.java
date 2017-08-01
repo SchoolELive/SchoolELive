@@ -1,5 +1,6 @@
 package com.xiaoyu.schoolelive.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -7,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.xiaoyu.schoolelive.adapter.UserFocusAdapter;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
@@ -30,10 +32,10 @@ public class UserFocusActivity extends BaseSlideBack {
     private UserFocusAdapter focusAdapter;
     private UserFocusData userfocus;
     private List<UserFocusData> data;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_focus);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();

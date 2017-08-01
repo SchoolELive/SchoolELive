@@ -58,6 +58,9 @@ public class CustomBar extends RelativeLayout {
         //this.info_menu_info = info_menu_info;
         this.info_menu_info.setText(info);
     }
+    public void setInfo_photo_info(String photo){
+
+    }
     public TextView getInfo_menu_info() {
         return info_menu_info;
     }
