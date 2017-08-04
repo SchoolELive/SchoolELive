@@ -1,16 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-
 
     <TextView
         android:id="@+id/words_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:layout_marginTop="10px" />
+        android:layout_marginTop="10px"
+        android:textColor="@color/black" />
+
+    <android.support.v7.widget.GridLayout
+        android:id="@+id/user_img_gridlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:paddingLeft="-4.5dp"
+        android:paddingRight="-4.5dp"
+        app:columnCount="3">
+
+        <!--<com.xiaoyu.schoolelive.util.SquareImageViewUtil-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_margin="4dp"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--app:layout_columnWeight="1"-->
+            <!--tools:src="@android:color/black" />-->
+
+        <!--<com.xiaoyu.schoolelive.util.SquareImageViewUtil-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_margin="4dp"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--app:layout_columnWeight="1"-->
+            <!--tools:src="@android:color/black" />-->
+
+        <!--<com.xiaoyu.schoolelive.util.SquareImageViewUtil-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_margin="4dp"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--app:layout_columnWeight="1"-->
+            <!--tools:src="@android:color/black" />-->
 
 
+    </android.support.v7.widget.GridLayout>
 </LinearLayout>

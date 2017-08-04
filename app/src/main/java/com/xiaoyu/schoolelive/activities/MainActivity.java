@@ -1,6 +1,7 @@
 package com.xiaoyu.schoolelive.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -10,15 +11,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import com.xiaoyu.schoolelive.base.BaseMainSlide;
-import com.xiaoyu.schoolelive.R;
 
+import com.xiaoyu.schoolelive.R;
+import com.xiaoyu.schoolelive.base.BaseMainSlide;
 
 
 public class MainActivity extends BaseMainSlide{
@@ -85,7 +85,7 @@ public class MainActivity extends BaseMainSlide{
                         startActivity(intent);
                         break;
                 }
-                drawer.closeDrawer(GravityCompat.START);
+                  drawer.closeDrawer(GravityCompat.START);
                 return true;
             }
         });
@@ -101,6 +101,8 @@ public class MainActivity extends BaseMainSlide{
             }
         });
     }
+
+
     //引入标题栏
     private void mainInitToolBar(){
         //标题栏
