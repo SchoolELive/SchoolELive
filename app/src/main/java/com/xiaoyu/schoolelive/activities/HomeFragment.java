@@ -79,7 +79,6 @@ public class HomeFragment extends Fragment {
                     }
                     break;
                 case 2://下拉刷新的时候调用
-//                    publish.setHead(getHead());
                     jsonData = (String) msg.obj;//得到返回的数据
                     try {
                         JSONArray jsonArray = new JSONArray(jsonData);
