@@ -1,127 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:id="@+id/home_fragment"
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/home_tabhost"
+    >
+    <!-- tabhost用来存放标签对象
+    在标签页中,每一页和这一页的内容,是垂直摆放的所以这里用到了线性布局
+    -->
     <include
-        layout="@layout/include_toolbar"
-        android:visibility="invisible"/>
-        <LinearLayout
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="20dp">
-            <LinearLayout
-                android:paddingLeft="20dp"
-                android:id="@+id/home_hot_ll"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/home_hot_tv"
-                    android:text="最热"
-                    android:layout_gravity="center"
-                    android:textColor="@color/green"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <View
-                    android:id="@+id/home_hot_view"
-                    android:background="@color/blue"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:paddingLeft="20dp"
-                android:id="@+id/home_new_ll"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/home_new_tv"
-                    android:text="最新"
-                    android:layout_gravity="center"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <View
-                    android:id="@+id/home_new_view"
-                    android:background="@color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:paddingLeft="20dp"
-                android:id="@+id/home_know_ll"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/home_know_tv"
-                    android:layout_gravity="center"
-                    android:text="八卦"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <View
-                    android:id="@+id/home_know_view"
-                    android:background="@color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:paddingLeft="20dp"
-                android:id="@+id/home_story_ll"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/home_story_tv"
-                    android:text="我有故事你有酒"
-                    android:layout_gravity="center"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_weight="1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <View
-                    android:id="@+id/home_story_view"
-                    android:background="@color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    />
-            </LinearLayout>
-        </LinearLayout>
-    <RelativeLayout
+        layout="@layout/include_toolbar"/>
+    <LinearLayout
+        android:layout_marginTop="@dimen/actionBarSize"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <include
-            android:id="@+id/home_hot_content"
-            layout="@layout/activity_home_hot"
-            android:visibility="visible"/>
-        <include
-            android:id="@+id/home_new_content"
-            layout="@layout/activity_home_new"
-            android:visibility="invisible"/>
-        <include
-            android:id="@+id/home_know_content"
-            layout="@layout/activity_home_know"
-            android:visibility="invisible"/>
-        <include
-            android:id="@+id/home_story_content"
-            layout="@layout/activity_home_story"
-            android:visibility="invisible"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!-- 这里开始存放每个标签TabWidget ,这个标签可以存放所有的标签TabWidget
+        android:id="@android:id/tabs"这个是在系统文件中定义的,是写死的-->
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </TabWidget>
+        <!--android:id="@android:id/tabcontent"这个是在系统文件中定义的也,是写死的-->
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!-- 这里放的是第一个标签的内容 -->
+            <LinearLayout
+                android:id="@+id/page1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <!-- 第一个的标签页显示的内容 -->
+                <include
+                    layout="@layout/activity_home_hot"/>
+            </LinearLayout>
+            <!-- 第二个的标签页显示的内容 -->
+            <LinearLayout
+                android:id="@+id/page2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <include
+                    layout="@layout/activity_home_new"/>
+            </LinearLayout>
 
-    </RelativeLayout>
-</LinearLayout>
+            <LinearLayout
+                android:id="@+id/page3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <include
+                    layout="@layout/activity_home_know"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/page4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <include
+                    layout="@layout/activity_home_story"/>
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+</TabHost>

@@ -125,6 +125,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity android:name="com.xiaoyu.schoolelive.activities.PreViewImgActivity" />
+        <activity android:name=".activities.SysSetBindActivity"/>
     </application>
 
 </manifest>
