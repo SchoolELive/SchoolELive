@@ -1,17 +1,36 @@
 package com.xiaoyu.schoolelive.data;
 
+
+import android.widget.ImageView;
+
+import java.io.Serializable;
+import java.util.zip.Inflater;
+
+
 /**
  * Created by NeekChaw on 2017-07-16.
  */
 
-public class Publish {
+public class Publish implements Serializable{
+    public String photo_path = null;
     String name; //评论者
     String content; //发布内容
     int head;//头像
     String ymd;//年月日
     String date;//小时分钟
+    String image_index;
+    long uid = 2015404;//发帖者的uid
 
     int like_count, comment_count, share_count;//点赞评论数量
+
+
+    public String getImage_index() {
+        return image_index;
+    }
+
+    public void setImage_index(String image_index) {
+        this.image_index = image_index;
+    }
 
     public String getName() {
         return name;
@@ -27,14 +46,6 @@ public class Publish {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public int getHead() {
-        return head;
-    }
-
-    public void setHead(int head) {
-        this.head = head;
     }
 
     public String getYmd() {
@@ -77,5 +88,11 @@ public class Publish {
         this.share_count = share_count;
     }
 
+    public long getUid(){
+        return uid;
+    }
 
+    public void setUid(long uid){
+        this.uid = uid;
+    }
 }

@@ -27,7 +27,6 @@
                 android:title="ToolBar"/>
             <ImageView
                 android:id="@+id/user_center_imageview"
-                android:src="@drawable/nav_photo"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="pin"
                 android:layout_width="match_parent"

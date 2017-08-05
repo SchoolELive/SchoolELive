@@ -11,7 +11,7 @@
             android:name="android.support.FILE_PROVIDER_PATHS"
             android:resource="@xml/provider_path" />
     </provider>
-    <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -83,13 +83,6 @@
         <activity android:name=".activities.FindActivity" />
         <activity android:name=".activities.HistoryCollectActivity" />
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
         <activity android:name=".activities.MySpinnerActivity" />
         <activity android:name=".activities.RegistActivity" />
@@ -109,10 +102,14 @@
             android:required="true" />
         <activity android:name=".activities.UserAddMsgActivity"></activity>
         <activity android:name=".activities.GoodsInfoActivity" />
+        <activity android:name="me.iwf.photopicker.PhotoPickerActivity"/>
+       <activity android:name=".activities.MainActivity">
+           <intent-filter>
+               <action android:name="android.intent.action.MAIN" />
 
-        <activity
-            android:name="me.iwf.photopicker.PhotoPickerActivity"
-            android:theme="@style/customTheme" />
+               <category android:name="android.intent.category.LAUNCHER" />
+           </intent-filter>
+       </activity>
 
         <activity
             android:name="me.iwf.photopicker.PhotoPagerActivity"

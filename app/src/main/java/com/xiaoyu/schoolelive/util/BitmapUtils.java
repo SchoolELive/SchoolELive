@@ -72,7 +72,7 @@ public class BitmapUtils {
 	 * @param bit
 	 * @return
 	 */
-    private static String saveMyBitmap(String filename, Bitmap bit) {
+    public static String saveMyBitmap(String filename, Bitmap bit) {
 		String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath()+"/laopai/";
         String filePath = baseDir + filename;
 		File dir = new File(baseDir);
@@ -83,7 +83,7 @@ public class BitmapUtils {
 		File f = new File(filePath);
 		try {
 			f.createNewFile();
-			FileOutputStream fOut = null;
+			FileOutputStream fOut =  null;
 			fOut = new FileOutputStream(f);
 			bit.compress(Bitmap.CompressFormat.PNG, 100, fOut);
 			fOut.flush();

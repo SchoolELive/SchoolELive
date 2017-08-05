@@ -3,16 +3,20 @@ package com.xiaoyu.schoolelive.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,37 +26,48 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.nostra13.universalimageloader.utils.L;
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.adapter.UserCenterAdapter;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
 import com.xiaoyu.schoolelive.custom.CustomImageDialogView;
 import com.xiaoyu.schoolelive.data.UserCenter;
+import com.xiaoyu.schoolelive.util.ACache;
+import com.xiaoyu.schoolelive.util.BitmapUtils;
+import com.xiaoyu.schoolelive.util.ConstantUtil;
 import com.xiaoyu.schoolelive.util.HttpUtil;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Administrator on 2017/7/11.
- */
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class UserCenterActivity extends BaseSlideBack {
     Bitmap bitmap = null;
-
     private ListView usercenter_list;
     private UserCenterAdapter userCenterAdapter;
     private List<UserCenter> data;
-
     /* 头像文件 */
     private static final String IMAGE_FILE_NAME = "temp_head_image.jpg";
-
     /* 请求识别码 */
     private static final int CODE_GALLERY_REQUEST = 0xa0;//本地
     private static final int CODE_CAMERA_REQUEST = 0xa1;//拍照
@@ -64,6 +79,20 @@ public class UserCenterActivity extends BaseSlideBack {
     private static int output_Y = 600;
     private long uid;
     private ImageView imageView;
+    private ACache mCache;
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            String photo = (String) msg.obj;
+            //Toast.makeText(UserCenterActivity.this,photo,Toast.LENGTH_LONG).show();
+            Log.i("aa",photo);
+            Glide.with(UserCenterActivity.this)//将选中的图片放到imageview中
+                    .load(ConstantUtil.SERVICE_PATH + str_trim(photo))
+                    .into(imageView);
+            mCache.put("photo_path", ConstantUtil.SERVICE_PATH + str_trim(photo), 15 * ACache.TIME_DAY);//将路径放到缓存中,保存15天
+            BitmapUtils.deleteCacheFile();//清除缓存
+        }
+    };
     final String[] items = new String[]{"拍照", "从手机相册选择",
             "从e生活相册选择", "查看头像", "编辑资料"};
 
@@ -72,14 +101,28 @@ public class UserCenterActivity extends BaseSlideBack {
         setContentView(R.layout.activity_user_center);
 
         Intent get_uid = getIntent();
-        uid =  get_uid.getLongExtra("uid",0);
+        uid = get_uid.getLongExtra("uid", 0);
+
+        mCache = ACache.get(this);//初始花缓存类ACache
 
         //设置折叠式标题栏
         Toolbar toolbar = (Toolbar) findViewById(R.id.user_center_toolbar);
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.user_center_layout);
         imageView = (ImageView) findViewById(R.id.user_center_imageview);
 
-        initView();
+        //initView();
+        String str = mCache.getAsString("photo_path");
+        if (str != null) {//初始化图像，从缓存中获取
+            Glide.with(UserCenterActivity.this)//将选中的图片放到imageview中
+                    .load(str)
+                    .error(R.drawable.qq_login)
+                    .into(imageView);
+        }else{
+            Glide.with(UserCenterActivity.this)//将选中的图片放到imageview中
+                    .load(R.drawable.qq_login)
+                    .into(imageView);
+        }
+
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -125,7 +168,7 @@ public class UserCenterActivity extends BaseSlideBack {
                                 break;
                             case 4://编辑资料
                                 Intent intent = new Intent(UserCenterActivity.this, UserInfo.class);
-                                intent.putExtra("uid",uid);
+                                intent.putExtra("uid", uid);
                                 startActivity(intent);
                                 break;
                         }
@@ -228,20 +271,16 @@ public class UserCenterActivity extends BaseSlideBack {
             case CODE_GALLERY_REQUEST://如果是来自本地的
                 cropRawPhoto(intent.getData());//直接裁剪图片
                 break;
-
             case CODE_CAMERA_REQUEST:
                 if (hasSdcard()) {
-                    File tempFile = new File(
-                            Environment.getExternalStorageDirectory(),
-                            IMAGE_FILE_NAME);
+                    File tempFile = new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME);
+                    Toast.makeText(UserCenterActivity.this, tempFile.toString(), Toast.LENGTH_LONG).show();
                     cropRawPhoto(Uri.fromFile(tempFile));
                 } else {
                     Toast.makeText(getApplication(), "没有SDCard!", Toast.LENGTH_LONG)
                             .show();
                 }
-
                 break;
-
             case CODE_APP_REQUEST:
                 Toast.makeText(getApplication(), "这是APP", Toast.LENGTH_SHORT).show();
                 Uri imgUri = Uri.parse(intent.getStringExtra("image_uri"));
@@ -253,7 +292,6 @@ public class UserCenterActivity extends BaseSlideBack {
                 }
                 break;
         }
-
         super.onActivityResult(requestCode, resultCode, intent);
     }
 
@@ -261,27 +299,20 @@ public class UserCenterActivity extends BaseSlideBack {
      * 裁剪原始的图片
      */
     public void cropRawPhoto(Uri uri) {
-
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
-
         //把裁剪的数据填入里面
-
         // 设置裁剪
         intent.putExtra("crop", "true");
-
         // aspectX , aspectY :宽高的比例
         intent.putExtra("aspectX", 1);
         intent.putExtra("aspectY", 1);
-
         // outputX , outputY : 裁剪图片宽高
         intent.putExtra("outputX", output_X);
         intent.putExtra("outputY", output_Y);
         intent.putExtra("return-data", true);
-
         startActivityForResult(intent, CODE_RESULT_REQUEST);
     }
-
     /**
      * 提取保存裁剪之后的图片数据，并设置头像部分的View
      */
@@ -293,15 +324,18 @@ public class UserCenterActivity extends BaseSlideBack {
             //新建文件夹 先选好路径 再调用mkdir函数 现在是根目录下面的Ask文件夹
             try{
                 File image = saveFile(photo,"photo");
-                HttpUtil.uploadMultiFile(uid,image);//上传文件到服务器
+                 uploadMultiFile(uid,image);//上传文件到服务器
             }catch (IOException e){
                 e.printStackTrace();
             }
-           /* File nf = new File(Environment.getExternalStorageDirectory() + "/Ask");
+            //File image = saveFile(photo, "photo");
+                //Toast.makeText(UserCenterActivity.this,image.getPath(),Toast.LENGTH_LONG).show();
+              //  uploadMultiFile(2015404, file);//上传文件到服务器
+            //Toast.makeText(UserCenterActivity.this,file.getPath(),Toast.LENGTH_LONG).show();
+            /* File nf = new File(Environment.getExternalStorageDirectory() + "/Ask");
             nf.mkdir();
             //在根目录下面的ASk文件夹下 创建okkk.jpg文件
             File f = new File(Environment.getExternalStorageDirectory() + "/Ask", "okkk.png");
-
             FileOutputStream out = null;
             try {//打开输出流 将图片数据填入文件中
                 out = new FileOutputStream(f);
@@ -315,8 +349,6 @@ public class UserCenterActivity extends BaseSlideBack {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }*/
-
-
         }
     }
 
@@ -361,7 +393,6 @@ public class UserCenterActivity extends BaseSlideBack {
         return true;
     }
 
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -374,17 +405,48 @@ public class UserCenterActivity extends BaseSlideBack {
     public File saveFile(Bitmap bm, String fileName) throws IOException {//将Bitmap类型的图片转化成file类型，便于上传到服务器
         String path = Environment.getExternalStorageDirectory() + "/photo";//用户图像
         File dirFile = new File(path);
-        if(!dirFile.exists()){
+        if (!dirFile.exists()) {
             dirFile.mkdir();
         }
-        File myCaptureFile = new File(path + fileName+".PNG");
+        File myCaptureFile = new File(path + fileName + ".PNG");
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
         bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
         bos.flush();
         bos.close();
         return myCaptureFile;
-
     }
 
+    public void uploadMultiFile(long uid, File file) {//将图片发送到服务器,一张图片(处理头像)
+        final String url = ConstantUtil.SERVICE_PATH + "photo_design.php";
+        MultipartBody.Builder mbody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        String str = BitmapUtils.compressImageUpload(file.getPath());//得到压缩过的文件路径
+            File compress_file = new File(str);//得到新文件
+            mbody.addFormDataPart("image" , compress_file.getName(), RequestBody.create(MediaType.parse("application/octet-stream"), compress_file));//添加到mbody中
+            mbody.addFormDataPart("uid",uid+"");
+        RequestBody requestBody = mbody.build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+        final okhttp3.OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
+        OkHttpClient okHttpClient = httpBuilder
+                //设置超时
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            public void onFailure(Call call, IOException e) {
+                Log.e("error", "uploadMultiFile() e=" + e);
+            }
+            public void onResponse(Call call, Response response) throws IOException {
+                  Message msg = new Message();
+                  msg.obj = response.body().string();
+                  handler.sendMessage(msg);
+            }
+        });
+    }
+    public String str_trim(String str) {//去除字符串中的所有空格(用来去掉服务器返回路径中的空格)
+        return str.replaceAll(" ", "");
+    }
 }
 

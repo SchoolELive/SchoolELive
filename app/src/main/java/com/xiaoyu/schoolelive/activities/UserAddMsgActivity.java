@@ -28,6 +28,7 @@ import com.xiaoyu.schoolelive.base.BaseSlideBack;
 import com.xiaoyu.schoolelive.data.Publish;
 import com.xiaoyu.schoolelive.util.BitmapUtils;
 import com.xiaoyu.schoolelive.util.ConstantUtil;
+import com.xiaoyu.schoolelive.util.HttpUtil;
 import com.xiaoyu.schoolelive.util.RecyclerItemClickListener;
 
 import java.io.File;
@@ -42,6 +43,7 @@ import me.iwf.photopicker.PhotoPicker;
 import me.iwf.photopicker.PhotoPreview;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -55,7 +57,6 @@ public class UserAddMsgActivity extends BaseSlideBack {
 
     private EditText add_msg_textContent;
     private TextView add_msg_textNum;
-    private Publish publish;
     private Button postButton;
 
     private PhotoAdapter photoAdapter;
@@ -208,7 +209,8 @@ public class UserAddMsgActivity extends BaseSlideBack {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    upLoad();
+                   // upLoad_with_image();
+                    upload_with_text();
                     progressDialog.dismiss();//发帖完成消除progressDialog
                 }
             }).start();
@@ -238,13 +240,25 @@ public class UserAddMsgActivity extends BaseSlideBack {
 //                    finish();
 //                }
 //            }).start();
-
-
         }
     }
+    private void upload_with_text(){
+        RequestBody requestBody = new FormBody.Builder()
+                .add("msg_id","123456")
+                .add("msg_content",add_msg_textContent.getText().toString())
 
-    private void upLoad() {
+                .build();
+        HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH + "get_msg_text.php", requestBody, new Callback() {
+            public void onFailure(Call call, IOException e) {
 
+            }
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.i("aa",response.body().string());
+            }
+        });
+
+    }
+    private void upLoad_with_image() {
         final String url = ConstantUtil.SERVICE_PATH + "upload.php";
         MultipartBody.Builder mbody = new MultipartBody.Builder().setType(MultipartBody.FORM);
         for (int i = 0; i < photos.size(); i++) {
@@ -266,11 +280,9 @@ public class UserAddMsgActivity extends BaseSlideBack {
                 .writeTimeout(3000, TimeUnit.MINUTES)
                 .build();
         okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
             public void onFailure(Call call, IOException e) {
                 Log.e("aa", "uploadMultiFile() e=" + e);
             }
-
             public void onResponse(Call call, Response response) throws IOException {
                 Log.i("bb", "uploadMultiFile() response=" + response.body().string());
                 BitmapUtils.deleteCacheFile();//清除缓存
@@ -282,5 +294,3 @@ public class UserAddMsgActivity extends BaseSlideBack {
 
 
 }
-
-

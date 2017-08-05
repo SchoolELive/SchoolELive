@@ -1,19 +1,9 @@
 package com.xiaoyu.schoolelive.util;
 
-import android.os.Environment;
-import android.os.Message;
 import android.util.Log;
 
-import com.xiaoyu.schoolelive.activities.MainActivity;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
@@ -77,8 +67,6 @@ public class HttpUtil {//发送Http请求类，每次发送Http请求调用该�
             }
             public void onResponse(Call call, Response response) throws IOException {
                 Log.i("bb", "uploadMultiFile() response=" + response.body().string());
-
-
             }
         });
     }

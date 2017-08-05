@@ -1,8 +1,8 @@
 package com.xiaoyu.schoolelive.activities;
 
+import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -19,24 +19,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.xiaoyu.schoolelive.base.BaseMainSlide;
 import com.xiaoyu.schoolelive.R;
-import com.xiaoyu.schoolelive.util.ConstantUtil;
-import com.xiaoyu.schoolelive.util.HttpUtil;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import com.xiaoyu.schoolelive.data.UserCenter;
 
 
 public class MainActivity extends BaseMainSlide{
@@ -54,29 +39,12 @@ public class MainActivity extends BaseMainSlide{
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private String str_name,str_ymd,str_date,str_content;
-    private ImageView imageView;
-    public static Handler handler1 = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            String responseData = (String)msg.obj;
-
-            //Toast.makeText(MainActivity.this,responseData,Toast.LENGTH_LONG).show();
-            try{
-                JSONArray jsonArray = new JSONArray(responseData);
-                JSONObject jsonObject = jsonArray.getJSONObject(0);
-                String photo = jsonObject.getString("photo");
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-    };//handler在主线程中更新UI
-
     //引入侧滑栏布局
     public void mainInitSlidView(){
         //获取侧滑栏的头部
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
         View view = navigationView.inflateHeaderView(R.layout.include_nav_header_main);
-        imageView = (ImageView)view.findViewById(R.id.imageView);
+        ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //drawer.closeDrawer(GravityCompat.START);
@@ -92,7 +60,6 @@ public class MainActivity extends BaseMainSlide{
                 switch (i.getItemId()){
                     case R.id.focus:
                         intent = new Intent(MainActivity.this,UserFocusActivity.class);
-                        intent.putExtra("uid",0);
                         startActivity(intent);
                         break;
                     case R.id.collect:
@@ -290,26 +257,5 @@ public class MainActivity extends BaseMainSlide{
         //处理获取的Intent数据
         mainDealIntent();
 
-
-    }
-    private void init(){//初始化头像及数据
-        String address = ConstantUtil.SERVICE_PATH + "query_data.php";
-        RequestBody requestBody = new FormBody.Builder()
-                .add("uid",2015404+"")
-                .build();
-        HttpUtil.sendHttpRequest(address, requestBody, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Message msg = Message.obtain();
-                msg.obj = response.body().string();
-                //handler.sendMessage(msg);
-
-            }
-        });
     }
 }

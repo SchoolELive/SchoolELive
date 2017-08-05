@@ -83,7 +83,7 @@ public class BaseSlideBack extends AppCompatActivity {
             default:
                 break;
         }
-        return super.dispatchTouchEvent(event);
+       return super.dispatchTouchEvent(event);
     }
     /**
      * 创建VelocityTracker对象，并将触摸界面的滑动事件加入到VelocityTracker当中。
