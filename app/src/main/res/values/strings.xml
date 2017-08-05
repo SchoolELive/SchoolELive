@@ -78,4 +78,44 @@
     <string name="title_partjob">兼职</string>
     <string name="title_sysinform">通知</string>
     <string name="textNum">140</string>
+
+    <!--兼职类型-->
+    <!--演员-->
+    <string name="yanyuan">演员</string>
+    <!--销售-->
+    <string name="xiaoshou">销售</string>
+    <!--保安-->
+    <string name="baoan">安保</string>
+    <!--发传单-->
+    <string name="fachuandan">派单</string>
+    <!--外卖-->
+    <string name="waimai">外卖</string>
+    <!--快递-->
+    <string name="kuaidi">快递</string>
+    <!--推广-->
+    <string name="tuiguang">推广</string>
+    <!--网络-->
+    <string name="wangluo">网络</string>
+    <!--家教-->
+    <string name="jiajiao">家教</string>
+    <!--工厂-->
+    <string name="gongchang">工厂</string>
+    <!--服务员-->
+    <string name="fuwuyuan">服务员</string>
+    <!--校园-->
+    <string name="xiaoyuan">校内</string>
+    <!--其他-->
+    <string name="qita">其他</string>
+
+    <!--工资计算方式-->
+    <string name="perhour"> 元/小时</string>
+    <string name="perday"> 元/天</string>
+    <string name="permonth"> 元/月</string>
+    <string name="perpiece"> 元/件</string>
+    <string name="peritem"> 元/单</string>
+    <!--工资结算方式-->
+    <string name="daypaid"> 日结 </string>
+    <string name="weekpaid"> 周结 </string>
+    <string name="monthpaid"> 月结 </string>
+    <string name="afterworkpaid"> 完工结算 </string>
 </resources>

@@ -9,4 +9,6 @@
     <dimen name="bar_text_size">20dp</dimen>
     <dimen name="ui_10_dip">10dp</dimen>
     <dimen name="actionBarSize">56dip</dimen>
+    <dimen name="ui_5_dip">5dp</dimen>
+    <dimen name="user_content_left">53dp</dimen>
 </resources>

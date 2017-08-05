@@ -71,21 +71,14 @@
         android:layout_marginTop="@dimen/ui_10_dip"
 >
 
-        <TextView
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/light"
             android:gravity="center"
             android:text="竞价"
-            android:textSize="@dimen/bar_text_size" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/light"
-            android:gravity="center"
-            android:text="最新提醒"
+            android:id="@+id/btn_pai"
             android:textSize="@dimen/bar_text_size" />
     </LinearLayout>
 

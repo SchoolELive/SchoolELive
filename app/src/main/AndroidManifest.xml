@@ -115,12 +115,14 @@
             android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
+
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity android:name="com.xiaoyu.schoolelive.activities.PreViewImgActivity" />
+        <activity android:name=".activities.SysSetBindActivity"/>
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ package me.iwf.photopicker.event;
  * Created by q805699513 on 2017/1/22.
  */
 
+
 public class PhotoOnLongClickManager {
     private static PhotoOnLongClick listener;
     private static PhotoOnLongClickManager photoOnLongClickManager;

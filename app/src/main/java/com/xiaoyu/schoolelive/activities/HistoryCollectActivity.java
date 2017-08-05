@@ -9,13 +9,14 @@ import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.xiaoyu.schoolelive.R;
+import com.xiaoyu.schoolelive.base.BaseHisColSlide;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
 
 /**
  * Created by Administrator on 2017/7/11.
  */
 
-public class HistoryCollectActivity extends BaseSlideBack {
+public class HistoryCollectActivity extends BaseHisColSlide {
     private TabHost tabHost;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

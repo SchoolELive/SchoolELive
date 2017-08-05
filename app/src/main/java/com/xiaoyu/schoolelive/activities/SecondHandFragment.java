@@ -3,11 +3,15 @@ package com.xiaoyu.schoolelive.activities;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -17,8 +21,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.adapter.WaterFallAdapter;
-import com.xiaoyu.schoolelive.base.BaseFragment;
 import com.xiaoyu.schoolelive.data.ImageBean;
+import com.xiaoyu.schoolelive.util.BitmapSampleUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,47 +37,83 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2017/7/15.
  */
 
-public class SecondHandFragment extends BaseFragment {
+public class SecondHandFragment extends Fragment {
 
     @Bind(R.id.goods_recycler_view)
     RecyclerView mRecyclerView;
 
     private WaterFallAdapter mAdapter;
 
+
     @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main_menu_secondhand;
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        View view = LayoutInflater.from(getActivity())
+                .inflate(R.layout.activity_main_menu_secondhand, container, false);
+        initView(view, savedInstanceState);
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initData();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+
+//    @Override
+//    protected int getLayoutId() {
+//        return R.layout.activity_main_menu_secondhand;
+//    }
+
+
+    //@Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
-    @Override
+    //@Override
     protected void initData() {
 
         mRecyclerView.setLayoutManager(new
                 StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
 
-        mAdapter = new WaterFallAdapter(mActivity);
+        mAdapter = new WaterFallAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
-        getJsonData();
-        mAdapter.setOnItemClickListener(new WaterFallAdapter.OnItemClickListener()
-        {
-            public void onItemClick(View view, int position)
-            {
-                Intent intent=new Intent(getActivity(),GoodsInfoActivity.class);
+        //getJsonData();
+        getGoodsData();
+        mAdapter.setOnItemClickListener(new WaterFallAdapter.OnItemClickListener() {
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getActivity(), GoodsInfoActivity.class);
                 startActivity(intent);
 //                Toast.makeText(getContext(), position + " click",
 //                        Toast.LENGTH_SHORT).show();
 
             }
-            public void onItemLongClick(View view, int position)
-            {
+
+            public void onItemLongClick(View view, int position) {
                 Toast.makeText(getContext(), position + " long click",
                         Toast.LENGTH_SHORT).show();
                 //mAdapter.removeData(position);
@@ -81,6 +121,19 @@ public class SecondHandFragment extends BaseFragment {
         });
     }
 
+
+    private void getGoodsData() {
+        List<ImageBean> list = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            String imgsrc=BitmapSampleUtil.getBmpUrl();
+            ImageBean bean = new ImageBean();
+            bean.setImgsrc(imgsrc);
+            list.add(bean);
+        }
+        mAdapter.getList().addAll(list);
+        mAdapter.getRandomHeight(list);
+        mAdapter.notifyDataSetChanged();
+    }
 
     private void getJsonData() {
 
@@ -94,7 +147,7 @@ public class SecondHandFragment extends BaseFragment {
                 "&mac=sSduRYcChdp%2BBL1a9Xa%2F9TC0ruPUyXM4Jwce4E9oM30%3D";
 
         //
-        RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
@@ -125,6 +178,7 @@ public class SecondHandFragment extends BaseFragment {
             }
         });
         requestQueue.add(request);
+
     }
 
 }

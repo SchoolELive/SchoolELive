@@ -2,7 +2,6 @@ package com.xiaoyu.schoolelive.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -33,9 +32,7 @@ import com.xiaoyu.schoolelive.util.RecyclerItemClickListener;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -50,8 +47,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import static java.lang.System.currentTimeMillis;
 
 public class UserAddMsgActivity extends BaseSlideBack {
 
@@ -91,8 +86,8 @@ public class UserAddMsgActivity extends BaseSlideBack {
         //add_msg_pic = (GridView) findViewById(R.id.pic_gridview);
         postButton = (Button) findViewById(R.id.postButton);
 
+        //底部图片选择
         iv_crop = (ImageView) findViewById(R.id.iv_crop);
-
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         photoAdapter = new PhotoAdapter(this, selectedPhotos);
 
@@ -129,11 +124,15 @@ public class UserAddMsgActivity extends BaseSlideBack {
         if (resultCode == RESULT_OK &&
                 (requestCode == PhotoPicker.REQUEST_CODE || requestCode == PhotoPreview.REQUEST_CODE)) {
             iv_crop.setVisibility(View.GONE);
+
             recyclerView.setVisibility(View.VISIBLE);
+
 
             photos = null;
             if (data != null) {
                 photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+                //获取图片路径
+                //Toast.makeText(UserAddMsgActivity.this, photos.get(0),Toast.LENGTH_SHORT).show();
             }
             selectedPhotos.clear();
             if (photos != null) {

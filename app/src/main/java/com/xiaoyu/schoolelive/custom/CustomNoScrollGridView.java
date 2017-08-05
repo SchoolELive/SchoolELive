@@ -13,6 +13,7 @@ import android.widget.GridView;
  * by:Hankkin at：2015-08-05 11:31:06
  *
  */
+
 public class CustomNoScrollGridView extends GridView {
 
     public CustomNoScrollGridView(Context context) {

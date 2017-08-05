@@ -4,13 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        layout="@layout/custom_goods_pai_info" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <include
-        layout="@layout/custom_goods_ykj_info" />
-
-    <include
-        layout="@layout/custom_goods_yj_info" />
-
+    </ScrollView>
 </LinearLayout>

@@ -45,9 +45,10 @@ public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.View
         mHeights = new ArrayList<>();
         for(int i=0; i < mList.size();i++){
             //随机的获取一个范围为200-600直接的高度
-            mHeights.add((int)(300+Math.random()*400));
+            mHeights.add((int)(500+Math.random()*400));
         }
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
