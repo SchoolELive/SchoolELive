@@ -60,7 +60,6 @@ public class HomeFragment extends Fragment {
             adapterPublish = new PublishAdapter(getContext(), date, imagesList);
             switch (msg.what) {
                 case 1:
-//                    publish.setHead(getHead());
                     jsonData = (String) msg.obj;//得到返回的数据
                     try {
                         JSONArray jsonArray = new JSONArray(jsonData);
