@@ -1,5 +1,7 @@
 package com.xiaoyu.schoolelive.activities;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
 
@@ -77,10 +80,28 @@ public class SysSetAccountActivity extends BaseSlideBack {
 //                        });
                         break;
                     case 1://切换账号
+                        if (MainActivity.boo){
+                            new AlertDialog.Builder(SysSetAccountActivity.this)
+                                    .setTitle("是否切换用户？")
+                                    .setIcon(R.drawable.side_nav_bar)
+                                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            MainActivity.boo = false;
+                                            Intent intent = new Intent(SysSetAccountActivity.this,LoginActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .setNegativeButton("取消", null)
+                                    .show();
 
+                        }else{
+                            Toast.makeText(SysSetAccountActivity.this,"尚未登录！",Toast.LENGTH_LONG).show();
+                        }
                         break;
                     case 2://账号绑定
-
+                        Intent intent = new Intent(SysSetAccountActivity.this,SysSetBindActivity.class);
+                        startActivity(intent);
                         break;
                 }
             }
