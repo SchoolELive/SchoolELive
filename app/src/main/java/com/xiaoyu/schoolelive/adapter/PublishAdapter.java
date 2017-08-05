@@ -3,8 +3,6 @@ package com.xiaoyu.schoolelive.adapter;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xiaoyu.schoolelive.R;
+import com.xiaoyu.schoolelive.custom.CustomImageView;
+import com.xiaoyu.schoolelive.custom.NineGridlayout;
+import com.xiaoyu.schoolelive.data.Image;
 import com.xiaoyu.schoolelive.data.Publish;
+import com.xiaoyu.schoolelive.util.ScreenTools;
 import com.xiaoyu.schoolelive.util.ShowShareUtil;
 
 import java.util.List;
@@ -30,14 +32,18 @@ public class PublishAdapter extends BaseAdapter {
 
     Context context;
     List<Publish> data;
+    List<List<Image>> imagesList;
 
     final String[] baseItems = new String[]{"关注", "举报", "复制内容"};
     final String[] againstItems = new String[]{"泄露隐私", "人身攻击", "淫秽色情", "垃圾广告", "敏感信息", "其他"};
 
-    public PublishAdapter(Context c, List<Publish> data) {
+
+    public PublishAdapter(Context c, List<Publish> data, List<List<Image>> imagesList) {
         this.context = c;
         this.data = data;
+        this.imagesList = imagesList;
     }
+
     @Override
     public int getCount() {
         return data.size();
@@ -56,10 +62,13 @@ public class PublishAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
-         final ViewHolder holder;
+        final ViewHolder holder;
+
+        List<Image> itemList = imagesList.get(i);
         // 重用convertView
         if (convertView == null) {
             holder = new ViewHolder();
+
             convertView = LayoutInflater.from(context).inflate(R.layout.custom_user_pub_msg, null);
 
             //初始化按钮
@@ -76,9 +85,26 @@ public class PublishAdapter extends BaseAdapter {
             holder.pub_like_count = (TextView) convertView.findViewById(R.id.pub_like_count);
             holder.pub_share_count = (TextView) convertView.findViewById(R.id.pub_zhuanfa_count);
             holder.publish_content = (TextView) convertView.findViewById(R.id.words_msg);
+            //初始化图片
+            holder.ivMore = (NineGridlayout) convertView.findViewById(R.id.iv_ngrid_layout);
+            holder.ivOne = (CustomImageView) convertView.findViewById(R.id.iv_oneimage);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
+        }
+        if (itemList.isEmpty()) {
+            holder.ivMore.setVisibility(View.GONE);
+            holder.ivOne.setVisibility(View.GONE);
+        } else if (itemList.size() == 1) {
+            holder.ivMore.setVisibility(View.GONE);
+            holder.ivOne.setVisibility(View.VISIBLE);
+
+            handlerOneImage(holder, itemList.get(0));
+        } else {
+            holder.ivMore.setVisibility(View.VISIBLE);
+            holder.ivOne.setVisibility(View.GONE);
+
+            holder.ivMore.setImagesData(itemList);
         }
 
         // 适配数据
@@ -131,10 +157,44 @@ public class PublishAdapter extends BaseAdapter {
         return convertView;
     }
 
+    //处理只有一张图片时的情况
+    private void handlerOneImage(ViewHolder viewHolder, Image image) {
+        int totalWidth;
+        int imageWidth;
+        int imageHeight;
+        ScreenTools screentools = ScreenTools.instance(context);
+        totalWidth = screentools.getScreenWidth() - screentools.dip2px(80);
+        imageWidth = screentools.dip2px(image.getWidth());
+        imageHeight = screentools.dip2px(image.getHeight());
+        if (image.getWidth() <= image.getHeight()) {
+            if (imageHeight > totalWidth) {
+                imageHeight = totalWidth;
+                imageWidth = (imageHeight * image.getWidth()) / image.getHeight();
+            }
+        } else {
+            if (imageWidth > totalWidth) {
+                imageWidth = totalWidth;
+                imageHeight = (imageWidth * image.getHeight()) / image.getWidth();
+            }
+        }
+        ViewGroup.LayoutParams layoutparams = viewHolder.ivOne.getLayoutParams();
+        layoutparams.height = imageHeight;
+        layoutparams.width = imageWidth;
+        viewHolder.ivOne.setLayoutParams(layoutparams);
+        viewHolder.ivOne.setClickable(true);
+        viewHolder.ivOne.setScaleType(android.widget.ImageView.ScaleType.FIT_XY);
+        viewHolder.ivOne.setImageUrl(image.getUrl());
+
+    }
+
     //发布动态
     public void addPublish(Publish publish) {
-
         data.add(publish);
+        notifyDataSetChanged();
+    }
+
+    public void addImages(List<Image> images) {
+        imagesList.add(images);
         notifyDataSetChanged();
     }
 
@@ -232,10 +292,13 @@ public class PublishAdapter extends BaseAdapter {
                     Toast.LENGTH_SHORT).show();
         }
     }
+
     /**
      * 静态类，便于GC回收
      */
     public class ViewHolder {
+        NineGridlayout ivMore;
+        CustomImageView ivOne;
         TextView publish_name;
         TextView publish_content;
         ImageView publish_head;

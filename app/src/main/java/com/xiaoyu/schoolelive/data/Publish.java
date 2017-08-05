@@ -1,5 +1,7 @@
 package com.xiaoyu.schoolelive.data;
 
+import java.util.List;
+
 /**
  * Created by NeekChaw on 2017-07-16.
  */
@@ -10,8 +12,18 @@ public class Publish {
     int head;//头像
     String ymd;//年月日
     String date;//小时分钟
+    List<List<Image>> imageList;//图片列表
 
     int like_count, comment_count, share_count;//点赞评论数量
+
+
+    public List<List<Image>> getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(List<List<Image>> imageList) {
+        this.imageList = imageList;
+    }
 
     public String getName() {
         return name;

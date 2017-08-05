@@ -52,6 +52,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     //图片加载的依赖库
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    compile 'com.squareup.picasso:picasso:2.5.2'
     //网络连接依赖库
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
 

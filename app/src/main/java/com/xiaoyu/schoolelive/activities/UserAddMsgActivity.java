@@ -2,7 +2,6 @@ package com.xiaoyu.schoolelive.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -32,9 +31,7 @@ import com.xiaoyu.schoolelive.util.RecyclerItemClickListener;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -48,8 +45,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import static java.lang.System.currentTimeMillis;
 
 public class UserAddMsgActivity extends BaseSlideBack {
 
@@ -130,6 +125,7 @@ public class UserAddMsgActivity extends BaseSlideBack {
             iv_crop.setVisibility(View.GONE);
 
             recyclerView.setVisibility(View.VISIBLE);
+
 
             photos = null;
             if (data != null) {
