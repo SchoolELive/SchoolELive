@@ -203,7 +203,7 @@ public class AnimationUtil{
             for(FloatingActionButton faButton : buttons){
                 int faButtonLeft = faButton.getLeft();
                 int faButtonTop = faButton.getTop();
-                slideview(faButton,0,buttonLeft-faButtonLeft,0,buttonTop-faButtonTop,500,0,true,false);
+                slideview(faButton,0,buttonLeft-faButtonLeft,0,buttonTop-faButtonTop+150,500,0,true,false);
             }
         }
 

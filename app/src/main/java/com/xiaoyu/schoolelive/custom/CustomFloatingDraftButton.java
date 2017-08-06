@@ -18,6 +18,7 @@ public class CustomFloatingDraftButton extends FloatingActionButton implements V
     int originX, originY;
     final int screenWidth ;
     final int screenHeight ;
+
     private ArrayList<FloatingActionButton> floatingActionButtons = new ArrayList<FloatingActionButton>();
 
     public CustomFloatingDraftButton(Context context) {
@@ -56,7 +57,7 @@ public class CustomFloatingDraftButton extends FloatingActionButton implements V
     //当被拖拽后其所属的FloatingActionButton 也要改变位置
     private void slideButton(int l, int t, int r, int b){
         for(FloatingActionButton floatingActionButton:floatingActionButtons){
-            floatingActionButton.layout(l, t, r, b);
+            floatingActionButton.layout(l, t, r, b );
         }
     }
 
@@ -114,6 +115,5 @@ public class CustomFloatingDraftButton extends FloatingActionButton implements V
                 break;
         }
         return false;
-
     }
 }
