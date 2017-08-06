@@ -19,10 +19,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.xiaoyu.schoolelive.R;
+import com.xiaoyu.schoolelive.custom.CustomImageView;
+import com.xiaoyu.schoolelive.custom.NineGridlayout;
+import com.xiaoyu.schoolelive.data.Image;
 import com.xiaoyu.schoolelive.data.Publish;
-import com.xiaoyu.schoolelive.util.ACache;
 import com.xiaoyu.schoolelive.util.ConstantUtil;
 import com.xiaoyu.schoolelive.util.HttpUtil;
+import com.xiaoyu.schoolelive.util.ScreenTools;
 import com.xiaoyu.schoolelive.util.ShowShareUtil;
 
 import org.json.JSONArray;
@@ -45,32 +48,36 @@ import okhttp3.Response;
  */
 public class PublishAdapter extends BaseAdapter {
     private ViewHolder holder = new ViewHolder();
-    private Map<String,ImageView> map = new HashMap<>();
+    private Map<String, ImageView> map = new HashMap<>();
     Context context;
     List<Publish> data;
-    Handler handler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                Bundle bundle = msg.getData();
-                String image = bundle.getString("photo");
-                String index = bundle.getString("image_index");
-                if(index != null){
-                    Glide.with(context)
-                            .load(ConstantUtil.SERVICE_PATH + str_trim(image))//得到图片的路径
-                            .error(R.drawable.qq_login);
-                            //.into(map.get(index));
-                }
-
-            }
-        };
+    List<List<Image>> imagesList;
 
     final String[] baseItems = new String[]{"关注", "举报", "复制内容"};
     final String[] againstItems = new String[]{"泄露隐私", "人身攻击", "淫秽色情", "垃圾广告", "敏感信息", "其他"};
 
-    public PublishAdapter(Context c, List<Publish> data) {
+    public PublishAdapter(Context c, List<Publish> data, List<List<Image>> imagesList) {
         this.context = c;
         this.data = data;
+        this.imagesList = imagesList;
     }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Bundle bundle = msg.getData();
+            String image = bundle.getString("photo");
+            String index = bundle.getString("image_index");
+            if (index != null) {
+                Glide.with(context)
+                        .load(ConstantUtil.SERVICE_PATH + str_trim(image))//得到图片的路径
+                        .error(R.drawable.qq_login);
+                //.into(map.get(index));
+            }
+
+        }
+    };
+
     @Override
     public int getCount() {
         return data.size();
@@ -89,6 +96,7 @@ public class PublishAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
+        List<Image> itemList = imagesList.get(i);
         // 重用convertView
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.custom_user_pub_msg, null);
@@ -106,17 +114,35 @@ public class PublishAdapter extends BaseAdapter {
             holder.pub_like_count = (TextView) convertView.findViewById(R.id.pub_like_count);
             holder.pub_share_count = (TextView) convertView.findViewById(R.id.pub_zhuanfa_count);
             holder.publish_content = (TextView) convertView.findViewById(R.id.words_msg);
+            //初始化图片
+            holder.ivMore = (NineGridlayout) convertView.findViewById(R.id.iv_ngrid_layout);
+            holder.ivOne = (CustomImageView) convertView.findViewById(R.id.iv_oneimage);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        if (itemList.isEmpty()) {
+            holder.ivMore.setVisibility(View.GONE);
+            holder.ivOne.setVisibility(View.GONE);
+        } else if (itemList.size() == 1) {
+            holder.ivMore.setVisibility(View.GONE);
+            holder.ivOne.setVisibility(View.VISIBLE);
+
+            handlerOneImage(holder, itemList.get(0));
+        } else {
+            holder.ivMore.setVisibility(View.VISIBLE);
+            holder.ivOne.setVisibility(View.GONE);
+
+            holder.ivMore.setImagesData(itemList);
+        }
+
         // 适配数据
         holder.publish_name.setText(data.get(i).getName());
         holder.publish_content.setText(data.get(i).getContent());
         //holder.publish_head.setImageResource(R.drawable.qq_login);
-       // holder.publish_date.setText(data.get(i).getDate());
+        // holder.publish_date.setText(data.get(i).getDate());
         String index = data.get(i).getImage_index();
-        map.put(index,holder.publish_head);
+        map.put(index, holder.publish_head);
 
         holder.publish_ymd.setText(data.get(i).getYmd());
         holder.image_index = data.get(i).getImage_index();
@@ -164,9 +190,43 @@ public class PublishAdapter extends BaseAdapter {
         return convertView;
     }
 
+    //处理只有一张图片时的情况
+    private void handlerOneImage(ViewHolder viewHolder, Image image) {
+        int totalWidth;
+        int imageWidth;
+        int imageHeight;
+        ScreenTools screentools = ScreenTools.instance(context);
+        totalWidth = screentools.getScreenWidth() - screentools.dip2px(80);
+        imageWidth = screentools.dip2px(image.getWidth());
+        imageHeight = screentools.dip2px(image.getHeight());
+        if (image.getWidth() <= image.getHeight()) {
+            if (imageHeight > totalWidth) {
+                imageHeight = totalWidth;
+                imageWidth = (imageHeight * image.getWidth()) / image.getHeight();
+            }
+        } else {
+            if (imageWidth > totalWidth) {
+                imageWidth = totalWidth;
+                imageHeight = (imageWidth * image.getHeight()) / image.getWidth();
+            }
+        }
+        ViewGroup.LayoutParams layoutparams = viewHolder.ivOne.getLayoutParams();
+        layoutparams.height = imageHeight;
+        layoutparams.width = imageWidth;
+        viewHolder.ivOne.setLayoutParams(layoutparams);
+        viewHolder.ivOne.setClickable(true);
+        viewHolder.ivOne.setScaleType(android.widget.ImageView.ScaleType.FIT_XY);
+        viewHolder.ivOne.setImageUrl(image.getUrl());
+
+    }
+
     //发布动态
     public void addPublish(Publish publish) {
         data.add(publish);
+        notifyDataSetChanged();
+    }
+    public void addImages(List<Image> images) {
+        imagesList.add(images);
         notifyDataSetChanged();
     }
 
@@ -254,6 +314,7 @@ public class PublishAdapter extends BaseAdapter {
             return false;
         }
     }
+
     //对举报信息进行处理
     public void dealClick(ViewHolder holder, int dealCode) {
         if (isAgainst(holder)) {
@@ -263,10 +324,48 @@ public class PublishAdapter extends BaseAdapter {
                     Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    public void getHead(long uid, final String image_index) {
+        RequestBody requestBody = new FormBody.Builder()
+                .add("uid", uid + "")
+                .build();
+        HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH + "query_data.php", requestBody, new Callback() {
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            public void onResponse(Call call, Response response) throws IOException {
+                String data = response.body().string();
+                try {
+                    JSONArray jsonArray = new JSONArray(data);
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    Message msg = new Message();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("photo", jsonObject.getString("photo"));
+                    bundle.putString("image_index", image_index);
+                    msg.setData(bundle);
+                    handler.sendMessage(msg);
+                    //  cache.put("photo",jsonObject.getString("photo"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+    }
+
+    public String str_trim(String str) {//去除字符串中的所有空格(用来去掉服务器返回路径中的空格)
+        return str.replaceAll(" ", "");
+    }
+
     /**
      * 静态类，便于GC回收
      */
     public class ViewHolder {
+        NineGridlayout ivMore;
+        CustomImageView ivOne;
         TextView publish_name;
         TextView publish_content;
         ImageView publish_head;
@@ -284,40 +383,6 @@ public class PublishAdapter extends BaseAdapter {
         boolean IS_FOCUS = true;//初始状态，还未关注
         String image_index;
     }
-
-    public void getHead(long uid, final String image_index) {
-        RequestBody requestBody = new FormBody.Builder()
-                .add("uid",uid+"")
-                .build();
-        HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH + "query_data.php", requestBody, new Callback() {
-            public void onFailure(Call call, IOException e) {
-
-            }
-            public void onResponse(Call call, Response response) throws IOException {
-                String data = response.body().string();
-                try{
-                    JSONArray jsonArray = new JSONArray(data);
-                    JSONObject jsonObject = jsonArray.getJSONObject(0);
-                    Message msg = new Message();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("photo",jsonObject.getString("photo"));
-                    bundle.putString("image_index",image_index);
-                    msg.setData(bundle);
-                    handler.sendMessage(msg);
-                    //  cache.put("photo",jsonObject.getString("photo"));
-                }catch (JSONException e){
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
-    }
-    public String str_trim(String str) {//去除字符串中的所有空格(用来去掉服务器返回路径中的空格)
-        return str.replaceAll(" ", "");
-    }
-
-
 
 
 }

@@ -4,6 +4,7 @@
     android:id="@+id/home_hot"
     android:background="@drawable/side_nav_bar"
     android:layout_margin="5dp"
+
     android:layout_height="match_parent">
     <include
         layout="@layout/include_publish_list"/>
