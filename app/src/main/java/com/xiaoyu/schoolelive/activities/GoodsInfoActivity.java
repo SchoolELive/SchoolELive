@@ -19,6 +19,7 @@ import com.xiaoyu.schoolelive.util.ShowShareUtil;
  * Created by NeekChaw on 2017-07-29.
  */
 
+
 public class GoodsInfoActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView btn_more;
     private Button btn_pai;

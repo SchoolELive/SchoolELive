@@ -13,7 +13,6 @@ import com.xiaoyu.schoolelive.R;
 /**
  * Created by Administrator on 2017/7/11.
  */
-
 public class CustomImageDialogView extends Dialog {
 
     public CustomImageDialogView(Context context) {

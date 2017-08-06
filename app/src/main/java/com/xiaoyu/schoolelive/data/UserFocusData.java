@@ -1,5 +1,4 @@
 package com.xiaoyu.schoolelive.data;
-
 /**
  * Created by Administrator on 2017/7/16.
  */

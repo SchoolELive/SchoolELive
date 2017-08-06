@@ -3,7 +3,6 @@ package com.xiaoyu.schoolelive.custom;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ListView;
-
 public class CustomFindHistory extends ListView {
     public CustomFindHistory(Context context) {
     super(context);

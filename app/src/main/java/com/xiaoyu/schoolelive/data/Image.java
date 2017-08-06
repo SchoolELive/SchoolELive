@@ -1,7 +1,6 @@
 package com.xiaoyu.schoolelive.data;
 
 import com.nostra13.universalimageloader.utils.L;
-
 /**
  * Created by Pan_ on 2015/2/3.
  */

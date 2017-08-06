@@ -8,7 +8,6 @@ import android.util.Log;
 /**
  * Created by Administrator on 2017/7/11.
  */
-
 public class SquareCenterImageViewUtil extends android.support.v7.widget.AppCompatImageView {
     public SquareCenterImageViewUtil(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);

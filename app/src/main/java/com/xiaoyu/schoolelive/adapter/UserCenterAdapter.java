@@ -16,7 +16,6 @@ import java.util.List;
 /**
  * Created by NeekChaw on 2017-07-19.
  */
-
 public class UserCenterAdapter extends BaseAdapter {
     Context context;
     List<UserCenter> data;

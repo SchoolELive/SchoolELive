@@ -14,7 +14,6 @@ import com.xiaoyu.schoolelive.R;
 /**
  * Created by Administrator on 2017/7/11.
  */
-
 public class CustomUserAlbum extends LinearLayout {
     private TextView photo_year, photo_month, photo_day;
 

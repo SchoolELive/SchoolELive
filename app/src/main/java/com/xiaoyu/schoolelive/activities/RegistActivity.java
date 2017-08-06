@@ -25,7 +25,6 @@ import okhttp3.FormBody;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-
 public class RegistActivity extends AppCompatActivity {
     class MyHandler extends Handler {
 

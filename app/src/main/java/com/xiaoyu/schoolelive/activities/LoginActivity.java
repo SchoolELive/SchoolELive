@@ -33,6 +33,7 @@ import com.xiaoyu.schoolelive.base.BaseSlideBack;
 import com.xiaoyu.schoolelive.util.ConstantUtil;
 import com.xiaoyu.schoolelive.util.HttpUtil;
 
+
 public class LoginActivity extends BaseSlideBack implements View.OnClickListener {
     class MyHandler extends Handler {
         public void handleMessage(Message msg) {

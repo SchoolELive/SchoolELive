@@ -3,7 +3,6 @@ package com.xiaoyu.schoolelive.data;
 /**
  * Created by NeekChaw on 2017-07-14.
  */
-
 public class Comment {
 
     String name; //评论者

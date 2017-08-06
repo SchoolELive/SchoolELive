@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2017/7/13.
  */
+
 public class PartJobFragment extends Fragment {
     //@Bind(R.id.partjob_recycler_view)
     RecyclerView mRecyclerView;

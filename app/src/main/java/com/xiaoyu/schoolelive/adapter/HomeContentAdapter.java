@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/7/12.
  */
-
 public class HomeContentAdapter extends PagerAdapter {
     private List<View> views;
     public HomeContentAdapter(List<View> views) {

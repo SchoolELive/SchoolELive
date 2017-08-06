@@ -16,7 +16,6 @@ import com.xiaoyu.schoolelive.R;
 /**
  * Created by Administrator on 2017/7/16.
  */
-
 public class UserFocusAdapter extends BaseAdapter {
     Context context;
     List<UserFocusData> data;

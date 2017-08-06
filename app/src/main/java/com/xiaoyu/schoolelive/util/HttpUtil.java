@@ -20,7 +20,6 @@ public class HttpUtil {//发送Http请求类，每次发送Http请求调用该�
     /*
     * 通过okhttp3发送请求(用来请求纯文本比较方便)
     * */
-
     /*
     * 不发送数据
     * */

@@ -22,7 +22,6 @@ import java.util.List;
 /**
  * Created by NeekChaw on 2017-07-14.
  */
-
 public class CommentAdapter extends BaseAdapter {
     Context context;
     List<Comment> data;

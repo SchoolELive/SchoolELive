@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.util.ShowShareUtil;
-
 public class SysSetShareActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {

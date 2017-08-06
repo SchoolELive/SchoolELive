@@ -14,7 +14,6 @@ import com.xiaoyu.schoolelive.R;
 /**
  * Created by Administrator on 2017/7/11.
  */
-
 public class CustomBar extends RelativeLayout {
     private TextView info_menu_name;
     private TextView info_menu_info;

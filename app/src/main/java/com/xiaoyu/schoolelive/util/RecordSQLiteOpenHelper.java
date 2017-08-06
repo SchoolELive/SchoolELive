@@ -3,7 +3,6 @@ package com.xiaoyu.schoolelive.util;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 public class RecordSQLiteOpenHelper extends SQLiteOpenHelper{
     private static String name = "temp.db";
     private static Integer version = 1;

@@ -34,7 +34,6 @@ public class BaseMainSlide extends AppCompatActivity{
     private float yMove;
     //用于计算手指滑动的速度。
     private VelocityTracker mVelocityTracker;
-
     //手势事件
     public boolean dispatchTouchEvent(MotionEvent event) {
         createVelocityTracker(event);

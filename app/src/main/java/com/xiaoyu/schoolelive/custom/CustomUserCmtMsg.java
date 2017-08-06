@@ -10,7 +10,6 @@ import com.xiaoyu.schoolelive.R;
 /**
  * Created by NeekChaw on 2017-07-13.
  */
-
 public class CustomUserCmtMsg extends LinearLayout {
 //    private TextView cmt_nickname, cmt_msg, cmt_comment_count,
 //            cmt_like_count, cmt_zhuanfa_count;

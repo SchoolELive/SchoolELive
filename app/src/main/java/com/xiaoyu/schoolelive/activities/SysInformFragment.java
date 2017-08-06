@@ -12,7 +12,6 @@ import com.xiaoyu.schoolelive.R;
 /**
  * Created by Administrator on 2017/7/15.
  */
-
 public class SysInformFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

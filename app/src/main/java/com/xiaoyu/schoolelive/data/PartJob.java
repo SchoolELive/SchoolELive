@@ -3,7 +3,6 @@ package com.xiaoyu.schoolelive.data;
 /**
  * Created by NeekChaw on 2017-08-02.
  */
-
 public class PartJob {
     int workType;
     int callNum;

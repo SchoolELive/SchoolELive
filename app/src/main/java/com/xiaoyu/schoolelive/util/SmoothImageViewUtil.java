@@ -17,7 +17,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 /**
  * Created by Administrator on 2017/7/11.
  */
-
 public class SmoothImageViewUtil extends android.support.v7.widget.AppCompatImageView {
 
     private static final int STATE_NORMAL = 0;

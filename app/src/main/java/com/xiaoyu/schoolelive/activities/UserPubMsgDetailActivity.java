@@ -36,7 +36,6 @@ import java.util.List;
 /**
  * Created by NeekChaw on 2017-07-13.
  */
-
 public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnClickListener {
     private int DEFAULT_HEAD = R.drawable.icon_default_head;
 

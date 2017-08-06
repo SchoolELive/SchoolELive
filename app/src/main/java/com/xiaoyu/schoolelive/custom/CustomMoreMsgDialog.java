@@ -9,7 +9,6 @@ import android.support.annotation.StyleRes;
 /**
  * Created by NeekChaw on 2017-07-18.
  */
-
 public class CustomMoreMsgDialog extends Dialog {
     public CustomMoreMsgDialog(@NonNull Context context) {
         super(context);

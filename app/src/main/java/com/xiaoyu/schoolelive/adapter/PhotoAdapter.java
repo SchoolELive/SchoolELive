@@ -20,7 +20,6 @@ import me.iwf.photopicker.utils.AndroidLifecycleUtils;
  * Created by donglua on 15/5/31.
  */
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder> {
-
   private ArrayList<String> photoPaths = new ArrayList<String>();
   private LayoutInflater inflater;
 

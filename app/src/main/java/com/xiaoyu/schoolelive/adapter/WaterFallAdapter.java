@@ -30,7 +30,6 @@ import static com.xiaoyu.schoolelive.activities.UserAlbumActivity.mNormalImageOp
 /**
  * Created by NeekChaw on 2017-07-28.
  */
-
 public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.ViewHolder> {
 
     private Context mContext;

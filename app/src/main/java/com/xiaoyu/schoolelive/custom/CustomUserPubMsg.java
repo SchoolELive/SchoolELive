@@ -12,7 +12,6 @@ import com.xiaoyu.schoolelive.R;
 /**
  * Created by NeekChaw on 2017-07-12.
  */
-
 public class CustomUserPubMsg extends LinearLayout {
     private TextView pub_nickname,
             pub_words_msg, pub_comment_count, pub_like_count, pub_zhuanfa_count;

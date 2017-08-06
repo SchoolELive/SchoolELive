@@ -23,7 +23,6 @@ import com.xiaoyu.schoolelive.R;
 /**
  * Created by Administrator on 2017/7/16.
  */
-
 public class UserFocusActivity extends BaseSlideBack {
     private CircleImageView user_focus_image;
     private TextView user_focus_fname;

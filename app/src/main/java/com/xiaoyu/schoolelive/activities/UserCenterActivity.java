@@ -60,7 +60,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
 public class UserCenterActivity extends BaseSlideBack {
     Bitmap bitmap = null;
     private ListView usercenter_list;

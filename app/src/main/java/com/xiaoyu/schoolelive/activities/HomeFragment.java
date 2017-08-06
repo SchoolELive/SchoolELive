@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TabHost;
+
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.adapter.PublishAdapter;
 import com.xiaoyu.schoolelive.data.Publish;
@@ -38,7 +40,8 @@ public class HomeFragment extends Fragment {
     private View view;
     private ListView pub_list;
     private SwipeRefreshLayout swipeRefresh;
-
+    public static boolean isDis = true;
+    private TabHost tabHost;
 
     Handler handler = new Handler(){//利用handler进行页面更新
 
@@ -94,12 +97,44 @@ public class HomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+    public void setHomeTab(){
+        //找到TabHost的标签集合
+        tabHost = (TabHost)view.findViewById(R.id.home_tabhost);
+        /*如果没有继承TabActivity时，通过下面这种方法加载启动tabHost.这一句在源代码中,
+        会根据findviewbyId()找到对应的TabWidget,还需要根据findViewById()找到
+        这个TabWidget下面对应的标签页的内容.也就是FrameLayout这个显示控件.*/
+        tabHost.setup();
+
+        //TabSpec这个是标签页对象.
+        TabHost.TabSpec tabSpec = tabHost.newTabSpec("page1");//新建一个标签页对象.
+        tabSpec.setIndicator(("最火"));//设置这个标签页的标题和图片
+        tabSpec.setContent(R.id.page1);//指定标签页的内容页.
+        tabHost.addTab(tabSpec);//把这个标签页,添加到标签对象tabHost中.
+
+        tabSpec = tabHost.newTabSpec("page2");
+        tabSpec.setIndicator("最新");
+        tabSpec.setContent(R.id.page2);
+        tabHost.addTab(tabSpec);
+
+        tabSpec = tabHost.newTabSpec("page2");
+        tabSpec.setIndicator("八卦");
+        tabSpec.setContent(R.id.page3);
+        tabHost.addTab(tabSpec);
+
+        tabSpec = tabHost.newTabSpec("page2");
+        tabSpec.setIndicator("瞎逼逼");
+        tabSpec.setContent(R.id.page4);
+        tabHost.addTab(tabSpec);
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_main_menu_home,container,false);
 
         //设置"最火"分界面
         setHomeHotAll();
+        //设置首页标题栏
+        setHomeTab();
 
         date= new ArrayList<Publish>();
 
@@ -149,7 +184,7 @@ public class HomeFragment extends Fragment {
                 intent.putExtra("tmp_ymd", publish.getYmd());
                 intent.putExtra("tmp_date", publish.getDate());
                 intent.putExtra("tmp_content", publish.getContent());
-                intent.putExtra("tmp_head", publish.getHead());
+                //intent.putExtra("tmp_head", publish.getHead());
                 startActivity(intent);
             }
         });
@@ -183,15 +218,7 @@ public class HomeFragment extends Fragment {
 //        publish.setYmd(bundle.getString("tmp_ymd"));
 //        publish.setDate(bundle.getString("tmp_date"));
 
-        for (int i =0 ;i < 3;i++){
-            publish.setHead(R.drawable.dw_1);
-            publish.setName("tmp_name");
-            publish.setContent("tmp_content");
-            publish.setYmd("tmp_ymd");
-            publish.setDate("tmp_date");
-            //在listView中添加数据
-            adapterPublish.addPublish(publish);
-        }
+
         //绑定适配器
         pub_list.setAdapter(adapterPublish);
 
@@ -205,7 +232,7 @@ public class HomeFragment extends Fragment {
                 intent.putExtra("tmp_ymd", publish.getYmd());
                 intent.putExtra("tmp_date", publish.getDate());
                 intent.putExtra("tmp_content", publish.getContent());
-                intent.putExtra("tmp_head", publish.getHead());
+               // intent.putExtra("tmp_head", publish.getHead());
                 Bundle bundle = new Bundle();
 //                bundle.putInt("tmp_like_count", publish.getLike_count());
 //                bundle.putInt("tmp_comment_count", publish.getComment_count());

@@ -141,22 +141,27 @@ public class MainActivity extends BaseMainSlide{
                 switch (item.getItemId()) {
                     case R.id.navigation_home:
                         getSupportActionBar().setTitle("主页");
+                        HomeFragment.isDis = true;
                         fragmentTransaction.replace(R.id.main_menu_content, homeFragment,"home").commit();
                         return true;
                     case R.id.navigation_business:
                         getSupportActionBar().setTitle("商家");
+                        HomeFragment.isDis = false;
                         fragmentTransaction.replace(R.id.main_menu_content, businessFragment,"business").commit();
                         return true;
                     case R.id.navigation_secondhand:
                         getSupportActionBar().setTitle("旧货");
+                        HomeFragment.isDis = false;
                         fragmentTransaction.replace(R.id.main_menu_content, secondHandFragment,"secondhand").commit();
                         return true;
                     case R.id.navigation_partjob:
                         getSupportActionBar().setTitle("兼职");
+                        HomeFragment.isDis = false;
                         fragmentTransaction.replace(R.id.main_menu_content, partJobFragment,"partjob").commit();
                         return true;
                     case R.id.navigation_sysinform:
                         getSupportActionBar().setTitle("通知");
+                        HomeFragment.isDis = false;
                         fragmentTransaction.replace(R.id.main_menu_content, sysInformFragment,"inform").commit();
                         return true;
                 }

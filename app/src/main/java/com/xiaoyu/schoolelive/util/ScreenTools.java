@@ -2,7 +2,6 @@
 package com.xiaoyu.schoolelive.util;
 
 import android.content.Context;
-
 public class ScreenTools {
 
     private static ScreenTools mScreenTools;

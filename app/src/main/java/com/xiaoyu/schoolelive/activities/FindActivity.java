@@ -23,6 +23,7 @@ import com.xiaoyu.schoolelive.base.BaseSlideBack;
 import com.xiaoyu.schoolelive.custom.CustomFindHistory;
 import com.xiaoyu.schoolelive.util.RecordSQLiteOpenHelper;
 
+
 public class FindActivity extends BaseSlideBack {
 
     private EditText find_et;

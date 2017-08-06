@@ -211,7 +211,6 @@ public class PartJobAdapter extends RecyclerView.Adapter<PartJobAdapter.ViewHold
             return;
         }
     }
-
     public void setWagesPaid(final ViewHolder holder, int position, int type) {
         if (type == ConstantUtil.WagesPay_DAY) {
             holder.wagesPay.setText(R.string.daypaid);

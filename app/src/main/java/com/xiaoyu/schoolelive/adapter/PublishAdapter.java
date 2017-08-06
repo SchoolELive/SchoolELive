@@ -3,13 +3,10 @@ package com.xiaoyu.schoolelive.adapter;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +43,6 @@ import okhttp3.Response;
 /**
  * Created by NeekChaw on 2017-07-16.
  */
-
 public class PublishAdapter extends BaseAdapter {
     private ViewHolder holder = new ViewHolder();
     private Map<String,ImageView> map = new HashMap<>();
@@ -61,8 +57,8 @@ public class PublishAdapter extends BaseAdapter {
                 if(index != null){
                     Glide.with(context)
                             .load(ConstantUtil.SERVICE_PATH + str_trim(image))//得到图片的路径
-                            .error(R.drawable.qq_login)
-                            .into(map.get(index));
+                            .error(R.drawable.qq_login);
+                            //.into(map.get(index));
                 }
 
             }

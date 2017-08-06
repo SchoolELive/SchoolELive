@@ -40,7 +40,6 @@ import static com.xiaoyu.schoolelive.activities.UserCenterActivity.CODE_APP_REQU
 /**
  * Created by Administrator on 2017/7/11.
  */
-
 public class UserAlbumActivity extends BaseSlideBack {
     public static DisplayImageOptions mNormalImageOptions;
     //private static final int CODE_APP_REQUEST = 0xa2;//APP

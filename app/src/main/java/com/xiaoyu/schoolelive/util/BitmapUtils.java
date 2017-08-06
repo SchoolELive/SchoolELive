@@ -11,7 +11,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class BitmapUtils {
-
 	/**
      * 质量压缩方法
 	 * 

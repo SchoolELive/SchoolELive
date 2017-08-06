@@ -19,7 +19,6 @@ import com.xiaoyu.schoolelive.base.BaseSlideBack;
 /**
  * Created by Administrator on 2017/7/11.
  */
-
 public class SystemSettingActivity extends BaseSlideBack {
 
     private ListView listView;

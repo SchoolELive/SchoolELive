@@ -12,7 +12,6 @@ import com.xiaoyu.schoolelive.util.ScreenTools;
 
 import java.util.List;
 
-
 /**
  * Created by Pan_ on 2015/2/2.
  */

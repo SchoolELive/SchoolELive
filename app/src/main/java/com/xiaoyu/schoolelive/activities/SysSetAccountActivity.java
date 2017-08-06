@@ -80,7 +80,7 @@ public class SysSetAccountActivity extends BaseSlideBack {
 //                        });
                         break;
                     case 1://切换账号
-                        if (MainActivity.boo){
+                        /*if (MainActivity.boo){
                             new AlertDialog.Builder(SysSetAccountActivity.this)
                                     .setTitle("是否切换用户？")
                                     .setIcon(R.drawable.side_nav_bar)
@@ -98,7 +98,7 @@ public class SysSetAccountActivity extends BaseSlideBack {
                         }else{
                             Toast.makeText(SysSetAccountActivity.this,"尚未登录！",Toast.LENGTH_LONG).show();
                         }
-                        break;
+                        break;*/
                     case 2://账号绑定
                         Intent intent = new Intent(SysSetAccountActivity.this,SysSetBindActivity.class);
                         startActivity(intent);

@@ -15,7 +15,6 @@ import com.xiaoyu.schoolelive.base.BaseSlideBack;
 
 import com.xiaoyu.schoolelive.R;
 
-
 public class SysSetInformActivity extends BaseSlideBack {
     private CheckBox checkBox1,checkBox2,checkBox3;
 

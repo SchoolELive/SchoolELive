@@ -10,7 +10,6 @@ import java.util.zip.Inflater;
 /**
  * Created by NeekChaw on 2017-07-16.
  */
-
 public class Publish implements Serializable{
     public String photo_path = null;
     String name; //评论者

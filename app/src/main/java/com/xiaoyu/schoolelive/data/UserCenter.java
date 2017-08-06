@@ -3,7 +3,6 @@ package com.xiaoyu.schoolelive.data;
 /**
  * Created by NeekChaw on 2017-07-19.
  */
-
 public class UserCenter {
     String msg_year;
     String msg_month;

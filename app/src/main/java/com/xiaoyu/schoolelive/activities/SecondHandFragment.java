@@ -36,7 +36,6 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2017/7/15.
  */
-
 public class SecondHandFragment extends Fragment {
 
     @Bind(R.id.goods_recycler_view)

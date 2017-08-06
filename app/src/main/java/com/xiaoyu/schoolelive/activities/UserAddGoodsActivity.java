@@ -26,7 +26,6 @@ import me.iwf.photopicker.PhotoPreview;
 /**
  * Created by NeekChaw on 2017-07-30.
  */
-
 public class UserAddGoodsActivity extends BaseSlideBack {
     private PhotoAdapter photoAdapter;
     private ArrayList<String> selectedPhotos = new ArrayList<>();

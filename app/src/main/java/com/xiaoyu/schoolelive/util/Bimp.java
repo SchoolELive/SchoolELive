@@ -19,7 +19,6 @@ import java.util.ArrayList;
 /**
  * Created by Hankkin on 15/10/10.
  */
-
 public class Bimp {
     public static int max = 0;
 

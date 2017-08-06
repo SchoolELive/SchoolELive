@@ -12,7 +12,6 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-
 /**
  * Created by Pan_ on 2015/2/2.
  */

@@ -16,7 +16,6 @@ import com.xiaoyu.schoolelive.R;
 /**
  * Created by Administrator on 2017/7/11.
  */
-
 public class UserReportActivity extends BaseSlideBack {
 
     private EditText editText;

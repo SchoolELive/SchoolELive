@@ -7,7 +7,6 @@ import com.xiaoyu.schoolelive.R;
 /**
  * Created by Administrator on 2017/7/11.
  */
-
 public class BitmapSampleUtil {
 
     public static String[] IMAGES = new String[]{

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.xiaoyu.schoolelive.R;
-
 public class SysSetBindActivity extends AppCompatActivity {
 
     @Override

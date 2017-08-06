@@ -15,7 +15,6 @@ import com.xiaoyu.schoolelive.R;
 /**
  * Created by Administrator on 2017/7/11.
  */
-
 public class CustomUserCenterMsg extends LinearLayout {
     private TextView msg_year, msg_day, msg_month, msg_date, msg_type, words_msg,
             zhuanfa_count, comment_count, like_count;

@@ -16,6 +16,7 @@ import com.xiaoyu.schoolelive.base.BaseSlideBack;
  * Created by Administrator on 2017/7/11.
  */
 
+
 public class HistoryCollectActivity extends BaseHisColSlide {
     private TabHost tabHost;
     public void onCreate(Bundle savedInstanceState) {

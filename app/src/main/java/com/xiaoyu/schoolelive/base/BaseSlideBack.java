@@ -16,7 +16,6 @@ import com.xiaoyu.schoolelive.R;
 /**
  * Created by Administrator on 2017/7/11.
  */
-
 public class BaseSlideBack extends AppCompatActivity {
 
     //手指上下滑动时的最小速度

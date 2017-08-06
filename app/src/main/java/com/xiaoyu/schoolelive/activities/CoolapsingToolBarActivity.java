@@ -15,6 +15,7 @@ import com.xiaoyu.schoolelive.base.BaseSlideBack;
  * Created by Administrator on 2017/7/11.
  */
 
+
 public class CoolapsingToolBarActivity extends BaseSlideBack {
     @Override
     public void onCreate(Bundle savedInstanceState) {

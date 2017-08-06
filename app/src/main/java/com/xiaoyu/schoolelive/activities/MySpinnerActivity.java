@@ -17,6 +17,7 @@ import com.xiaoyu.schoolelive.R;
  * Created by Administrator on 2017/7/11.
  */
 
+
 public class MySpinnerActivity extends BaseSlideBack {
     private Spinner provinceSpinner = null;  //省级（省、直辖市）
     private Spinner citySpinner = null;     //地级市

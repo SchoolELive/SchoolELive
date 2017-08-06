@@ -8,7 +8,6 @@ import android.view.VelocityTracker;
 import android.widget.TabHost;
 
 import com.xiaoyu.schoolelive.R;
-
 public class BaseHisColSlide extends AppCompatActivity {
 
     //手指上下滑动时的最小速度
