@@ -37,7 +37,6 @@ import com.xiaoyu.schoolelive.util.ACache;
 import com.xiaoyu.schoolelive.util.BitmapUtils;
 import com.xiaoyu.schoolelive.util.ConstantUtil;
 import com.xiaoyu.schoolelive.util.HttpUtil;
-
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;

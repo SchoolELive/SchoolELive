@@ -1,5 +1,6 @@
 package com.xiaoyu.schoolelive.activities;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
@@ -17,17 +18,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.xiaoyu.schoolelive.base.BaseMainSlide;
 import com.xiaoyu.schoolelive.R;
+import com.xiaoyu.schoolelive.custom.CustomFloatingDraftButton;
 import com.xiaoyu.schoolelive.data.UserCenter;
+import com.xiaoyu.schoolelive.util.AnimationUtil;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 public class MainActivity extends BaseMainSlide{
     private Intent intent,intent_getUid;
     private long uid;//用户的id
-    private static boolean boo = false;
+    public static boolean boo = false;
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private HomeFragment homeFragment = new HomeFragment();
@@ -39,6 +48,21 @@ public class MainActivity extends BaseMainSlide{
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private String str_name,str_ymd,str_date,str_content;
+    private boolean fabOpened = false;
+    private TextView textViewCloud;
+
+    @Bind(R.id.floatingActionButton)
+    CustomFloatingDraftButton floatingDraftButton;
+    @Bind(R.id.floatingActionButton_liveness)
+    FloatingActionButton liveness;
+    @Bind(R.id.floatingActionButton_2)
+    FloatingActionButton floatingActionButton2;
+    @Bind(R.id.floatingActionButton_3)
+    FloatingActionButton floatingActionButton3;
+    @Bind(R.id.floatingActionButton_4)
+    FloatingActionButton floatingActionButton4;
+    @Bind(R.id.floatingActionButton_5)
+    FloatingActionButton floatingActionButton5;
     //引入侧滑栏布局
     public void mainInitSlidView(){
         //获取侧滑栏的头部
@@ -94,15 +118,77 @@ public class MainActivity extends BaseMainSlide{
     }
     //引入悬浮按钮
     public void mainInitFloatBar(){
-        //实例化悬浮按钮并绑定事件
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                intent = new Intent(MainActivity.this,UserAddMsgActivity.class);
-                startActivity(intent);
+        ButterKnife.bind(this);
+
+        floatingDraftButton.registerButton(liveness);
+        floatingDraftButton.registerButton(floatingActionButton2);
+        floatingDraftButton.registerButton(floatingActionButton3);
+        floatingDraftButton.registerButton(floatingActionButton4);
+        floatingDraftButton.registerButton(floatingActionButton5);
+
+        floatingDraftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //弹出动态button
+                AnimationUtil.slideButtons(MainActivity.this,floatingDraftButton);
             }
         });
+
+        liveness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //关闭动态Button
+                AnimationUtil.slideButtons(MainActivity.this,floatingDraftButton);
+            }
+        });
+//        textViewCloud =  (TextView)findViewById(R.id.cloud);
+//        textViewCloud.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                closeMenu(v);
+//            }
+//        });
+//        //实例化悬浮按钮并绑定事件
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        assert fab != null;
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View view) {
+//                if (!fabOpened){
+//                    openMenu(view);
+//                }else{
+//                    closeMenu(view);
+//                }
+//                intent = new Intent(MainActivity.this,UserAddMsgActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
+//    //打开蒙版
+//    public void openMenu(View view){
+//        ObjectAnimator animator = ObjectAnimator.ofFloat(view,"rotation",0,20,-135);
+//        animator.setDuration(500);
+//        animator.start();
+//
+//        textViewCloud.setVisibility(View.VISIBLE);
+//        AlphaAnimation alphaAnimation = new AlphaAnimation(0,0.7f);
+//        alphaAnimation.setDuration(500);
+//        alphaAnimation.setFillAfter(true);
+//        textViewCloud.startAnimation(alphaAnimation);
+//
+//        fabOpened = true;
+//    }
+//    //关闭蒙版
+//    public void closeMenu(View view){
+//        ObjectAnimator animator = ObjectAnimator.ofFloat(view,"rotation",-135,20,0);
+//        animator.setDuration(500);
+//        animator.start();
+//
+//        AlphaAnimation alphaAnimation = new AlphaAnimation(0.7f,0);
+//        alphaAnimation.setDuration(500);
+//        textViewCloud.startAnimation(alphaAnimation);
+//        textViewCloud.setVisibility(View.GONE);
+//        fabOpened = false;
+//    }
     //引入标题栏
     private void mainInitToolBar(){
         //标题栏

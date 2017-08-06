@@ -19,6 +19,7 @@
     <color name="view_color">#d3d3d3</color>
     <color name="meihong">#DE1F73</color>
     <color name="pink">#F699B4</color>
+    <color name="primary_dark">#ffaa44</color>
     <!--兼职类型-->
     <!--演员-->
     <color name="yanyuan">#248888</color>

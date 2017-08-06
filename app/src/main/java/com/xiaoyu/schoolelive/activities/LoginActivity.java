@@ -5,16 +5,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.StrictMode;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -46,6 +41,7 @@ public class LoginActivity extends BaseSlideBack implements View.OnClickListener
             }else{
                if(password.equals(data)){
                    Toast.makeText(LoginActivity.this,"登陆中", Toast.LENGTH_SHORT).show();
+                   MainActivity.boo = true;
                    if(remember_pass.isChecked()){//如果用户点击了记住密码
                        editor.putLong("uid",uid);//将用户的实际帐号密码存到shareperference中，
                        editor.putString("Password",data);//用来设置记录的帐号和密码
