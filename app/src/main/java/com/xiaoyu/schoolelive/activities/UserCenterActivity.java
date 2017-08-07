@@ -17,6 +17,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -121,10 +122,6 @@ public class UserCenterActivity extends BaseSlideBack {
                     .into(imageView);
         }
 
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
         collapsingToolbar.setTitle("紫炎");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,8 +129,10 @@ public class UserCenterActivity extends BaseSlideBack {
                 onBackPressed();
             }
         });
-        collapsingToolbar.setExpandedTitleColor(Color.WHITE);
-        collapsingToolbar.setCollapsedTitleTextColor(Color.BLACK);
+        collapsingToolbar.setExpandedTitleGravity(Gravity.BOTTOM|Gravity.CENTER);
+        collapsingToolbar.setExpandedTitleColor(Color.BLACK);
+        collapsingToolbar.setCollapsedTitleGravity(Gravity.LEFT);
+        collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -382,22 +381,6 @@ public class UserCenterActivity extends BaseSlideBack {
         } else {
             return false;
         }
-    }
-
-    //导入菜单项
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_change_info, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public File saveFile(Bitmap bm, String fileName) throws IOException {//将Bitmap类型的图片转化成file类型，便于上传到服务器

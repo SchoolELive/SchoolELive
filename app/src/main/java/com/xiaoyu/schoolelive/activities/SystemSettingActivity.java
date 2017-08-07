@@ -82,6 +82,7 @@ public class SystemSettingActivity extends BaseSlideBack {
             }
         });
 
+        backLogin = (Button)findViewById(R.id.sysset_back_login);
         backLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,12 +94,11 @@ public class SystemSettingActivity extends BaseSlideBack {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     MainActivity.boo = false;
+                                    Toast.makeText(SystemSettingActivity.this,"已退出！",Toast.LENGTH_LONG).show();
                                 }
                             })
                             .setNegativeButton("取消", null)
                             .show();
-
-                    Toast.makeText(SystemSettingActivity.this,"已退出！",Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(SystemSettingActivity.this,"尚未登录！",Toast.LENGTH_LONG).show();
                 }

@@ -54,7 +54,9 @@
     <!--周结-->
     <color name="weekpaid">#866667</color>
     <!--月结-->
-    <color name="monthpaid">#ed8a63</color>
+    <color name="monthpaid">#f3b096</color>
     <!--完工结算-->
     <color name="afterworkpaid">#F05D5E</color>
+
+    <color name="kong">#00000000</color>
 </resources>

@@ -96,7 +96,7 @@ public class AnimationUtil{
         //主按钮的宽度
         int buttonWidth = button.getWidth();
         //展开按钮与主按钮的间隔(中心至中心的距离)
-        int radius = 6*buttonWidth/4;
+        int radius = 5*buttonWidth/4;
         //展开按钮之间的间隔(中心至中心的距离)
         int gap = 5*buttonWidth/4;
 
@@ -206,7 +206,6 @@ public class AnimationUtil{
                 slideview(faButton,0,buttonLeft-faButtonLeft,0,buttonTop-faButtonTop+150,500,0,true,false);
             }
         }
-
     }
 
     /**旋转的动画

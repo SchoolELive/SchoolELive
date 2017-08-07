@@ -54,7 +54,7 @@ public class MainActivity extends BaseMainSlide{
     @Bind(R.id.floatingActionButton)
     CustomFloatingDraftButton floatingDraftButton;
     @Bind(R.id.floatingActionButton_liveness)
-    FloatingActionButton liveness;
+    FloatingActionButton floatingActionButton1;
     @Bind(R.id.floatingActionButton_2)
     FloatingActionButton floatingActionButton2;
     @Bind(R.id.floatingActionButton_3)
@@ -120,7 +120,7 @@ public class MainActivity extends BaseMainSlide{
     public void mainInitFloatBar(){
         ButterKnife.bind(this);
 
-        floatingDraftButton.registerButton(liveness);
+        floatingDraftButton.registerButton(floatingActionButton1);
         floatingDraftButton.registerButton(floatingActionButton2);
         floatingDraftButton.registerButton(floatingActionButton3);
         floatingDraftButton.registerButton(floatingActionButton4);
@@ -134,11 +134,13 @@ public class MainActivity extends BaseMainSlide{
             }
         });
 
-        liveness.setOnClickListener(new View.OnClickListener() {
+        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //关闭动态Button
                 AnimationUtil.slideButtons(MainActivity.this,floatingDraftButton);
+                Intent intent = new Intent(MainActivity.this, UserAddMsgActivity.class);
+                startActivity(intent);
             }
         });
 //        textViewCloud =  (TextView)findViewById(R.id.cloud);
