@@ -9,6 +9,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -79,12 +81,13 @@ public class RegistActivity extends AppCompatActivity {
         });
     }
     private void register(){
+
         if(rg_uid.getText().toString().isEmpty()||rg_pwd.getText().toString().isEmpty()){
             Toast.makeText(RegistActivity.this,"你还没有输入帐号或密码", Toast.LENGTH_SHORT).show();
             return;
         }
         if(rg_uid.getText().toString().length()<6||rg_pwd.getText().toString().length()<6){
-            Toast.makeText(RegistActivity.this,"注册的帐号或密码不能小与6位", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistActivity.this,"注册的帐号或密码不能小于6位", Toast.LENGTH_SHORT).show();
             return;
         }
         rg_uid_content = Long.parseLong(rg_uid.getText().toString());
