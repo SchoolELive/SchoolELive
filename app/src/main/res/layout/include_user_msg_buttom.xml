@@ -11,7 +11,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/pub_zhuanfa_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             android:textColor="@color/black"
             android:text="0"/>
 
-        <ImageButton
+        <ImageView
             android:id="@+id/pub_comment_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:textColor="@color/black"
             android:text="0"/>
 
-        <ImageButton
+        <ImageView
             android:id="@+id/pub_like_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
