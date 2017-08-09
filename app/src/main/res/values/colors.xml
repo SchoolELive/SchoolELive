@@ -19,6 +19,7 @@
     <color name="view_color">#d3d3d3</color>
     <color name="meihong">#DE1F73</color>
     <color name="pink">#F699B4</color>
+    <color name="primary_dark">#ffaa44</color>
     <!--兼职类型-->
     <!--演员-->
     <color name="yanyuan">#248888</color>
@@ -53,7 +54,9 @@
     <!--周结-->
     <color name="weekpaid">#866667</color>
     <!--月结-->
-    <color name="monthpaid">#ed8a63</color>
+    <color name="monthpaid">#f3b096</color>
     <!--完工结算-->
     <color name="afterworkpaid">#F05D5E</color>
+
+    <color name="kong">#00000000</color>
 </resources>

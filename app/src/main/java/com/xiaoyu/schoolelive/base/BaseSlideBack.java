@@ -65,8 +65,7 @@ public class BaseSlideBack extends AppCompatActivity {
                 //3.y轴上（即上下滑动的速度）<XSPEED_MIN，如果大于，则认为用户意图是在上下滑动而非左滑结束Activity
                 if (distanceX > XDISTANCE_MIN && (distanceY < YDISTANCE_MIN && distanceY > -YDISTANCE_MIN) && ySpeed < YSPEED_MIN) {
                     DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-                    BottomNavigationView bnv = (BottomNavigationView)findViewById(R.id.navigation);
-                    if (drawerLayout == null && bnv == null){
+                    if (drawerLayout == null){
                         finish();
                     }else {
                         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
@@ -74,7 +73,9 @@ public class BaseSlideBack extends AppCompatActivity {
                             drawerLayout.openDrawer(GravityCompat.START);
                         }
                     }
+
                 }
+
                 break;
             case MotionEvent.ACTION_UP:
                 recycleVelocityTracker();

@@ -1,13 +1,10 @@
 package com.xiaoyu.schoolelive.base;
 
-import android.graphics.Color;
-
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
-import android.view.View;
 import android.widget.TabHost;
 
 import com.xiaoyu.schoolelive.R;
@@ -34,6 +31,8 @@ public class BaseMainSlide extends AppCompatActivity{
     private float yMove;
     //用于计算手指滑动的速度。
     private VelocityTracker mVelocityTracker;
+
+    private boolean isClickFloatingButton = false;
     //手势事件
     public boolean dispatchTouchEvent(MotionEvent event) {
         createVelocityTracker(event);
@@ -42,6 +41,7 @@ public class BaseMainSlide extends AppCompatActivity{
                 case MotionEvent.ACTION_DOWN:
                     xDown = event.getRawX();
                     yDown = event.getRawY();
+
                     break;
                 case MotionEvent.ACTION_MOVE:
                     break;
@@ -60,7 +60,7 @@ public class BaseMainSlide extends AppCompatActivity{
                     //3.y轴上（即上下滑动的速度）<XSPEED_MIN，如果大于，则认为用户意图是在上下滑动而非左滑结束Activity
                     TabHost tabHost = (TabHost) findViewById(R.id.home_tabhost);
 
-                    if (distanceX > XDISTANCE_MIN && (distanceY < YDISTANCE_MIN && distanceY > -YDISTANCE_MIN) && ySpeed < YSPEED_MIN) {
+                    if ( distanceX > XDISTANCE_MIN && (distanceY < YDISTANCE_MIN && distanceY > -YDISTANCE_MIN) && ySpeed < YSPEED_MIN) {
                         if (tabHost.getCurrentTab() == 3) {
                             tabHost.setCurrentTab(2);
                         } else if (tabHost.getCurrentTab() == 2) {

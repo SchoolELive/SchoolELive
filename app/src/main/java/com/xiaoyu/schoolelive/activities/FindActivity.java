@@ -40,7 +40,6 @@ public class FindActivity extends BaseSlideBack {
         setContentView(R.layout.activity_find);
         // 初始化控件
         initView();
-
         // 清空搜索历史
         find_history_clear.setOnClickListener(new View.OnClickListener() {
             @Override

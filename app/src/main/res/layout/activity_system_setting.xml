@@ -18,8 +18,9 @@
         android:layout_below="@id/syssetToolBar">
     </ListView>
     <Button
+        android:id="@+id/sysset_back_login"
         android:layout_margin="1dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/systemSetting_listview"
         android:layout_centerHorizontal="true"
