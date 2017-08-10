@@ -9,6 +9,7 @@ import android.widget.TabHost;
 
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.activities.HomeFragment;
+import com.xiaoyu.schoolelive.activities.MainActivity;
 
 /**
  * Created by Administrator on 2017/7/11.
@@ -32,7 +33,6 @@ public class BaseMainSlide extends AppCompatActivity{
     //用于计算手指滑动的速度。
     private VelocityTracker mVelocityTracker;
 
-    private boolean isClickFloatingButton = false;
     //手势事件
     public boolean dispatchTouchEvent(MotionEvent event) {
         createVelocityTracker(event);
@@ -48,42 +48,9 @@ public class BaseMainSlide extends AppCompatActivity{
                 case MotionEvent.ACTION_UP:
                     xMove = event.getRawX();
                     yMove = event.getRawY();
-                    //滑动的距离
-                    final int distanceX = (int) (xMove - xDown);
-                    int distanceFX = (int) (xDown - xMove);
-                    int distanceY = (int) (yMove - yDown);
-                    //获取顺时速度
-                    int ySpeed = getScrollVelocity();
-                    //关闭Activity需满足以下条件：
-                    //1.x轴滑动的距离>XDISTANCE_MIN
-                    //2.y轴滑动的距离在YDISTANCE_MIN范围内
-                    //3.y轴上（即上下滑动的速度）<XSPEED_MIN，如果大于，则认为用户意图是在上下滑动而非左滑结束Activity
-                    TabHost tabHost = (TabHost) findViewById(R.id.home_tabhost);
 
-                    if ( distanceX > XDISTANCE_MIN && (distanceY < YDISTANCE_MIN && distanceY > -YDISTANCE_MIN) && ySpeed < YSPEED_MIN) {
-                        if (tabHost.getCurrentTab() == 3) {
-                            tabHost.setCurrentTab(2);
-                        } else if (tabHost.getCurrentTab() == 2) {
-                            tabHost.setCurrentTab(1);
-                        } else if (tabHost.getCurrentTab() == 1) {
-                            tabHost.setCurrentTab(0);
-                        } else if (tabHost.getCurrentTab() == 0) {
-                            DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-                            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                            } else {
-                                drawerLayout.openDrawer(GravityCompat.START);
-                            }
-                        }
-                    }
-                    if (distanceFX > XDISTANCE_MIN && (distanceY < YDISTANCE_MIN && distanceY > -YDISTANCE_MIN) && ySpeed < YSPEED_MIN) {
-                        if (tabHost.getCurrentTab() == 0) {
-                            tabHost.setCurrentTab(1);
-                        } else if (tabHost.getCurrentTab() == 1) {
-                            tabHost.setCurrentTab(2);
-                        } else if (tabHost.getCurrentTab() == 2) {
-                            tabHost.setCurrentTab(3);
-                        }
-                    }
+                    mainTabChange();
+
                     recycleVelocityTracker();
                     break;
                 default:
@@ -91,6 +58,44 @@ public class BaseMainSlide extends AppCompatActivity{
             }
         }
         return super.dispatchTouchEvent(event);
+    }
+    //分页滑动
+    public void mainTabChange(){
+        //滑动的距离
+        final int distanceX = (int) (xMove - xDown);
+        int distanceFX = (int) (xDown - xMove);
+        int distanceY = (int) (yMove - yDown);
+        //获取顺时速度
+        int ySpeed = getScrollVelocity();
+        //关闭Activity需满足以下条件：
+        //1.x轴滑动的距离>XDISTANCE_MIN
+        //2.y轴滑动的距离在YDISTANCE_MIN范围内
+        //3.y轴上（即上下滑动的速度）<XSPEED_MIN，如果大于，则认为用户意图是在上下滑动而非左滑结束Activity
+        TabHost tabHost = (TabHost) findViewById(R.id.home_tabhost);
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if ( distanceX > XDISTANCE_MIN && (distanceY < YDISTANCE_MIN && distanceY > -YDISTANCE_MIN) && ySpeed < YSPEED_MIN) {
+            if (tabHost.getCurrentTab() == 3) {
+                tabHost.setCurrentTab(2);
+            } else if (tabHost.getCurrentTab() == 2) {
+                tabHost.setCurrentTab(1);
+            } else if (tabHost.getCurrentTab() == 1) {
+                tabHost.setCurrentTab(0);
+            } else if (tabHost.getCurrentTab() == 0) {
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                } else {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        }
+        if (distanceFX > XDISTANCE_MIN && (distanceY < YDISTANCE_MIN && distanceY > -YDISTANCE_MIN) && ySpeed < YSPEED_MIN) {
+            if (tabHost.getCurrentTab() == 0) {
+                tabHost.setCurrentTab(1);
+            } else if (tabHost.getCurrentTab() == 1) {
+                tabHost.setCurrentTab(2);
+            } else if (tabHost.getCurrentTab() == 2) {
+                tabHost.setCurrentTab(3);
+            }
+        }
     }
     //创建VelocityTracker对象，并将触摸界面的滑动事件加入到VelocityTracker当中。@param event
     private void createVelocityTracker(MotionEvent event) {

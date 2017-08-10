@@ -54,9 +54,9 @@ public class MainActivity extends BaseMainSlide{
     @Bind(R.id.floatingActionButton)
     CustomFloatingDraftButton floatingDraftButton;
     @Bind(R.id.floatingActionButton_liveness)
-    FloatingActionButton floatingActionButton1;
+    FloatingActionButton addMsgFloatingButton;
     @Bind(R.id.floatingActionButton_2)
-    FloatingActionButton floatingActionButton2;
+    FloatingActionButton addGoodsFloatingButton;
     @Bind(R.id.floatingActionButton_3)
     FloatingActionButton floatingActionButton3;
     @Bind(R.id.floatingActionButton_4)
@@ -120,8 +120,8 @@ public class MainActivity extends BaseMainSlide{
     public void mainInitFloatBar(){
         ButterKnife.bind(this);
 
-        floatingDraftButton.registerButton(floatingActionButton1);
-        floatingDraftButton.registerButton(floatingActionButton2);
+        floatingDraftButton.registerButton(addMsgFloatingButton);
+        floatingDraftButton.registerButton(addGoodsFloatingButton);
         floatingDraftButton.registerButton(floatingActionButton3);
         floatingDraftButton.registerButton(floatingActionButton4);
         floatingDraftButton.registerButton(floatingActionButton5);
@@ -133,8 +133,7 @@ public class MainActivity extends BaseMainSlide{
                 AnimationUtil.slideButtons(MainActivity.this,floatingDraftButton);
             }
         });
-
-        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
+        addMsgFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //关闭动态Button
@@ -143,6 +142,15 @@ public class MainActivity extends BaseMainSlide{
                 startActivity(intent);
             }
         });
+        addGoodsFloatingButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //关闭动态Button
+                AnimationUtil.slideButtons(MainActivity.this,floatingDraftButton);
+                Intent intent = new Intent(MainActivity.this, UserAddGoodsActivity.class);
+                startActivity(intent);
+            }
+        });
+
 //        textViewCloud =  (TextView)findViewById(R.id.cloud);
 //        textViewCloud.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -228,29 +236,19 @@ public class MainActivity extends BaseMainSlide{
                 fragmentTransaction = fragmentManager.beginTransaction();
                 switch (item.getItemId()) {
                     case R.id.navigation_home:
-                        getSupportActionBar().setTitle("主页");
-                        HomeFragment.isDis = true;
-                        fragmentTransaction.replace(R.id.main_menu_content, homeFragment,"home").commit();
+                        mainSetHomeFrament();
                         return true;
                     case R.id.navigation_business:
-                        getSupportActionBar().setTitle("商家");
-                        HomeFragment.isDis = false;
-                        fragmentTransaction.replace(R.id.main_menu_content, businessFragment,"business").commit();
+                        mainSetBusinessFrament();
                         return true;
                     case R.id.navigation_secondhand:
-                        getSupportActionBar().setTitle("旧货");
-                        HomeFragment.isDis = false;
-                        fragmentTransaction.replace(R.id.main_menu_content, secondHandFragment,"secondhand").commit();
+                        mainSetSecondFrament();
                         return true;
                     case R.id.navigation_partjob:
-                        getSupportActionBar().setTitle("兼职");
-                        HomeFragment.isDis = false;
-                        fragmentTransaction.replace(R.id.main_menu_content, partJobFragment,"partjob").commit();
+                        mainSetPatjobFrament();
                         return true;
                     case R.id.navigation_sysinform:
-                        getSupportActionBar().setTitle("通知");
-                        HomeFragment.isDis = false;
-                        fragmentTransaction.replace(R.id.main_menu_content, sysInformFragment,"inform").commit();
+                        mainSetSysinformFrament();
                         return true;
                 }
                 return false;
@@ -329,6 +327,33 @@ public class MainActivity extends BaseMainSlide{
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void mainSetHomeFrament(){
+        getSupportActionBar().setTitle("主页");
+        HomeFragment.isDis = true;
+        fragmentTransaction.replace(R.id.main_menu_content, homeFragment,"home").commit();
+    }
+    public void mainSetPatjobFrament(){
+        getSupportActionBar().setTitle("兼职");
+        HomeFragment.isDis = false;
+        fragmentTransaction.replace(R.id.main_menu_content, partJobFragment,"partjob").commit();
+    }
+    public void mainSetSecondFrament(){
+        getSupportActionBar().setTitle("旧货");
+        HomeFragment.isDis = false;
+        fragmentTransaction.replace(R.id.main_menu_content, secondHandFragment,"secondhand").commit();
+
+    }
+    public void mainSetBusinessFrament(){
+        getSupportActionBar().setTitle("商家");
+        HomeFragment.isDis = false;
+        fragmentTransaction.replace(R.id.main_menu_content, businessFragment,"business").commit();
+    }
+    public void mainSetSysinformFrament(){
+        getSupportActionBar().setTitle("通知");
+        HomeFragment.isDis = false;
+        fragmentTransaction.replace(R.id.main_menu_content, sysInformFragment,"inform").commit();
     }
 
     protected void onCreate(Bundle savedInstanceState) {

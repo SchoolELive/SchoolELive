@@ -29,7 +29,7 @@
                 android:textSize="@dimen/bar_text_size" />
 
             <TextView
-                android:id="@+id/all_cmt_count"
+                android:id="@+id/all_cmt_count2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
@@ -45,7 +45,7 @@
             android:paddingRight="15dp">
 
             <TextView
-                android:id="@+id/all_like_count"
+                android:id="@+id/all_like_count2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"

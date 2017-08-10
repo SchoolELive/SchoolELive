@@ -108,6 +108,7 @@ public class CustomFloatingDraftButton extends FloatingActionButton implements V
                 int distance = (int) event.getRawX() - originX + (int)event.getRawY() - originY;
                 Log.e("DIstance",distance+"");
                 if (Math.abs(distance)<20) {
+
                     //当变化太小的时候什么都不做 OnClick执行
                 }else {
                     return true;

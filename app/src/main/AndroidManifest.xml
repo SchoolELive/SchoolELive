@@ -123,6 +123,7 @@
 
         <activity android:name="com.xiaoyu.schoolelive.activities.PreViewImgActivity" />
         <activity android:name=".activities.SysSetBindActivity"/>
+        <activity android:name=".activities.UserAddGoodsActivity"/>
     </application>
 
 </manifest>

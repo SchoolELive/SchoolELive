@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -93,7 +94,7 @@ public class UserCenterActivity extends BaseSlideBack {
         }
     };
     final String[] items = new String[]{"拍照", "从手机相册选择",
-            "从e生活相册选择", "查看头像", "编辑资料"};
+            "从e生活相册选择", "查看头像"};
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,11 +164,6 @@ public class UserCenterActivity extends BaseSlideBack {
                                 img_dialog.setCanceledOnTouchOutside(true);// 点击外部区域关闭
                                 img_dialog.show();
                                 break;
-                            case 4://编辑资料
-                                Intent intent = new Intent(UserCenterActivity.this, UserInfo.class);
-                                intent.putExtra("uid", uid);
-                                startActivity(intent);
-                                break;
                         }
                     }
                 });
@@ -181,8 +177,22 @@ public class UserCenterActivity extends BaseSlideBack {
                 dialog.getWindow().setAttributes(params);
             }
         });
+
+        setUserenterFloatingButton();
     }
 
+    //悬浮按钮
+    private void setUserenterFloatingButton(){
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserCenterActivity.this, UserInfo.class);
+                intent.putExtra("uid", uid);
+                startActivity(intent);
+            }
+        });
+    }
     private void initView() {
 
         // 初始化评论列表
