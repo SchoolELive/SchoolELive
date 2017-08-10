@@ -29,6 +29,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    //权限申请
+    compile 'pub.devrel:easypermissions:0.4.3'
     //分享的依赖库
     compile files('libs/MobCommons-2017.0608.1618.jar')
     //
@@ -46,6 +48,10 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.yalantis:ucrop:2.2.0'
     compile 'com.nineoldandroids:library:2.4.0'
+    //九图依赖库
+    //compile 'com.w4lle.library:NineLayout:1.0.0'
+    compile 'cn.bingoogolapple:bga-adapter:1.1.5@aar'
+    compile 'cn.bingoogolapple:bga-photopicker:1.2.3@aar'
     //
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     //圆形图片的依赖库

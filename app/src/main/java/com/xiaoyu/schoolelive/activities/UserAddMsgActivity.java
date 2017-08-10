@@ -1,6 +1,5 @@
 package com.xiaoyu.schoolelive.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,42 +10,26 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.adapter.PhotoAdapter;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
-import com.xiaoyu.schoolelive.data.Publish;
-import com.xiaoyu.schoolelive.util.BitmapUtils;
-import com.xiaoyu.schoolelive.util.ConstantUtil;
-import com.xiaoyu.schoolelive.util.HttpUtil;
 import com.xiaoyu.schoolelive.util.RecyclerItemClickListener;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import me.iwf.photopicker.PhotoPicker;
 import me.iwf.photopicker.PhotoPreview;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+
 public class UserAddMsgActivity extends BaseSlideBack {
 
     private EditText add_msg_textContent;
@@ -194,26 +177,47 @@ public class UserAddMsgActivity extends BaseSlideBack {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * 点击发送按钮返回result值，由homeFragment处理
+     */
+    //    public void onClick(View v) {
+//        if (v.getId() == R.id.tv_moment_add_choice_photo) {
+//            choicePhotoWrapper();
+//        } else if (v.getId() == R.id.tv_moment_add_publish) {
+//            String content = mContentEt.getText().toString().trim();
+//            if (content.length() == 0 && mPhotosSnpl.getItemCount() == 0) {
+//                Toast.makeText(this, "必须填写这一刻的想法或选择照片！", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//
+//            Intent intent = new Intent();
+//            intent.putExtra(EXTRA_MOMENT, new Moment(mContentEt.getText().toString().trim(), mPhotosSnpl.getData()));
+//            setResult(RESULT_OK, intent);
+//            finish();
+//        }
+//    }
     //发送数据
     public void sendUserMessage() {
-        if (add_msg_textContent.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(), "动态不能为空！", Toast.LENGTH_SHORT).show();
-        } else {
-            final ProgressDialog progressDialog = new ProgressDialog(UserAddMsgActivity.this);
-            progressDialog.setMessage("发帖中...");
-            progressDialog.setCancelable(true);
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.show();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                   // upLoad_with_image();
-                    upload_with_text();
-                    progressDialog.dismiss();//发帖完成消除progressDialog
-                }
-            }).start();
-            Intent intent = new Intent(UserAddMsgActivity.this,MainActivity.class);
-            startActivity(intent);
+//        if (add_msg_textContent.getText().toString().equals("")) {
+//            Toast.makeText(getApplicationContext(), "动态不能为空！", Toast.LENGTH_SHORT).show();
+//        } else {
+//            final ProgressDialog progressDialog = new ProgressDialog(UserAddMsgActivity.this);
+//            progressDialog.setMessage("发帖中...");
+//            progressDialog.setCancelable(true);
+//            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            progressDialog.show();
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    // upLoad_with_image();
+//                    upload_with_text();
+//                    progressDialog.dismiss();//发帖完成消除progressDialog
+//                }
+//            }).start();
+//            Intent intent = new Intent(UserAddMsgActivity.this, MainActivity.class);
+//            startActivity(intent);
+
+
             // 生成数据
 //                       publish = new Publish();
 //            //获取年月日
@@ -240,55 +244,58 @@ public class UserAddMsgActivity extends BaseSlideBack {
 //            }).start();
         }
     }
-    private void upload_with_text(){
-        RequestBody requestBody = new FormBody.Builder()
-                .add("msg_id","123456")
-                .add("msg_content",add_msg_textContent.getText().toString())
 
-                .build();
-        HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH + "get_msg_text.php", requestBody, new Callback() {
-            public void onFailure(Call call, IOException e) {
+//    private void upload_with_text() {
+//        RequestBody requestBody = new FormBody.Builder()
+//                .add("msg_id", "123456")
+//                .add("msg_content", add_msg_textContent.getText().toString())
+//
+//                .build();
+//        HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH + "get_msg_text.php", requestBody, new Callback() {
+//            public void onFailure(Call call, IOException e) {
+//
+//            }
+//
+//            public void onResponse(Call call, Response response) throws IOException {
+//                Log.i("aa", response.body().string());
+//            }
+//        });
+//
+//    }
 
-            }
-            public void onResponse(Call call, Response response) throws IOException {
-                Log.i("aa",response.body().string());
-            }
-        });
-
-    }
-    private void upLoad_with_image() {
-        final String url = ConstantUtil.SERVICE_PATH + "upload.php";
-        MultipartBody.Builder mbody = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        for (int i = 0; i < photos.size(); i++) {
-            File file = new File(photos.get(i));//得到选择的图片
-            String str = BitmapUtils.compressImageUpload(file.getPath());//得到压缩过的文件路径
-            File compress_file = new File(str);//得到新文件
-            mbody.addFormDataPart("image" + i, compress_file.getName(), RequestBody.create(MediaType.parse("application/octet-stream"), compress_file));//添加到mbody中
-        }
-        RequestBody requestBody = mbody.build();
-        Request request = new Request.Builder()
-                .url(url)
-                .post(requestBody)
-                .build();
-        final okhttp3.OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
-        OkHttpClient okHttpClient = httpBuilder
-                //设置超时
-                .connectTimeout(3000, TimeUnit.MINUTES)
-                .readTimeout(3000, TimeUnit.MINUTES)
-                .writeTimeout(3000, TimeUnit.MINUTES)
-                .build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            public void onFailure(Call call, IOException e) {
-                Log.e("aa", "uploadMultiFile() e=" + e);
-            }
-            public void onResponse(Call call, Response response) throws IOException {
-                Log.i("bb", "uploadMultiFile() response=" + response.body().string());
-                BitmapUtils.deleteCacheFile();//清除缓存
-            }
-        });
+//    private void upLoad_with_image() {
+//        final String url = ConstantUtil.SERVICE_PATH + "upload.php";
+//        MultipartBody.Builder mbody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+//        for (int i = 0; i < photos.size(); i++) {
+//            File file = new File(photos.get(i));//得到选择的图片
+//            String str = BitmapUtils.compressImageUpload(file.getPath());//得到压缩过的文件路径
+//            File compress_file = new File(str);//得到新文件
+//            mbody.addFormDataPart("image" + i, compress_file.getName(), RequestBody.create(MediaType.parse("application/octet-stream"), compress_file));//添加到mbody中
+//        }
+//        RequestBody requestBody = mbody.build();
+//        Request request = new Request.Builder()
+//                .url(url)
+//                .post(requestBody)
+//                .build();
+//        final okhttp3.OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
+//        OkHttpClient okHttpClient = httpBuilder
+//                //设置超时
+//                .connectTimeout(3000, TimeUnit.MINUTES)
+//                .readTimeout(3000, TimeUnit.MINUTES)
+//                .writeTimeout(3000, TimeUnit.MINUTES)
+//                .build();
+//        okHttpClient.newCall(request).enqueue(new Callback() {
+//            public void onFailure(Call call, IOException e) {
+//                Log.e("aa", "uploadMultiFile() e=" + e);
+//            }
+//
+//            public void onResponse(Call call, Response response) throws IOException {
+//                Log.i("bb", "uploadMultiFile() response=" + response.body().string());
+//                BitmapUtils.deleteCacheFile();//清除缓存
+//            }
+//        });
+//
+//
+//    }
 
 
-    }
-
-
-}

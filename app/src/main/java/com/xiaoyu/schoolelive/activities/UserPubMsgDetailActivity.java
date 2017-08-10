@@ -1,5 +1,6 @@
 package com.xiaoyu.schoolelive.activities;
 
+import android.Manifest;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
@@ -20,7 +22,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -37,15 +38,25 @@ import com.xiaoyu.schoolelive.custom.ListViewForScrollView;
 import com.xiaoyu.schoolelive.data.Comment;
 import com.xiaoyu.schoolelive.util.ShowShareUtil;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.zip.Inflater;
 
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPreviewActivity;
+import cn.bingoogolapple.photopicker.widget.BGANinePhotoLayout;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
+import static com.xiaoyu.schoolelive.activities.HomeFragment.REQUEST_CODE_PERMISSION_PHOTO_PREVIEW;
+import static com.xiaoyu.schoolelive.activities.HomeFragment.mDownLoadableCb;
+
 /**
  * Created by NeekChaw on 2017-07-13.
  */
+public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnClickListener, BGANinePhotoLayout.Delegate {
 public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnClickListener{
     private int DEFAULT_HEAD = R.drawable.icon_default_head;
 
@@ -59,14 +70,17 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
     private EditText comment_content;
     private Button comment_send;
     private RelativeLayout rl_comment;
+    private ImageView btn_comment;
+    private LinearLayout rl_enroll;
     //主题与评论相关控件
-    private ImageButton btn_pub_comment, btn_pub_like, btn_pub_share;
+    private ImageView btn_pub_comment, btn_pub_like, btn_pub_share;
     private TextView pub_comment_count, pub_like_count, pub_share_count;
     private TextView pub_content, pub_nickname;
     private TextView all_like_count, all_cmt_count,all_like_count2,all_cmt_count2;
     private TextView pub_ymd, pub_date;
     private ImageView pub_head;
-    private ImageButton btn_pub_more;
+    private ImageView btn_pub_more;
+    private BGANinePhotoLayout mCurrentClickNpl;
     //
     private ListView comment_list;
     private CommentAdapter adapterComment;
@@ -89,6 +103,8 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //让布局向上移来显示软键盘
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_user_pub_msg_detail);
 
         initView();
@@ -108,6 +124,7 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
         all_like_count2.setText(pub_like_count.getText());
         all_cmt_count2.setText(pub_comment_count.getText());
     }
+
     private void initView() {
 
         // 初始化评论列表
@@ -164,6 +181,8 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
             }
         });
 //        myScrollView.smoothScrollTo(0,0);
+        btn_comment = (ImageView) findViewById(R.id.comment);
+        rl_enroll = (LinearLayout) findViewById(R.id.rl_enroll);
         setListener();
     }
 
@@ -171,6 +190,23 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
         Intent intent = getIntent();
 
         //初始化主题发布者信息
+        mCurrentClickNpl = (BGANinePhotoLayout) findViewById(R.id.npl_item_moment_photos);
+        pub_content = (TextView) findViewById(R.id.words_msg);
+        btn_pub_share = (ImageView) findViewById(R.id.pub_zhuanfa_icon);
+        btn_pub_comment = (ImageView) findViewById(R.id.pub_comment_icon);
+        btn_pub_like = (ImageView) findViewById(R.id.pub_like_icon);
+        btn_pub_more = (ImageView) findViewById(R.id.pub_icon_more);
+        pub_like_count = (TextView) findViewById(R.id.pub_like_count);
+        pub_comment_count = (TextView) findViewById(R.id.pub_comment_count);
+        pub_share_count = (TextView) findViewById(R.id.pub_zhuanfa_count);
+        pub_head = (ImageView) findViewById(R.id.user_head);
+        pub_ymd = (TextView) findViewById(R.id.pub_ymd);
+        pub_date = (TextView) findViewById(R.id.pub_date);
+        pub_nickname = (TextView) findViewById(R.id.pub_nickname);
+
+        pub_share_count.setText(intent.getIntExtra("tmp_share_count", 0) + "");
+        pub_comment_count.setText(intent.getIntExtra("tmp_comment_count", 0) + "");
+        pub_like_count.setText(intent.getIntExtra("tmp_like_count", 0) + "");
         pub_content = (TextView)findViewById(R.id.words_msg);
         btn_pub_share = (ImageButton)findViewById(R.id.pub_zhuanfa_icon);
         btn_pub_comment = (ImageButton)findViewById(R.id.pub_comment_icon);
@@ -191,8 +227,48 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
         pub_head.setImageResource(intent.getIntExtra("tmp_head", DEFAULT_HEAD));
         pub_ymd.setText(intent.getStringExtra("tmp_ymd"));
         pub_date.setText(intent.getStringExtra("tmp_date"));
+        //加载图片
+        //将点击图片放大的事件委托给当前activity，没有这句话则点击失效
+        mCurrentClickNpl.setDelegate(UserPubMsgDetailActivity.this);
+        //显示图片
+        mCurrentClickNpl.setData(intent.getStringArrayListExtra("tmp_photos"));
 
     }
+
+    @Override
+    public void onClickNinePhotoItem(BGANinePhotoLayout ninePhotoLayout, View view, int position, String model, List<String> models) {
+        mCurrentClickNpl = ninePhotoLayout;
+        photoPreviewWrapper();
+    }
+
+    /**
+     * 图片预览，兼容6.0动态权限
+     */
+    @AfterPermissionGranted(REQUEST_CODE_PERMISSION_PHOTO_PREVIEW)
+    private void photoPreviewWrapper() {
+        if (mCurrentClickNpl == null) {
+            return;
+        }
+
+        // 保存图片的目录，改成你自己要保存图片的目录。如果不传递该参数的话就不会显示右上角的保存按钮
+        File downloadDir = new File(Environment.getExternalStorageDirectory(), "BGAPhotoPickerDownload");
+
+        String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(UserPubMsgDetailActivity.this, perms)) {
+            if (mCurrentClickNpl.getItemCount() == 1) {
+                // 预览单张图片
+
+                startActivity(BGAPhotoPreviewActivity.newIntent(UserPubMsgDetailActivity.this, mDownLoadableCb.isChecked() ? downloadDir : null, mCurrentClickNpl.getCurrentClickItem()));
+            } else if (mCurrentClickNpl.getItemCount() > 1) {
+                // 预览多张图片
+
+                startActivity(BGAPhotoPreviewActivity.newIntent(UserPubMsgDetailActivity.this, mDownLoadableCb.isChecked() ? downloadDir : null, mCurrentClickNpl.getData(), mCurrentClickNpl.getCurrentClickItemPosition()));
+            }
+        } else {
+            EasyPermissions.requestPermissions(this, "图片预览需要以下权限:\n\n1.访问设备上的照片", REQUEST_CODE_PERMISSION_PHOTO_PREVIEW, perms);
+        }
+    }
+
     /**
      * 设置监听
      */
@@ -203,6 +279,7 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
         btn_pub_comment.setOnClickListener(this);
         btn_pub_share.setOnClickListener(this);
         btn_pub_more.setOnClickListener(this);
+        btn_comment.setOnClickListener(this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
@@ -210,21 +287,25 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pub_comment_icon:
-//            case R.id.comment:
-//                // 弹出输入法
-//                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-//                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-//                // 显示评论框
-//                rl_enroll.setVisibility(View.GONE);
-//                rl_comment.setVisibility(View.VISIBLE);
-//                break;
-//            case R.id.hide_down:
-//                // 隐藏评论框
-//                rl_comment.setVisibility(View.GONE);
-//                // 隐藏输入法，然后暂存当前输入框的内容，方便下次使用
-//                InputMethodManager im = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-//                im.hideSoftInputFromWindow(comment_content.getWindowToken(), 0);
-//                break;
+            case R.id.comment:
+                comment_content.setFocusable(true);
+                comment_content.setFocusableInTouchMode(true);
+                comment_content.requestFocus();
+                // 弹出输入法
+                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                // 显示评论框
+                rl_enroll.setVisibility(View.GONE);
+                rl_comment.setVisibility(View.VISIBLE);
+                break;
+            case R.id.hide_down:
+                // 隐藏评论框
+                rl_comment.setVisibility(View.GONE);
+                rl_enroll.setVisibility(View.VISIBLE);
+                // 隐藏输入法，然后暂存当前输入框的内容，方便下次使用
+                InputMethodManager im = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                im.hideSoftInputFromWindow(comment_content.getWindowToken(), 0);
+                break;
             case R.id.comment_send:
                 sendComment();
                 break;
@@ -290,6 +371,7 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
             im.hideSoftInputFromWindow(comment_content.getWindowToken(), 0);
         }
     }
+
     private void showDialog() {
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         //自定义对话框标题栏
@@ -372,6 +454,7 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
                         handler.sendMessageDelayed(handler.obtainMessage(), 5);
                     }
                 }
+
 
             };
     /**

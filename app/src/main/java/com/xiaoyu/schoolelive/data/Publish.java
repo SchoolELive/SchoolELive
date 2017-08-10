@@ -1,34 +1,74 @@
 package com.xiaoyu.schoolelive.data;
 
 
-import android.widget.ImageView;
-
 import java.io.Serializable;
-import java.util.zip.Inflater;
+import java.util.ArrayList;
 
 
 /**
  * Created by NeekChaw on 2017-07-16.
  */
-public class Publish implements Serializable{
+public class Publish implements Serializable {
+    public ArrayList<String> photos;
     public String photo_path = null;
-    String name; //评论者
-    String content; //发布内容
-    int head;//头像
-    String ymd;//年月日
-    String date;//小时分钟
-    String image_index;
-    long uid = 2015404;//发帖者的uid
-
-    int like_count, comment_count, share_count;//点赞评论数量
+    public String name; //评论者
+    public String content; //发布内容
+    public String ymd;//年月日
+    public String date;//小时分钟
+    public boolean PUB_LIKE_FLAG = false;//初始状态，还未点赞
+    public boolean IS_AGAINST = false;//初始状态，还未举报
+    public boolean IS_FOCUS = false;//初始状态，还未关注
 
 
-    public String getImage_index() {
-        return image_index;
+    public long uid = 2015404;//发帖者的uid
+
+    public int like_count, comment_count, share_count;//点赞评论数量
+
+    public Publish(String nickname,String ymd,String date,String content, ArrayList<String> photos) {
+        this.name=nickname;
+        this.ymd=ymd;
+        this.date=date;
+        this.content = content;
+        this.photos = photos;
     }
 
-    public void setImage_index(String image_index) {
-        this.image_index = image_index;
+    public ArrayList<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(ArrayList<String> photos) {
+        this.photos = photos;
+    }
+
+    public boolean isPUB_LIKE_FLAG() {
+        return PUB_LIKE_FLAG;
+    }
+
+    public void setPUB_LIKE_FLAG(boolean PUB_LIKE_FLAG) {
+        this.PUB_LIKE_FLAG = PUB_LIKE_FLAG;
+    }
+
+    public boolean IS_AGAINST() {
+        return IS_AGAINST;
+    }
+
+    public void setIS_AGAINST(boolean IS_AGAINST) {
+        this.IS_AGAINST = IS_AGAINST;
+    }
+
+    public boolean IS_FOCUS() {
+        return IS_FOCUS;
+    }
+
+    public void setIS_FOCUS(boolean IS_FOCUS) {
+        this.IS_FOCUS = IS_FOCUS;
+    }
+    public String getPhoto_path() {
+        return photo_path;
+    }
+
+    public void setPhoto_path(String photo_path) {
+        this.photo_path = photo_path;
     }
 
     public String getName() {
@@ -87,11 +127,11 @@ public class Publish implements Serializable{
         this.share_count = share_count;
     }
 
-    public long getUid(){
+    public long getUid() {
         return uid;
     }
 
-    public void setUid(long uid){
+    public void setUid(long uid) {
         this.uid = uid;
     }
 }

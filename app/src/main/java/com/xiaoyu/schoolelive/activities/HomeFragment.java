@@ -108,6 +108,7 @@ public class HomeFragment extends Fragment {
         }
     };
 
+
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -209,12 +210,11 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    //停止事务委托
     @Override
     public void onPause() {
         super.onPause();
     }
-    //开启事务委托
+
     @Override
     public void onResume() {
         super.onResume();
