@@ -5,15 +5,12 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,9 +29,6 @@ import android.widget.Toast;
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.adapter.CommentAdapter;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
-import com.xiaoyu.schoolelive.custom.CustomScrollView;
-import com.xiaoyu.schoolelive.custom.CustomUserPubMsg;
-import com.xiaoyu.schoolelive.custom.ListViewForScrollView;
 import com.xiaoyu.schoolelive.data.Comment;
 import com.xiaoyu.schoolelive.util.ShowShareUtil;
 
@@ -43,7 +37,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPreviewActivity;
 import cn.bingoogolapple.photopicker.widget.BGANinePhotoLayout;
@@ -57,7 +50,6 @@ import static com.xiaoyu.schoolelive.activities.HomeFragment.mDownLoadableCb;
  * Created by NeekChaw on 2017-07-13.
  */
 public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnClickListener, BGANinePhotoLayout.Delegate {
-public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnClickListener{
     private int DEFAULT_HEAD = R.drawable.icon_default_head;
 
     final String[] baseItems = new String[]{"关注", "举报", "复制内容"};
@@ -86,17 +78,13 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
     private CommentAdapter adapterComment;
     private List<Comment> data;
     //
-    private int INIT_COUNT = 0;
-    private boolean CMT_LIKE_FLAG = true;
     private boolean PUB_LIKE_FLAG = true;
 
-    private boolean PUB_COMMENT_FLAG = true;
 
     private LayoutInflater inflater;
     private View titleView;
 
     private LinearLayout comment_bar2;
-    private CustomUserPubMsg myPubMsg;
     private LinearLayout comment_bar1;
     private int lastScrollY;
 
@@ -149,7 +137,6 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
         rl_comment = (RelativeLayout) findViewById(R.id.rl_comment);
 
         //详情界面列表头部
-        myPubMsg = (CustomUserPubMsg)findViewById(R.id.comment_pubmsg);
         comment_bar1 = (LinearLayout)findViewById(R.id.comment_bar1);
         comment_bar2 = (LinearLayout)findViewById(R.id.comment_bar2);
 
@@ -204,24 +191,9 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
         pub_date = (TextView) findViewById(R.id.pub_date);
         pub_nickname = (TextView) findViewById(R.id.pub_nickname);
 
-        pub_share_count.setText(intent.getIntExtra("tmp_share_count", 0) + "");
-        pub_comment_count.setText(intent.getIntExtra("tmp_comment_count", 0) + "");
-        pub_like_count.setText(intent.getIntExtra("tmp_like_count", 0) + "");
-        pub_content = (TextView)findViewById(R.id.words_msg);
-        btn_pub_share = (ImageButton)findViewById(R.id.pub_zhuanfa_icon);
-        btn_pub_comment = (ImageButton)findViewById(R.id.pub_comment_icon);
-        btn_pub_like = (ImageButton)findViewById(R.id.pub_like_icon);
-        btn_pub_more = (ImageButton)findViewById(R.id.pub_icon_more);
-        pub_like_count = (TextView)findViewById(R.id.pub_like_count);
-        pub_comment_count = (TextView)findViewById(R.id.pub_comment_count);
-        pub_share_count = (TextView)findViewById(R.id.pub_zhuanfa_count);
-        pub_head = (ImageView)findViewById(R.id.user_head);
-        pub_ymd = (TextView)findViewById(R.id.pub_ymd);
-        pub_date = (TextView)findViewById(R.id.pub_date);
-        pub_nickname = (TextView)findViewById(R.id.pub_nickname);
-        pub_share_count.setText(intent.getIntExtra("tmp_share_count",0)+"");
-        pub_comment_count.setText(intent.getIntExtra("tmp_comment_count",0)+"");
-        pub_like_count.setText(intent.getIntExtra("tmp_like_count",0)+"");
+        pub_share_count.setText(intent.getIntExtra("tmp_allShareCount", 0) + "");
+        pub_comment_count.setText(intent.getIntExtra("tmp_allCommentCount", 0) + "");
+        pub_like_count.setText(intent.getIntExtra("tmp_allLikeCount", 0) + "");
         pub_content.setText(intent.getStringExtra("tmp_content"));
         pub_nickname.setText(intent.getStringExtra("tmp_name"));
         pub_head.setImageResource(intent.getIntExtra("tmp_head", DEFAULT_HEAD));

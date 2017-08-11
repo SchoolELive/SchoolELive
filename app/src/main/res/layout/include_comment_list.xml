@@ -9,6 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/rl_comment"
+        android:headerDividersEnabled="false"
+        android:divider="@color/grey"
+        android:dividerHeight="1dp"
         android:layout_alignParentStart="true" />
 
     <LinearLayout
