@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/include_goods_info_head" />
+        <include layout="@layout/include_goods_thum_head" />
 
         <ImageView
             android:id="@+id/imageview"

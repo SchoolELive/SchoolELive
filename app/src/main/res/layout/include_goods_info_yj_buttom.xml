@@ -27,21 +27,21 @@
             android:layout_height="wrap_content"
             android:text="  ¥ "/>
         <TextView
-            android:id="@+id/yikoujia_price"
+            android:id="@+id/yj_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10"
             android:textColor="@color/red"
             android:textSize="@dimen/bar_text_size"/>
     </LinearLayout>
     <include layout="@layout/include_goods_intro" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/ui_10_dip"
         >
 
         <Button
+            android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="就是Ta了"
@@ -52,6 +52,7 @@
             android:textSize="@dimen/bar_text_size"
             />
         <Button
+            android:layout_gravity="bottom"
             android:id="@+id/btn_yj_chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

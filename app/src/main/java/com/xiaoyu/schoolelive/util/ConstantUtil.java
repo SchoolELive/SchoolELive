@@ -50,4 +50,34 @@ public class ConstantUtil {
     public static int WagesPay_MONTH = 3;
     //完工结算
     public static int WagesPay_AFTERWORK = 4;
+
+    /**
+     * 商品：顶 热 新
+     */
+    //无
+    public static int Goods_Null = 0;
+    //顶
+    public static int Goods_Top = 1;
+    //热
+    public static int Goods_Hot = 2;
+    //新
+    public static int Goods_New = 3;
+    //顶_热
+    public static int Goods_Top_Hot = 4;
+    //顶_新
+    public static int Goods_Top_New = 5;
+    //热_新
+    public static int Goods_Hot_New = 6;
+    //全部
+    public static int Goods_All = 7;
+
+    /**
+     * 商品类型 ：一口价  可议价  竞拍
+     */
+    //一口价
+    public static int Goods_Type_ykj = 1;
+    //可议价
+    public static int Goods_Type_yj = 2;
+    //竞拍
+    public static int Goods_Type_pai = 3;
 }

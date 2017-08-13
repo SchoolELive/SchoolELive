@@ -274,13 +274,13 @@ public class HomeFragment extends Fragment implements EasyPermissions.Permission
         intent.putExtra("tmp_ymd", publish.getYmd());
         intent.putExtra("tmp_date", publish.getDate());
         intent.putExtra("tmp_content", publish.getContent());
-        intent.putExtra("tmp_photos",publish.getPhotos());
-        intent.putExtra("tmp_isFocus",publish.IS_FOCUS());
-        intent.putExtra("tmp_isAgainst",publish.IS_AGAINST());
-        intent.putExtra("tmp_allLikeCount",publish.getLike_count());
-        intent.putExtra("tmp_allCommentCount",publish.getComment_count());
-        intent.putExtra("tmp_allShareCount",publish.getShare_count());
-        intent.putExtra("tmp_isLike",publish.isPUB_LIKE_FLAG());
+        intent.putExtra("tmp_photos", publish.getPhotos());
+        intent.putExtra("tmp_isFocus", publish.IS_FOCUS());
+        intent.putExtra("tmp_isAgainst", publish.IS_AGAINST());
+        intent.putExtra("tmp_allLikeCount", publish.getLike_count());
+        intent.putExtra("tmp_allCommentCount", publish.getComment_count());
+        intent.putExtra("tmp_allShareCount", publish.getShare_count());
+        intent.putExtra("tmp_isLike", publish.isPUB_LIKE_FLAG());
         startActivity(intent);
         //Toast.makeText(getContext(), "点击了item " + position, Toast.LENGTH_SHORT).show();
     }

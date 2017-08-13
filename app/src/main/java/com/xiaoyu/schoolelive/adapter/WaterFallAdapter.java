@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.cache.memory.MemoryCache;
 import com.nostra13.universalimageloader.cache.memory.impl.LRULimitedMemoryCache;
@@ -17,7 +18,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.xiaoyu.schoolelive.R;
+import com.xiaoyu.schoolelive.data.Goods;
 import com.xiaoyu.schoolelive.data.ImageBean;
+import com.xiaoyu.schoolelive.util.ConstantUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,18 +36,22 @@ import static com.xiaoyu.schoolelive.activities.UserAlbumActivity.mNormalImageOp
 public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<ImageBean> mList = new ArrayList<>();
+    //private List<ImageBean> mList = new ArrayList<>();
+    private List<Goods> mData = new ArrayList<>();
     private List<Integer> mHeights;
 
-    public WaterFallAdapter(Context context){
+    private String[] mItems = {"关注卖家", "收藏宝贝", "举报"};
+    final String[] mAgainstItems = new String[]{"泄露隐私", "人身攻击", "淫秽色情", "垃圾广告", "敏感信息", "其他"};
+
+    public WaterFallAdapter(Context context) {
         this.mContext = context;
     }
 
-    public void getRandomHeight(List<ImageBean> mList){
+    public void getRandomHeight(List<Goods> mList) {
         mHeights = new ArrayList<>();
-        for(int i=0; i < mList.size();i++){
+        for (int i = 0; i < mList.size(); i++) {
             //随机的获取一个范围为200-600直接的高度
-            mHeights.add((int)(500+Math.random()*400));
+            mHeights.add((int) (500 + Math.random() * 400));
         }
     }
 
@@ -61,23 +68,31 @@ public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.View
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return mData.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.imageview)
         ImageView mImageView;
+        @Bind(R.id.goods_top)
+        TextView mGoodsTop;
+        @Bind(R.id.goods_hot)
+        TextView mGoodsHot;
+        @Bind(R.id.goods_new)
+        TextView mGoodsNew;
+        @Bind(R.id.goods_attention_count)
+        TextView mGoodsPageViews;
 
-        public ViewHolder(View view){
+        public ViewHolder(View view) {
             //需要设置super
             super(view);
             ButterKnife.bind(this, view);
         }
     }
 
-    public List<ImageBean> getList() {
-        return mList;
+    public List<Goods> getList() {
+        return mData;
     }
 
     public static DisplayImageOptions NORMAL_OPTION = new DisplayImageOptions.Builder()
@@ -88,6 +103,11 @@ public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.View
             .cacheOnDisc(true)
             .build();
 
+//    public void addGoods(Goods goods) {
+//        mData.add(goods);
+//        notifyDataSetChanged();
+//    }
+
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
@@ -95,30 +115,59 @@ public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.View
         holder.itemView.setLayoutParams(layoutParams);
 
         initImageLoader(mContext);
-        ImageBean bean = mList.get(position);
+        Goods goods = mData.get(position);
+        //获取封面图片
+        ImageBean bean = goods.getTopImages();
+        //获取商品类型
+        int GoodsStyle = goods.getGoodsStyle();
+        setGoodsStyle(holder, GoodsStyle);
+        //获取商品浏览量
+        holder.mGoodsPageViews.setText(goods.getPageViews() + "");
+        //显示图片
         ImageLoader.getInstance().displayImage(bean.getImgsrc(),
                 holder.mImageView, NORMAL_OPTION);
 
-        if (onItemClickListener != null){
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                {
+        if (onItemClickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     int position = holder.getLayoutPosition();
                     onItemClickListener.onItemClick(holder.itemView, position);
-                }
 
-            }
-        });
-        //LongClick
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                int position = holder.getLayoutPosition();
-                onItemClickListener.onItemLongClick(holder.itemView, position);
-                return false;
-            }
-        });
+                }
+            });
+            //LongClick
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int position = holder.getLayoutPosition();
+                    onItemClickListener.onItemLongClick(holder.itemView, position);
+                    return false;
+                }
+            });
+        }
+    }
+
+    private void setGoodsStyle(ViewHolder holder, int type) {
+        if (type == ConstantUtil.Goods_All) {
+            holder.mGoodsHot.setVisibility(View.VISIBLE);
+            holder.mGoodsNew.setVisibility(View.VISIBLE);
+            holder.mGoodsTop.setVisibility(View.VISIBLE);
+        } else if (type == ConstantUtil.Goods_Hot) {
+            holder.mGoodsHot.setVisibility(View.VISIBLE);
+        } else if (type == ConstantUtil.Goods_New) {
+            holder.mGoodsNew.setVisibility(View.VISIBLE);
+        } else if (type == ConstantUtil.Goods_Top) {
+            holder.mGoodsTop.setVisibility(View.VISIBLE);
+        } else if (type == ConstantUtil.Goods_Top_Hot) {
+            holder.mGoodsTop.setVisibility(View.VISIBLE);
+            holder.mGoodsHot.setVisibility(View.VISIBLE);
+        } else if (type == ConstantUtil.Goods_Hot_New) {
+            holder.mGoodsHot.setVisibility(View.VISIBLE);
+            holder.mGoodsNew.setVisibility(View.VISIBLE);
+        } else if (type == ConstantUtil.Goods_Top_New) {
+            holder.mGoodsTop.setVisibility(View.VISIBLE);
+            holder.mGoodsNew.setVisibility(View.VISIBLE);
         }
     }
 
@@ -156,4 +205,6 @@ public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.View
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }
+
+
 }
