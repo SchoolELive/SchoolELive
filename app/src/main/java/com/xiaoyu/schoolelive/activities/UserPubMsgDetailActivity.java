@@ -22,6 +22,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -57,7 +58,6 @@ import static com.xiaoyu.schoolelive.activities.HomeFragment.mDownLoadableCb;
  * Created by NeekChaw on 2017-07-13.
  */
 public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnClickListener, BGANinePhotoLayout.Delegate {
-public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnClickListener{
     private int DEFAULT_HEAD = R.drawable.icon_default_head;
 
     final String[] baseItems = new String[]{"关注", "举报", "复制内容"};
@@ -180,7 +180,6 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
                 }
             }
         });
-//        myScrollView.smoothScrollTo(0,0);
         btn_comment = (ImageView) findViewById(R.id.comment);
         rl_enroll = (LinearLayout) findViewById(R.id.rl_enroll);
         setListener();
@@ -204,21 +203,6 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
         pub_date = (TextView) findViewById(R.id.pub_date);
         pub_nickname = (TextView) findViewById(R.id.pub_nickname);
 
-        pub_share_count.setText(intent.getIntExtra("tmp_share_count", 0) + "");
-        pub_comment_count.setText(intent.getIntExtra("tmp_comment_count", 0) + "");
-        pub_like_count.setText(intent.getIntExtra("tmp_like_count", 0) + "");
-        pub_content = (TextView)findViewById(R.id.words_msg);
-        btn_pub_share = (ImageButton)findViewById(R.id.pub_zhuanfa_icon);
-        btn_pub_comment = (ImageButton)findViewById(R.id.pub_comment_icon);
-        btn_pub_like = (ImageButton)findViewById(R.id.pub_like_icon);
-        btn_pub_more = (ImageButton)findViewById(R.id.pub_icon_more);
-        pub_like_count = (TextView)findViewById(R.id.pub_like_count);
-        pub_comment_count = (TextView)findViewById(R.id.pub_comment_count);
-        pub_share_count = (TextView)findViewById(R.id.pub_zhuanfa_count);
-        pub_head = (ImageView)findViewById(R.id.user_head);
-        pub_ymd = (TextView)findViewById(R.id.pub_ymd);
-        pub_date = (TextView)findViewById(R.id.pub_date);
-        pub_nickname = (TextView)findViewById(R.id.pub_nickname);
         pub_share_count.setText(intent.getIntExtra("tmp_share_count",0)+"");
         pub_comment_count.setText(intent.getIntExtra("tmp_comment_count",0)+"");
         pub_like_count.setText(intent.getIntExtra("tmp_like_count",0)+"");

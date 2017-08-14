@@ -4,13 +4,20 @@ package com.xiaoyu.schoolelive.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.IdRes;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.bumptech.glide.Glide;
+import com.nostra13.universalimageloader.utils.L;
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.adapter.PhotoAdapter;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
@@ -26,18 +33,42 @@ import me.iwf.photopicker.PhotoPreview;
 /**
  * Created by NeekChaw on 2017-07-30.
  */
-public class UserAddGoodsActivity extends BaseSlideBack {
+public class UserAddGoodsActivity extends BaseSlideBack implements RadioGroup.OnCheckedChangeListener{
+    private RadioGroup radioGroup;
+    private RadioButton fixed_price,auction,negotiable;
+    private LinearLayout price_ll,auction_ll;
+
     private PhotoAdapter photoAdapter;
     private ArrayList<String> selectedPhotos = new ArrayList<>();
     //private ArrayList<String> onLongClickListData = new ArrayList<>();
     private ImageView iv_crop;
     private RecyclerView recyclerView;
 
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1:
+                    price_ll.setVisibility(View.VISIBLE);
+                    auction_ll.setVisibility(View.GONE);
+                    break;
+                case 2:
+                    price_ll.setVisibility(View.GONE);
+                    auction_ll.setVisibility(View.VISIBLE);
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_publish);
 
+        //初始化控件
         initView();
+        //方式选择
+        initChoose();
     }
 
     //初始化控件
@@ -49,7 +80,6 @@ public class UserAddGoodsActivity extends BaseSlideBack {
 
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, OrientationHelper.VERTICAL));
         recyclerView.setAdapter(photoAdapter);
-
 
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,
                 new RecyclerItemClickListener.OnItemClickListener() {
@@ -70,8 +100,9 @@ public class UserAddGoodsActivity extends BaseSlideBack {
                         }
                     }
                 }));
-    }
 
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -97,6 +128,30 @@ public class UserAddGoodsActivity extends BaseSlideBack {
             iv_crop.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
             Glide.with(getApplicationContext()).load(Uri.fromFile(new File(data.getStringExtra(PhotoPicker.KEY_CAMEAR_PATH)))).into(iv_crop);
+        }
+    }
+    //方式选择
+    public void initChoose(){
+        radioGroup = (RadioGroup)findViewById(R.id.radioGroup);
+
+        fixed_price = (RadioButton)findViewById(R.id.fixed_price);
+        negotiable = (RadioButton)findViewById(R.id.negotiable);
+        price_ll = (LinearLayout)findViewById(R.id.price_ll);
+
+        auction = (RadioButton)findViewById(R.id.auction);
+        auction_ll = (LinearLayout)findViewById(R.id.auction_ll);
+
+        radioGroup.setOnCheckedChangeListener(this);
+    }
+    @Override
+    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+        Message message = new Message();
+        if (checkedId == fixed_price.getId() || checkedId == negotiable.getId()){
+            message.what = 1;
+            handler.sendMessage(message);
+        }else if(checkedId == auction.getId()){
+            message.what = 2;
+            handler.sendMessage(message);
         }
     }
 }

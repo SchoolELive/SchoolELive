@@ -86,12 +86,9 @@ public class PartJobFragment extends Fragment {
         mAdapter.setOnItemClickListener(new PartJobAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
             }
-
             @Override
             public void onItemLongClick(View view, int position) {
-
             }
         });
     }
@@ -113,6 +110,5 @@ public class PartJobFragment extends Fragment {
         mAdapter.getList().addAll(mData);
         mAdapter.notifyDataSetChanged();
     }
-
 }
 

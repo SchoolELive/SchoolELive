@@ -10,6 +10,7 @@ import android.widget.TabHost;
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.activities.HomeFragment;
 import com.xiaoyu.schoolelive.activities.MainActivity;
+import com.xiaoyu.schoolelive.activities.SysInformFragment;
 
 /**
  * Created by Administrator on 2017/7/11.
@@ -56,10 +57,27 @@ public class BaseMainSlide extends AppCompatActivity{
                 default:
                     break;
             }
+        }else if(SysInformFragment.SysInformIsDisplay){
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    xDown = event.getRawX();
+                    yDown = event.getRawY();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    break;
+                case MotionEvent.ACTION_UP:
+                    xMove = event.getRawX();
+                    yMove = event.getRawY();
+                    SysInformTabChange();
+                    recycleVelocityTracker();
+                    break;
+                default:
+                    break;
+            }
         }
         return super.dispatchTouchEvent(event);
     }
-    //分页滑动
+    //主页分页滑动
     public void mainTabChange(){
         //滑动的距离
         final int distanceX = (int) (xMove - xDown);
@@ -94,6 +112,30 @@ public class BaseMainSlide extends AppCompatActivity{
                 tabHost.setCurrentTab(2);
             } else if (tabHost.getCurrentTab() == 2) {
                 tabHost.setCurrentTab(3);
+            }
+        }
+    }
+    //消息通知界面分页滑动
+    public void SysInformTabChange(){
+        //滑动的距离
+        final int distanceX = (int) (xMove - xDown);
+        int distanceFX = (int) (xDown - xMove);
+        int distanceY = (int) (yMove - yDown);
+        //获取顺时速度
+        int ySpeed = getScrollVelocity();
+        //关闭Activity需满足以下条件：
+        //1.x轴滑动的距离>XDISTANCE_MIN
+        //2.y轴滑动的距离在YDISTANCE_MIN范围内
+        //3.y轴上（即上下滑动的速度）<XSPEED_MIN，如果大于，则认为用户意图是在上下滑动而非左滑结束Activity
+        TabHost tabHost = (TabHost) findViewById(R.id.sysinform_tabhost);
+        if ( distanceX > XDISTANCE_MIN && (distanceY < YDISTANCE_MIN && distanceY > -YDISTANCE_MIN) && ySpeed < YSPEED_MIN) {
+            if (tabHost.getCurrentTab() == 1) {
+                tabHost.setCurrentTab(0);
+            }
+        }
+        if (distanceFX > XDISTANCE_MIN && (distanceY < YDISTANCE_MIN && distanceY > -YDISTANCE_MIN) && ySpeed < YSPEED_MIN) {
+            if (tabHost.getCurrentTab() == 0) {
+                tabHost.setCurrentTab(1);
             }
         }
     }

@@ -332,27 +332,32 @@ public class MainActivity extends BaseMainSlide{
     public void mainSetHomeFrament(){
         getSupportActionBar().setTitle("主页");
         HomeFragment.isDis = true;
+        SysInformFragment.SysInformIsDisplay = false;
         fragmentTransaction.replace(R.id.main_menu_content, homeFragment,"home").commit();
     }
     public void mainSetPatjobFrament(){
         getSupportActionBar().setTitle("兼职");
         HomeFragment.isDis = false;
+        SysInformFragment.SysInformIsDisplay = false;
         fragmentTransaction.replace(R.id.main_menu_content, partJobFragment,"partjob").commit();
     }
     public void mainSetSecondFrament(){
         getSupportActionBar().setTitle("旧货");
         HomeFragment.isDis = false;
+        SysInformFragment.SysInformIsDisplay = false;
         fragmentTransaction.replace(R.id.main_menu_content, secondHandFragment,"secondhand").commit();
 
     }
     public void mainSetBusinessFrament(){
         getSupportActionBar().setTitle("商家");
         HomeFragment.isDis = false;
+        SysInformFragment.SysInformIsDisplay = false;
         fragmentTransaction.replace(R.id.main_menu_content, businessFragment,"business").commit();
     }
     public void mainSetSysinformFrament(){
         getSupportActionBar().setTitle("通知");
         HomeFragment.isDis = false;
+        SysInformFragment.SysInformIsDisplay = true;
         fragmentTransaction.replace(R.id.main_menu_content, sysInformFragment,"inform").commit();
     }
 
