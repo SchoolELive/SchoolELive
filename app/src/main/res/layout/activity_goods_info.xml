@@ -4,13 +4,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/include_goods_info_head" />
+
+    <include layout="@layout/include_goods_info_content" />
+
+    //底部选项
     <include
-        layout="@layout/custom_goods_pai_info" />
+        android:id="@+id/goodsType_pai"
+        layout="@layout/include_goods_info_pai_buttom"
+        android:visibility="gone" />
 
     <include
-        layout="@layout/custom_goods_ykj_info" />
+        android:id="@+id/goodsType_ykj"
+        layout="@layout/include_goods_info_ykj_buttom"
+        android:visibility="gone" />
 
     <include
-        layout="@layout/custom_goods_yj_info" />
+        android:id="@+id/goodsType_yj"
+        layout="@layout/include_goods_info_yj_buttom"
+        android:visibility="gone" />
 
 </LinearLayout>

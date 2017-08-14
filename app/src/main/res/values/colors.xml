@@ -20,6 +20,8 @@
     <color name="meihong">#DE1F73</color>
     <color name="pink">#F699B4</color>
     <color name="primary_dark">#ffaa44</color>
+    <color name="simple_green">#36D7B6</color>
+    <color name="simple_blue">#3DBFF0</color>
     <!--兼职类型-->
     <!--演员-->
     <color name="yanyuan">#248888</color>

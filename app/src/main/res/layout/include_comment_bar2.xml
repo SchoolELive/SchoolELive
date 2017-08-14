@@ -59,10 +59,10 @@
         </LinearLayout>
     </LinearLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:background="#E8E8E8"
-        />
+    <!--<View-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="1px"-->
+        <!--android:background="#E8E8E8"-->
+        <!--/>-->
 
 </LinearLayout>

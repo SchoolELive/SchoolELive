@@ -30,21 +30,41 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="  当前 ¥ " />
+            android:text="  当前  " />
 
         <TextView
             android:id="@+id/pai_now_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10"
             android:textColor="@color/red"
             android:textSize="@dimen/bar_text_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" ¥" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="      起拍价  " />
+
+        <TextView
+            android:id="@+id/pai_base_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/bar_text_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" ¥" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="right|center"
-            android:layout_marginRight="@dimen/ui_10_dip">
+            android:layout_marginRight="@dimen/ui_10_dip"
+            android:gravity="right|center">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -54,31 +74,32 @@
             <TextView
                 android:id="@+id/pai_min_price"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1" />
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" RMB" />
+                android:text=" ¥" />
         </LinearLayout>
 
     </LinearLayout>
-    <include layout="@layout/include_goods_intro"/>
+
+    <include layout="@layout/include_goods_intro" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ui_10_dip"
->
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/ui_10_dip">
 
         <Button
+            android:id="@+id/btn_pai"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:layout_weight="1"
             android:background="@color/light"
             android:gravity="center"
             android:text="竞价"
-            android:id="@+id/btn_pai"
             android:textSize="@dimen/bar_text_size" />
     </LinearLayout>
 

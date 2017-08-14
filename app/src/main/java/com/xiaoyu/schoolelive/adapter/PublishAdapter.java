@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -56,11 +55,6 @@ public class PublishAdapter extends BGARecyclerViewAdapter<Publish> {
     final String[] baseItems = new String[]{"关注", "举报", "复制内容"};
     final String[] againstItems = new String[]{"泄露隐私", "人身攻击", "淫秽色情", "垃圾广告", "敏感信息", "其他"};
 
-//    public PublishAdapter(Context c, List<Publish> data, List<List<Image>> imagesList) {
-//        this.context = c;
-//        this.data = data;
-//        this.imagesList = imagesList;
-//    }
 
     public PublishAdapter(Context c, RecyclerView recyclerView) {
         super(recyclerView, R.layout.custom_user_pub_msg);
@@ -152,87 +146,6 @@ public class PublishAdapter extends BGARecyclerViewAdapter<Publish> {
     public long getItemId(int i) {
         return i;
     }
-
-
-    // @Override
-//    public View getView(final int i, View convertView, ViewGroup parent) {
-//        List<Image> itemList = imagesList.get(i);
-//        // 重用convertView
-//        if (convertView == null) {
-//            convertView = LayoutInflater.from(context).inflate(R.layout.custom_user_pub_msg, null);
-//            //初始化按钮
-//            holder.btn_pub_share = (ImageView) convertView.findViewById(R.id.pub_zhuanfa_icon);
-//            holder.btn_pub_comment = (ImageView) convertView.findViewById(R.id.pub_comment_icon);
-//            holder.btn_pub_like = (ImageView) convertView.findViewById(R.id.pub_like_icon);
-//            holder.btn_pub_more = (ImageView) convertView.findViewById(R.id.pub_icon_more);
-//            //初始化信息
-//            holder.publish_head = (ImageView) convertView.findViewById(R.id.user_head);
-//            holder.publish_name = (TextView) convertView.findViewById(R.id.pub_nickname);
-//            holder.publish_ymd = (TextView) convertView.findViewById(R.id.pub_ymd);
-//            holder.publish_date = (TextView) convertView.findViewById(R.id.pub_date);
-//            holder.pub_comment_count = (TextView) convertView.findViewById(R.id.pub_comment_count);
-//            holder.pub_like_count = (TextView) convertView.findViewById(R.id.pub_like_count);
-//            holder.pub_share_count = (TextView) convertView.findViewById(R.id.pub_zhuanfa_count);
-//            holder.publish_content = (TextView) convertView.findViewById(R.id.words_msg);
-//
-//            convertView.setTag(holder);
-//        } else {
-//            holder = (ViewHolder) convertView.getTag();
-//        }
-//
-//        // 适配数据
-//        holder.publish_name.setText(data.get(i).getName());
-//        holder.publish_content.setText(data.get(i).getContent());
-//        //holder.publish_head.setImageResource(R.drawable.qq_login);
-//        // holder.publish_date.setText(data.get(i).getDate());
-//        //String index = data.get(i).getImage_index();
-//        // map.put(index, holder.publish_head);
-//
-//        holder.publish_ymd.setText(data.get(i).getYmd());
-//        // holder.image_index = data.get(i).getImage_index();
-//        //实现监听事件
-//
-//        //点赞
-//        holder.btn_pub_like.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (holder.PUB_LIKE_FLAG) {
-//                    holder.pub_like_count.setText(Integer.valueOf(holder.pub_like_count.getText().toString()) + 1 + "");
-//                    holder.PUB_LIKE_FLAG = false;
-//                } else {
-//                    holder.pub_like_count.setText(Integer.valueOf(holder.pub_like_count.getText().toString()) + -1 + "");
-//                    holder.PUB_LIKE_FLAG = true;
-//                }
-//            }
-//        });
-//
-//        //评论
-//        holder.btn_pub_comment.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//            }
-//        });
-//        holder.btn_pub_share.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //showShare();
-//                ShowShareUtil.showShare(context);
-//            }
-//        });
-//        //更多
-//        holder.btn_pub_more.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showDialog(holder);
-//            }
-//        });
-//
-//        holder.btn_pub_like.setTag(i);
-//        holder.btn_pub_comment.setTag(i);
-//        holder.btn_pub_share.setTag(i);
-//        holder.btn_pub_more.setTag(i);
-//        return convertView;
-//    }
 
 
     //发布动态
@@ -377,25 +290,4 @@ public class PublishAdapter extends BGARecyclerViewAdapter<Publish> {
         return str.replaceAll(" ", "");
     }
 
-    /**
-     * 静态类，便于GC回收
-     */
-    public class ViewHolder {
-        TextView publish_name;
-        TextView publish_content;
-        ImageView publish_head;
-        TextView publish_date;
-        TextView publish_ymd;
-        TextView pub_comment_count;
-        TextView pub_like_count;
-        TextView pub_share_count;
-        ImageView btn_pub_like;
-        ImageView btn_pub_comment;
-        ImageView btn_pub_share;
-        ImageView btn_pub_more;
-        boolean PUB_LIKE_FLAG = false;//初始状态，还未点赞
-        boolean IS_AGAINST = false;//初始状态，还未举报
-        boolean IS_FOCUS = false;//初始状态，还未关注
-        String image_index;
-    }
 }

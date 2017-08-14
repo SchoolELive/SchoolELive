@@ -8,24 +8,17 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.adapter.WaterFallAdapter;
+import com.xiaoyu.schoolelive.data.Goods;
 import com.xiaoyu.schoolelive.data.ImageBean;
 import com.xiaoyu.schoolelive.util.BitmapSampleUtil;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.xiaoyu.schoolelive.util.ConstantUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +33,7 @@ public class SecondHandFragment extends Fragment {
 
     @Bind(R.id.goods_recycler_view)
     RecyclerView mRecyclerView;
-
+    private List<Goods> goodsList = new ArrayList<>();
     private WaterFallAdapter mAdapter;
 
 
@@ -104,11 +97,14 @@ public class SecondHandFragment extends Fragment {
         getGoodsData();
         mAdapter.setOnItemClickListener(new WaterFallAdapter.OnItemClickListener() {
             public void onItemClick(View view, int position) {
+                Goods goods = new Goods();
+                goods = goodsList.get(position);
                 Intent intent = new Intent(getActivity(), GoodsInfoActivity.class);
+                intent.putExtra("tmp_pageViews", String.valueOf(goods.getPageViews()));
+                intent.putExtra("tmp_goodsStyle", goods.getGoodsStyle());
+                intent.putExtra("tmp_goodsType", goods.getGoodsType());
+                toIntentPrice(intent, goods);
                 startActivity(intent);
-//                Toast.makeText(getContext(), position + " click",
-//                        Toast.LENGTH_SHORT).show();
-
             }
 
             public void onItemLongClick(View view, int position) {
@@ -117,67 +113,53 @@ public class SecondHandFragment extends Fragment {
                 //mAdapter.removeData(position);
             }
         });
+
+
     }
 
+    private void toIntentPrice(Intent intent, Goods goods) {
+        if (goods.getGoodsType() == ConstantUtil.Goods_Type_ykj) {
+            intent.putExtra("tmp_ykjPrice", String.valueOf(goods.getPrice()));
+        } else if (goods.getGoodsType() == ConstantUtil.Goods_Type_yj) {
+            intent.putExtra("tmp_yjPrice", String.valueOf(goods.getRefPrice()));
+        } else if (goods.getGoodsType() == ConstantUtil.Goods_Type_pai) {
+            intent.putExtra("tmp_basePrice", String.valueOf(goods.getBasePrice()));
+            intent.putExtra("tmp_nowPrice", String.valueOf(goods.getNowPrice()));
+            intent.putExtra("tmp_minPrice", String.valueOf(goods.getMinPrice()));
+        }
+    }
+
+    private void setPrice(Goods goods, int type) {
+        if (type == ConstantUtil.Goods_Type_ykj) {
+            goods.setPrice(10);
+        } else if (type == ConstantUtil.Goods_Type_yj) {
+            goods.setRefPrice(10);
+        } else if (type == ConstantUtil.Goods_Type_pai) {
+            goods.setBasePrice(10);
+            goods.setNowPrice(10);
+            goods.setMinPrice(1);
+        }
+    }
 
     private void getGoodsData() {
-        List<ImageBean> list = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
-            String imgsrc=BitmapSampleUtil.getBmpUrl();
+            Goods goods = new Goods();
+            String imgsrc = BitmapSampleUtil.getBmpUrl();
             ImageBean bean = new ImageBean();
             bean.setImgsrc(imgsrc);
-            list.add(bean);
+            goods.setTopImage(bean);
+            goods.setPageViews(58);
+            goods.setGoodsStyle(ConstantUtil.Goods_New);
+            goods.setGoodsType(ConstantUtil.Goods_Type_yj);
+            setPrice(goods, goods.getGoodsType());
+            goodsList.add(goods);
         }
-        mAdapter.getList().addAll(list);
-        mAdapter.getRandomHeight(list);
+
+        mAdapter.getList().addAll(goodsList);
+        mAdapter.getRandomHeight(goodsList);
         mAdapter.notifyDataSetChanged();
     }
 
-    private void getJsonData() {
-
-        //网易的接口(可以浏览器直接访问)
-        String url = "http://c.3g.163.com/recommend/getChanListNews?" +
-                "channel=T1456112189138&size=20&passport=&devId=1uuFYbybIU2oqSRGyFrjCw%3D%3D" +
-                "&lat=%2F%2FOm%2B%2F8ScD%2B9fX1D8bxYWg%3D%3D&lon=LY2l8sFCNzaGzqWEPPgmUw%3D%3D" +
-                "&version=9.0&net=wifi&ts=1464769308" +
-                "&sign=bOVsnQQ6gJamli6%2BfINh6fC%2Fi9ydsM5XXPKOGRto5G948ErR02zJ6%2FKXOnxX046I" +
-                "&encryption=1&canal=meizu_store2014_news" +
-                "&mac=sSduRYcChdp%2BBL1a9Xa%2F9TC0ruPUyXM4Jwce4E9oM30%3D";
-
-        //
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        StringRequest request = new StringRequest(url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                try {
-                    List<ImageBean> list = new ArrayList<>();
-                    JSONObject jsonObject = new JSONObject(s);
-                    JSONArray array = jsonObject.optJSONArray("美女");
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject item = array.optJSONObject(i);
-                        String imgsrc = item.optString("imgsrc");
-                        String title = item.optString("title");
-                        ImageBean bean = new ImageBean();
-                        bean.setImgsrc(imgsrc);
-                        bean.setTitle(title);
-                        list.add(bean);
-                        Log.d("img", "imgsrc=" + imgsrc);
-                    }
-                    mAdapter.getList().addAll(list);
-                    mAdapter.getRandomHeight(list);
-                    mAdapter.notifyDataSetChanged();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-            }
-        });
-        requestQueue.add(request);
-
-    }
 
 }
 
