@@ -68,7 +68,7 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
     private ImageView btn_pub_comment, btn_pub_like, btn_pub_share;
     private TextView pub_comment_count, pub_like_count, pub_share_count;
     private TextView pub_content, pub_nickname;
-    private TextView all_like_count, all_cmt_count,all_like_count2,all_cmt_count2;
+    private TextView all_like_count, all_cmt_count, all_like_count2, all_cmt_count2;
     private TextView pub_ymd, pub_date;
     private ImageView pub_head;
     private ImageView btn_pub_more;
@@ -119,7 +119,7 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
         comment_list = (ListView) findViewById(R.id.comment_list);
 
         inflater = LayoutInflater.from(this);
-        titleView = inflater.inflate(R.layout.include_listview_head,null);
+        titleView = inflater.inflate(R.layout.include_listview_head, null);
 
         comment_list.addHeaderView(titleView);
 
@@ -137,8 +137,8 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
         rl_comment = (RelativeLayout) findViewById(R.id.rl_comment);
 
         //详情界面列表头部
-        comment_bar1 = (LinearLayout)findViewById(R.id.comment_bar1);
-        comment_bar2 = (LinearLayout)findViewById(R.id.comment_bar2);
+        comment_bar1 = (LinearLayout) findViewById(R.id.comment_bar1);
+        comment_bar2 = (LinearLayout) findViewById(R.id.comment_bar2);
 
         initPublish();
         comment_list.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -146,22 +146,25 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
             public void onScrollStateChanged(AbsListView view, int scrollState) {
 
             }
+
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 //监听滚动Y值变化，通过addView和removeView来实现悬停效果
                 View c = comment_list.getChildAt(0);
-                if(c == null){return ;}
+                if (c == null) {
+                    return;
+                }
                 int firstVisiblePosition = comment_list.getFirstVisiblePosition();
                 int top = c.getTop();
 
                 float scale = getApplication().getResources().getDisplayMetrics().density;
-                int dpvalue = (int)(51*scale + 0.5f);
+                int dpvalue = (int) (51 * scale + 0.5f);
                 int pxvalue = c.getHeight() - dpvalue;
 
-                if(-top+firstVisiblePosition*c.getHeight() < pxvalue){
+                if (-top + firstVisiblePosition * c.getHeight() < pxvalue) {
                     comment_bar1.setVisibility(View.VISIBLE);
                     comment_bar2.setVisibility(View.GONE);
-                }else{
+                } else {
                     comment_bar1.setVisibility(View.INVISIBLE);
                     comment_bar2.setVisibility(View.VISIBLE);
                 }
@@ -191,9 +194,9 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
         pub_date = (TextView) findViewById(R.id.pub_date);
         pub_nickname = (TextView) findViewById(R.id.pub_nickname);
 
-        pub_share_count.setText(intent.getIntExtra("tmp_allShareCount", 0) + "");
-        pub_comment_count.setText(intent.getIntExtra("tmp_allCommentCount", 0) + "");
-        pub_like_count.setText(intent.getIntExtra("tmp_allLikeCount", 0) + "");
+        pub_share_count.setText(intent.getStringExtra("tmp_allShareCount"));
+        pub_comment_count.setText(intent.getStringExtra("tmp_allCommentCount"));
+        pub_like_count.setText(intent.getStringExtra("tmp_allLikeCount"));
         pub_content.setText(intent.getStringExtra("tmp_content"));
         pub_nickname.setText(intent.getStringExtra("tmp_name"));
         pub_head.setImageResource(intent.getIntExtra("tmp_head", DEFAULT_HEAD));
@@ -414,21 +417,23 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
         params.y = -200;
         dialog.getWindow().setAttributes(params);
     }
+
     /**
      * 用于用户手指离开MyScrollView的时候获取MyScrollView滚动的Y距离，然后回调给onScroll方法中
      */
     private Handler handler = new Handler() {
-                public void handleMessage(android.os.Message msg) {
-                    int scrollY = comment_list.getScrollY();
-                    //此时的距离和记录下的距离不相等，在隔5毫秒给handler发送消息
-                    if(lastScrollY != scrollY){
-                        lastScrollY = scrollY;
-                        handler.sendMessageDelayed(handler.obtainMessage(), 5);
-                    }
-                }
+        public void handleMessage(android.os.Message msg) {
+            int scrollY = comment_list.getScrollY();
+            //此时的距离和记录下的距离不相等，在隔5毫秒给handler发送消息
+            if (lastScrollY != scrollY) {
+                lastScrollY = scrollY;
+                handler.sendMessageDelayed(handler.obtainMessage(), 5);
+            }
+        }
 
 
-            };
+    };
+
     /**
      * 重写onTouchEvent， 当用户的手在MyScrollView上面的时候，
      * 直接将MyScrollView滑动的Y方向距离回调给onScroll方法中，当用户抬起手的时候，
@@ -437,7 +442,7 @@ public class UserPubMsgDetailActivity extends BaseSlideBack implements View.OnCl
      */
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        switch(ev.getAction()){
+        switch (ev.getAction()) {
             case MotionEvent.ACTION_UP:
                 handler.sendMessageDelayed(handler.obtainMessage(), 20);
                 break;

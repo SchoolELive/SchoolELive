@@ -65,4 +65,6 @@
     <string name="weekpaid"> 周结 </string>
     <string name="monthpaid"> 月结 </string>
     <string name="afterworkpaid"> 完工结算 </string>
+
+
 </resources>

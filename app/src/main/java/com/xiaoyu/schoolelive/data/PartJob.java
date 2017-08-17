@@ -5,16 +5,88 @@ package com.xiaoyu.schoolelive.data;
  */
 public class PartJob {
     int workType;
-    int callNum;
     int wagesType;
     int wagesPay;
+    int workManNeed;
+    int workSexNeed;
+    int hasJoinMan;
+    String contactNum;
     String workWages;
     String workPlace;
     String workName;
     String workIntro;
     String workStartDate;
     String workEndDate;
+    String workStartHours;
+    String workEndHours;
+    String workNeed;
+    String pubWorkApartment;
+    String infoPublishDate;
     String contactPerson;
+
+    public int getWorkManNeed() {
+        return workManNeed;
+    }
+
+    public void setWorkManNeed(int workManNeed) {
+        this.workManNeed = workManNeed;
+    }
+
+    public int getWorkSexNeed() {
+        return workSexNeed;
+    }
+
+    public void setWorkSexNeed(int workSexNeed) {
+        this.workSexNeed = workSexNeed;
+    }
+
+    public int getHasJoinMan() {
+        return hasJoinMan;
+    }
+
+    public void setHasJoinMan(int hasJoinMan) {
+        this.hasJoinMan = hasJoinMan;
+    }
+
+    public String getWorkStartHours() {
+        return workStartHours;
+    }
+
+    public void setWorkStartHours(String workStartHours) {
+        this.workStartHours = workStartHours;
+    }
+
+    public String getWorkEndHours() {
+        return workEndHours;
+    }
+
+    public void setWorkEndHours(String workEndHours) {
+        this.workEndHours = workEndHours;
+    }
+
+    public String getWorkNeed() {
+        return workNeed;
+    }
+
+    public void setWorkNeed(String workNeed) {
+        this.workNeed = workNeed;
+    }
+
+    public String getPubWorkApartment() {
+        return pubWorkApartment;
+    }
+
+    public void setPubWorkApartment(String pubWorkApartment) {
+        this.pubWorkApartment = pubWorkApartment;
+    }
+
+    public String getInfoPublishDate() {
+        return infoPublishDate;
+    }
+
+    public void setInfoPublishDate(String infoPublishDate) {
+        this.infoPublishDate = infoPublishDate;
+    }
 
     public int getWagesPay() {
         return wagesPay;
@@ -40,12 +112,12 @@ public class PartJob {
         this.wagesType = wagesType;
     }
 
-    public int getCallNum() {
-        return callNum;
+    public String getContactNum() {
+        return contactNum;
     }
 
-    public void setCallNum(int callNum) {
-        this.callNum = callNum;
+    public void setContactNum(String contactNum) {
+        this.contactNum = contactNum;
     }
 
     public String getWorkPlace() {

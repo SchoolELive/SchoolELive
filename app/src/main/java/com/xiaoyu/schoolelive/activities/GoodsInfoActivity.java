@@ -47,7 +47,7 @@ public class GoodsInfoActivity extends AppCompatActivity implements View.OnClick
     private Button btn_ykj;
     private Button btn_yj_mai;
     private Button btn_yj_chat;
-    private Goods goods;
+    private Goods mGoods;
     private TextView mGoodsPageViews;
     private TextView mGoodsHot;
     private TextView mGoodsNew;
@@ -62,13 +62,13 @@ public class GoodsInfoActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_info);
-        goods = new Goods();
         initView();
         setGoodsImages();
     }
 
     public void initView() {
         Intent intent = getIntent();
+        mGoods = new Goods();
 
         findById();
         //设置商品类型
@@ -118,8 +118,8 @@ public class GoodsInfoActivity extends AppCompatActivity implements View.OnClick
             public void fillBannerItem(BGABanner banner, ImageView itemView, String model, int position) {
                 Glide.with(GoodsInfoActivity.this)
                         .load(model)
-                        .placeholder(R.mipmap.ic_launcher)
-                        .error(R.mipmap.ic_launcher)
+                        .placeholder(R.drawable.ic_imgloader)
+                        .error(R.drawable.ic_imgloader)
                         .centerCrop()
                         .dontAnimate()
                         .into(itemView);
@@ -187,7 +187,7 @@ public class GoodsInfoActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.goods_more:
-                showDialog(goods);
+                showDialog(mGoods);
                 break;
             case R.id.btn_pai:
                 showPaiDialog();
@@ -199,6 +199,7 @@ public class GoodsInfoActivity extends AppCompatActivity implements View.OnClick
                 showYJDialog();
                 break;
             case R.id.btn_yj_mai:
+                showYJ_Mai_Dialog();
                 break;
         }
     }
@@ -307,6 +308,12 @@ public class GoodsInfoActivity extends AppCompatActivity implements View.OnClick
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void showPaiDialog() {
         View view = View.inflate(this, R.layout.custom_dialog_pai, null);
+        TextView basePrice = (TextView) view.findViewById(R.id.basePrice);
+        TextView nowPrice = (TextView) view.findViewById(R.id.nowPrice);
+        TextView addPrice = (TextView) view.findViewById(R.id.addPrice);
+        basePrice.setText(mBasePrice.getText());
+        nowPrice.setText(mNowPrice.getText());
+        addPrice.setText(mMinPrice.getText());
         final CustomDialog.Builder builder = new CustomDialog.Builder(GoodsInfoActivity.this);
         builder.setTitle("竞拍").
                 setContentView(view).
@@ -341,8 +348,28 @@ public class GoodsInfoActivity extends AppCompatActivity implements View.OnClick
         }).create().show();
     }
 
+    public void showYJ_Mai_Dialog() {
+        View view = View.inflate(this, R.layout.custom_dialog_ykj, null);
+        final CustomDialog.Builder builder = new CustomDialog.Builder(GoodsInfoActivity.this);
+        builder.setTitle("确认购买").
+                setContentView(view).
+                setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        }).create().show();
+    }
+
     public void showYJDialog() {
         View view = View.inflate(this, R.layout.custom_dialog_yj, null);
+        TextView refPrice = (TextView) view.findViewById(R.id.refPrice);
+        refPrice.setText(mRefPrice.getText());
         final CustomDialog.Builder builder = new CustomDialog.Builder(GoodsInfoActivity.this);
         builder.setTitle("可议价").
                 setContentView(view).

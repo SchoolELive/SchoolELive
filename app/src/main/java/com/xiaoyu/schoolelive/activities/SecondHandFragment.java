@@ -71,14 +71,6 @@ public class SecondHandFragment extends Fragment {
         super.onStop();
     }
 
-
-//    @Override
-//    protected int getLayoutId() {
-//        return R.layout.activity_main_menu_secondhand;
-//    }
-
-
-    //@Override
     protected void initView(View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
     }
@@ -148,7 +140,7 @@ public class SecondHandFragment extends Fragment {
             ImageBean bean = new ImageBean();
             bean.setImgsrc(imgsrc);
             goods.setTopImage(bean);
-            goods.setPageViews(58);
+            goods.setPageViews(0);
             goods.setGoodsStyle(ConstantUtil.Goods_New);
             goods.setGoodsType(ConstantUtil.Goods_Type_yj);
             setPrice(goods, goods.getGoodsType());
