@@ -60,7 +60,7 @@ public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.View
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.item_image_text, parent, false);
+                .inflate(R.layout.custom_goods_thum, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;

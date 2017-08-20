@@ -1,5 +1,6 @@
 package com.xiaoyu.schoolelive.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,7 +26,6 @@ import butterknife.ButterKnife;
  */
 
 public class PartJobFragment extends Fragment {
-    //@Bind(R.id.partjob_recycler_view)
     RecyclerView mRecyclerView;
 
     private List<PartJob> mData;
@@ -35,14 +35,12 @@ public class PartJobFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //initData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = LayoutInflater.from(getActivity())
                 .inflate(R.layout.activity_main_menu_partjob, container, false);
-        //mRecyclerView=(RecyclerView)view.findViewById(R.id.partjob_recycler_view);
         initView(view, savedInstanceState);
         return view;
     }
@@ -66,10 +64,12 @@ public class PartJobFragment extends Fragment {
         super.onStop();
     }
 
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initData();
+        setItemListener();
     }
 
     private void initData() {
@@ -82,22 +82,13 @@ public class PartJobFragment extends Fragment {
         mAdapter = new PartJobAdapter(getActivity(), mData);
         mRecyclerView.setAdapter(mAdapter);
         getPartJobData();
-
-        mAdapter.setOnItemClickListener(new PartJobAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-            }
-            @Override
-            public void onItemLongClick(View view, int position) {
-            }
-        });
     }
 
 
     private void getPartJobData() {
         PartJob partJob = new PartJob();
         for (int i = 0; i < 10; i++) {
-            partJob.setWorkType(ConstantUtil.PartJob_QITA);
+            partJob.setWorkType(ConstantUtil.PartJob_YANYUAN);
             partJob.setWagesType(ConstantUtil.WagesType_PERDAY);
             partJob.setWagesPay(ConstantUtil.WagesPay_DAY);
             partJob.setWorkName("脱口秀节目现场充场观众");
@@ -109,6 +100,31 @@ public class PartJobFragment extends Fragment {
         }
         mAdapter.getList().addAll(mData);
         mAdapter.notifyDataSetChanged();
+    }
+
+    private void setItemListener() {
+        mAdapter.setOnItemClickListener(new PartJobAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                PartJob partJob;
+                partJob = mData.get(position);
+                Intent intent = new Intent(getActivity(), PartJobInfoActivity.class);
+                intent.putExtra("tmp_workType", partJob.getWorkType());
+                intent.putExtra("tmp_wagesType", partJob.getWagesType());
+                intent.putExtra("tmp_wagesPay", partJob.getWagesPay());
+                intent.putExtra("tmp_workName", partJob.getWorkName());
+                intent.putExtra("tmp_workWages", partJob.getWorkWages());
+                intent.putExtra("tmp_workPlace", partJob.getWorkPlace());
+                intent.putExtra("tmp_workStartDate", partJob.getWorkStartDate());
+                intent.putExtra("tmp_workEndDate", partJob.getWorkEndDate());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
     }
 }
 

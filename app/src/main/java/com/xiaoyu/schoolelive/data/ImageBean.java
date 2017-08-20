@@ -3,6 +3,7 @@ package com.xiaoyu.schoolelive.data;
 /**
  * Created by NeekChaw on 2017-07-23.
  */
+
 import android.graphics.Bitmap;
 
 import com.xiaoyu.schoolelive.util.Bimp;

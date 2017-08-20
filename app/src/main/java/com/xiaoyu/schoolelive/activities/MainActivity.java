@@ -63,6 +63,7 @@ public class MainActivity extends BaseMainSlide{
     FloatingActionButton floatingActionButton4;
     @Bind(R.id.floatingActionButton_5)
     FloatingActionButton floatingActionButton5;
+
     //引入侧滑栏布局
     public void mainInitSlidView(){
         //获取侧滑栏的头部
@@ -119,13 +120,14 @@ public class MainActivity extends BaseMainSlide{
             }
         });
     }
+
     //引入悬浮按钮
-    public void mainInitFloatBar(){
+    public void mainInitFloatBar() {
         ButterKnife.bind(this);
 
         floatingDraftButton.registerButton(addMsgFloatingButton);
         floatingDraftButton.registerButton(addGoodsFloatingButton);
-        floatingDraftButton.registerButton(floatingActionButton3);
+        floatingDraftButton.registerButton(addPartJobFloatingButton);
         floatingDraftButton.registerButton(floatingActionButton4);
         floatingDraftButton.registerButton(floatingActionButton5);
 
@@ -153,6 +155,14 @@ public class MainActivity extends BaseMainSlide{
                 startActivity(intent);
             }
         });
+        addPartJobFloatingButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //关闭动态Button
+                AnimationUtil.slideButtons(MainActivity.this, floatingDraftButton);
+                Intent intent = new Intent(MainActivity.this, UserAddPartJobActivity.class);
+                startActivity(intent);
+            }
+        });
 
 //        textViewCloud =  (TextView)findViewById(R.id.cloud);
 //        textViewCloud.setOnClickListener(new View.OnClickListener() {
@@ -176,7 +186,8 @@ public class MainActivity extends BaseMainSlide{
 //            }
 //        });
     }
-//    //打开蒙版
+
+    //    //打开蒙版
 //    public void openMenu(View view){
 //        ObjectAnimator animator = ObjectAnimator.ofFloat(view,"rotation",0,20,-135);
 //        animator.setDuration(500);
@@ -217,6 +228,7 @@ public class MainActivity extends BaseMainSlide{
             //显示已登录用户的头像
         }
     }
+
     //在程序中加入默认Fragment
     public void mainAddFragment(){
         fragmentManager = getSupportFragmentManager();
@@ -225,6 +237,7 @@ public class MainActivity extends BaseMainSlide{
         fragmentTransaction.add(R.id.main_menu_content, homeFragment,"home");
         fragmentTransaction.commit();
     }
+
     //引入底部菜单
     public void mainInitBottomBar(){
         //实例化BottomNavigationView菜单
@@ -258,6 +271,7 @@ public class MainActivity extends BaseMainSlide{
             }
         });
     }
+
     //得到所有Intent过来的数据
     public void mainGetAllIntent(){
         intent = getIntent();
@@ -266,10 +280,18 @@ public class MainActivity extends BaseMainSlide{
         str_date = intent.getStringExtra("tmp_date");
         str_content = intent.getStringExtra("tmp_content");
 
+        int toWhere = intent.getIntExtra("toPartJob", 0);
+        if (toWhere == 1) {
+            // 根据flag来判断显示哪个Fragment
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.main_menu_content, new PartJobFragment());
+            transaction.commit();
+        }
         //得到用户的Id
         intent_getUid = getIntent();
         uid = intent_getUid.getLongExtra("uid",0);
     }
+
     //处理获取的Intent数据
     public void mainDealIntent(){
         //判断Intent
@@ -282,6 +304,7 @@ public class MainActivity extends BaseMainSlide{
             homeFragment.setArguments(bundle);
         }
     }
+
     //隐藏所有的Fragment
     public void mainFragmentAllRemove(){
         if (homeFragment != null){
