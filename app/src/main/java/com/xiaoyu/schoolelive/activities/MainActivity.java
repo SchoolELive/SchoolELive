@@ -58,7 +58,7 @@ public class MainActivity extends BaseMainSlide{
     @Bind(R.id.floatingActionButton_2)
     FloatingActionButton addGoodsFloatingButton;
     @Bind(R.id.floatingActionButton_3)
-    FloatingActionButton floatingActionButton3;
+    FloatingActionButton addPartJobFloatingButton;
     @Bind(R.id.floatingActionButton_4)
     FloatingActionButton floatingActionButton4;
     @Bind(R.id.floatingActionButton_5)
@@ -377,13 +377,11 @@ public class MainActivity extends BaseMainSlide{
     public void mainSetBusinessFrament(){
         getSupportActionBar().setTitle("商家");
         HomeFragment.isDis = false;
-        SysInformFragment.SysInformIsDisplay = false;
         fragmentTransaction.replace(R.id.main_menu_content, businessFragment,"business").commit();
     }
     public void mainSetSysinformFrament(){
         getSupportActionBar().setTitle("通知");
         HomeFragment.isDis = false;
-        SysInformFragment.SysInformIsDisplay = true;
         fragmentTransaction.replace(R.id.main_menu_content, sysInformFragment,"inform").commit();
     }
 
