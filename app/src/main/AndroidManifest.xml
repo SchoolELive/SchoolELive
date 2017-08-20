@@ -21,7 +21,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
@@ -83,7 +83,6 @@
         <activity android:name=".activities.FindActivity" />
         <activity android:name=".activities.HistoryCollectActivity" />
         <activity android:name=".activities.LoginActivity" />
-
         <activity android:name=".activities.MySpinnerActivity" />
         <activity android:name=".activities.RegistActivity" />
         <activity android:name=".activities.SysSetAccountActivity" />
@@ -100,30 +99,28 @@
         <uses-feature
             android:name="android.hardware.camera2"
             android:required="true" />
-        <activity android:name=".activities.UserAddMsgActivity"></activity>
+
+        <activity android:name=".activities.UserAddMsgActivity" />
         <activity android:name=".activities.GoodsInfoActivity" />
-        <activity android:name="me.iwf.photopicker.PhotoPickerActivity"/>
-       <activity android:name=".activities.MainActivity">
-           <intent-filter>
-               <action android:name="android.intent.action.MAIN" />
+        <activity android:name="me.iwf.photopicker.PhotoPickerActivity" />
+        <activity android:name=".activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-               <category android:name="android.intent.category.LAUNCHER" />
-           </intent-filter>
-       </activity>
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-
-
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
-        <activity android:name="com.xiaoyu.schoolelive.activities.PreViewImgActivity" />
-        <activity android:name=".activities.SysSetBindActivity"/>
-        <activity android:name=".activities.UserAddGoodsActivity"/>
+        <activity android:name=".activities.PreViewImgActivity" />
+        <activity android:name=".activities.SysSetBindActivity" />
+        <activity android:name=".activities.UserAddGoodsActivity" />
+        <activity android:name=".activities.CheckInActivity"></activity>
     </application>
 
 </manifest>

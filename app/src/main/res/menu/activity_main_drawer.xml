@@ -27,5 +27,10 @@
             android:id="@+id/SystemSetting"
             android:icon="@drawable/ic_menu_manage"
             android:title="系统设置" />
+        <item
+            android:id="@+id/checkin"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="每日签到"
+            />
     </group>
 </menu>

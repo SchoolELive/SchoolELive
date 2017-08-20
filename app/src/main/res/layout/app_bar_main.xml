@@ -24,17 +24,5 @@
 
     <include
         layout="@layout/include_floatingmenu"/>
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="top|left"-->
-        <!--android:layout_marginBottom="60dp"-->
-        <!--android:clickable="true"-->
-        <!--app:backgroundTint="#0077d9"-->
-        <!--app:layout_anchor="@+id/include"-->
-        <!--app:layout_anchorGravity="bottom|right"-->
-        <!--app:rippleColor="#33ffaa"-->
-        <!--app:srcCompat="@drawable/ic_add" />-->
 
 </android.support.design.widget.CoordinatorLayout>

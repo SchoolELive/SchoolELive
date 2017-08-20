@@ -12,12 +12,8 @@ import android.view.ViewGroup;
 import android.widget.TabHost;
 
 import com.xiaoyu.schoolelive.R;
-import com.xiaoyu.schoolelive.adapter.PartJobAdapter;
 import com.xiaoyu.schoolelive.adapter.SysInformAdapter;
-import com.xiaoyu.schoolelive.data.PartJob;
 import com.xiaoyu.schoolelive.data.SysInform;
-import com.xiaoyu.schoolelive.util.ConstantUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +29,7 @@ public class SysInformFragment extends Fragment {
     private SysInformAdapter mAdapter;
     private View view;
     private TabHost tabHost;
-    RecyclerView general_rcview;
+    private RecyclerView general_rcview;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

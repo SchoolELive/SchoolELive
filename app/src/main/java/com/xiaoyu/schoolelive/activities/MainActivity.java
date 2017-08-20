@@ -110,6 +110,9 @@ public class MainActivity extends BaseMainSlide{
                         intent = new Intent(MainActivity.this,SystemSettingActivity.class);
                         startActivity(intent);
                         break;
+                    case R.id.checkin:
+                        intent = new Intent(MainActivity.this,CheckInActivity.class);
+                        startActivity(intent);
                 }
                 drawer.closeDrawer(GravityCompat.START);
                 return true;

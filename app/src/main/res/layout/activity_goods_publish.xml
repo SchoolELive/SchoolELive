@@ -40,9 +40,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="2dp"
         android:orientation="vertical">
 
         <TextView
@@ -55,26 +55,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <RadioButton
                 android:id="@+id/fixed_price"
-                android:checked="true"
-                android:layout_margin="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:checked="true"
                 android:text="一口价" />
 
             <RadioButton
                 android:id="@+id/negotiable"
-                android:layout_margin="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:text="可议价" />
 
             <RadioButton
                 android:id="@+id/auction"
-                android:layout_margin="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:text="竞拍" />
         </RadioGroup>
     </LinearLayout>

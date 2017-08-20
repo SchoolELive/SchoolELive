@@ -6,13 +6,6 @@
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="$USER_HOME$/.gradle/wrapper/dists/gradle-3.3-all" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/PhotoPicker-PhotoPicker" />
-            <option value="$PROJECT_DIR$/app" />
-          </set>
-        </option>
         <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
