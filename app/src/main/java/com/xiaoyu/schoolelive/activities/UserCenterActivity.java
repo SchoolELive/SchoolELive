@@ -3,9 +3,8 @@ package com.xiaoyu.schoolelive.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,14 +13,11 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -29,7 +25,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.nostra13.universalimageloader.utils.L;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.adapter.UserCenterAdapter;
 import com.xiaoyu.schoolelive.base.BaseSlideBack;
@@ -38,15 +36,11 @@ import com.xiaoyu.schoolelive.data.UserCenter;
 import com.xiaoyu.schoolelive.util.ACache;
 import com.xiaoyu.schoolelive.util.BitmapUtils;
 import com.xiaoyu.schoolelive.util.ConstantUtil;
-import com.xiaoyu.schoolelive.util.HttpUtil;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,8 +55,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
 public class UserCenterActivity extends BaseSlideBack {
-    Bitmap bitmap = null;
+    public static Bitmap bigImg = null;
+    int[] screenSize = null;
+    int mWidth;
+    int mHeigh;
     private ListView usercenter_list;
     private UserCenterAdapter userCenterAdapter;
     private List<UserCenter> data;
@@ -85,7 +83,7 @@ public class UserCenterActivity extends BaseSlideBack {
         public void handleMessage(Message msg) {
             String photo = (String) msg.obj;
             //Toast.makeText(UserCenterActivity.this,photo,Toast.LENGTH_LONG).show();
-            Log.i("aa",photo);
+            Log.i("aa", photo);
             Glide.with(UserCenterActivity.this)//将选中的图片放到imageview中
                     .load(ConstantUtil.SERVICE_PATH + str_trim(photo))
                     .into(imageView);
@@ -99,16 +97,37 @@ public class UserCenterActivity extends BaseSlideBack {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_center);
+        imageView = (ImageView) findViewById(R.id.user_center_imageview);
+        //初始化查看头像的图片
+        //initBigPhoto();
 
-        Intent get_uid = getIntent();
-        uid = get_uid.getLongExtra("uid", 0);
-
+        Intent intent = getIntent();
+        if (intent.getIntExtra("acFrom", 0) == ConstantUtil.MAIN_ACTIVITY) {
+            uid = intent.getLongExtra("uid", 0);
+        } else if (intent.getExtras().getInt("acFrom") == ConstantUtil.USERALBUM_ACTIVITY) {
+            Glide.with(this)
+                    //.load(getIntent().getStringExtra("photoUrl"))
+                    .load(getIntent().getExtras().getByteArray("photoByte"))
+                    .asBitmap()
+                    .into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
+                        @Override
+                        public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
+                            //设置裁剪后的头像
+                            imageView.setImageBitmap(bitmap);
+                        }
+                    });
+        }
         mCache = ACache.get(this);//初始花缓存类ACache
+
+        //获取当前屏幕宽高
+        screenSize = BitmapUtils.getScreenSize(UserCenterActivity.this);
+        mWidth = screenSize[0];
+        mHeigh = screenSize[1];
 
         //设置折叠式标题栏
         Toolbar toolbar = (Toolbar) findViewById(R.id.user_center_toolbar);
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.user_center_layout);
-        imageView = (ImageView) findViewById(R.id.user_center_imageview);
+
 
         //initView();
         String str = mCache.getAsString("photo_path");
@@ -117,7 +136,7 @@ public class UserCenterActivity extends BaseSlideBack {
                     .load(str)
                     .error(R.drawable.qq_login)
                     .into(imageView);
-        }else{
+        } else {
             Glide.with(UserCenterActivity.this)//将选中的图片放到imageview中
                     .load(R.drawable.qq_login)
                     .into(imageView);
@@ -130,7 +149,7 @@ public class UserCenterActivity extends BaseSlideBack {
                 onBackPressed();
             }
         });
-        collapsingToolbar.setExpandedTitleGravity(Gravity.BOTTOM|Gravity.CENTER);
+        collapsingToolbar.setExpandedTitleGravity(Gravity.BOTTOM | Gravity.CENTER);
         collapsingToolbar.setExpandedTitleColor(Color.BLACK);
         collapsingToolbar.setCollapsedTitleGravity(Gravity.LEFT);
         collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
@@ -142,6 +161,7 @@ public class UserCenterActivity extends BaseSlideBack {
                 View mTitleView = layoutInflater.inflate(R.layout.custom_user_center_dialog, null);
                 //创建对话框
                 AlertDialog.Builder builder = new AlertDialog.Builder(UserCenterActivity.this);
+                builder.setCustomTitle(mTitleView);
                 builder.setTitle("选择");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     //注册点击事件
@@ -157,9 +177,9 @@ public class UserCenterActivity extends BaseSlideBack {
                                 choseHeadImageFromApp();//从app中选择图片
                                 break;
                             case 3://查看图片
-                                bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                                //Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
                                 CustomImageDialogView.Builder dialogBuild = new CustomImageDialogView.Builder(UserCenterActivity.this);
-                                dialogBuild.setImage(bitmap);
+                                dialogBuild.setImage(bigImg);
                                 CustomImageDialogView img_dialog = dialogBuild.create();
                                 img_dialog.setCanceledOnTouchOutside(true);// 点击外部区域关闭
                                 img_dialog.show();
@@ -167,13 +187,13 @@ public class UserCenterActivity extends BaseSlideBack {
                         }
                     }
                 });
-                builder.setCustomTitle(mTitleView);
+
                 AlertDialog dialog = builder.show();
                 //设置宽度和高度
                 WindowManager.LayoutParams params =
                         dialog.getWindow().getAttributes();
-                params.width = 800;
-                params.height = 1000;
+                params.width = 600;
+                params.height = 750;
                 dialog.getWindow().setAttributes(params);
             }
         });
@@ -181,9 +201,19 @@ public class UserCenterActivity extends BaseSlideBack {
         setUserenterFloatingButton();
     }
 
+    private void initBigPhoto() {
+        Matrix max = new Matrix();
+        //设置是否开启缓存
+        imageView.setDrawingCacheEnabled(true);
+        //直接获得imageview中的缓存
+        bigImg = imageView.getDrawingCache();
+        //需要在获得缓存以后setDrawingCacheEnabled设置为false，因为这样才能让之前的缓存去掉，不会影响后来新的缓存。
+        imageView.setDrawingCacheEnabled(false);
+    }
+
     //悬浮按钮
-    private void setUserenterFloatingButton(){
-        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+    private void setUserenterFloatingButton() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,6 +223,7 @@ public class UserCenterActivity extends BaseSlideBack {
             }
         });
     }
+
     private void initView() {
 
         // 初始化评论列表
@@ -282,6 +313,7 @@ public class UserCenterActivity extends BaseSlideBack {
                 if (hasSdcard()) {
                     File tempFile = new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME);
                     Toast.makeText(UserCenterActivity.this, tempFile.toString(), Toast.LENGTH_LONG).show();
+
                     cropRawPhoto(Uri.fromFile(tempFile));
                 } else {
                     Toast.makeText(getApplication(), "没有SDCard!", Toast.LENGTH_LONG)
@@ -318,8 +350,10 @@ public class UserCenterActivity extends BaseSlideBack {
         intent.putExtra("outputX", output_X);
         intent.putExtra("outputY", output_Y);
         intent.putExtra("return-data", true);
+        bigImg = BitmapUtils.decodeUri(UserCenterActivity.this, uri, mWidth, mHeigh);
         startActivityForResult(intent, CODE_RESULT_REQUEST);
     }
+
     /**
      * 提取保存裁剪之后的图片数据，并设置头像部分的View
      */
@@ -329,15 +363,15 @@ public class UserCenterActivity extends BaseSlideBack {
             Bitmap photo = extras.getParcelable("data");
             imageView.setImageBitmap(photo);
             //新建文件夹 先选好路径 再调用mkdir函数 现在是根目录下面的Ask文件夹
-            try{
-                File image = saveFile(photo,"photo");
-                 uploadMultiFile(uid,image);//上传文件到服务器
-            }catch (IOException e){
+            try {
+                File image = saveFile(photo, "photo");
+                uploadMultiFile(uid, image);//上传文件到服务器
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             //File image = saveFile(photo, "photo");
-                //Toast.makeText(UserCenterActivity.this,image.getPath(),Toast.LENGTH_LONG).show();
-              //  uploadMultiFile(2015404, file);//上传文件到服务器
+            //Toast.makeText(UserCenterActivity.this,image.getPath(),Toast.LENGTH_LONG).show();
+            //  uploadMultiFile(2015404, file);//上传文件到服务器
             //Toast.makeText(UserCenterActivity.this,file.getPath(),Toast.LENGTH_LONG).show();
             /* File nf = new File(Environment.getExternalStorageDirectory() + "/Ask");
             nf.mkdir();
@@ -357,26 +391,6 @@ public class UserCenterActivity extends BaseSlideBack {
                 e.printStackTrace();
             }*/
         }
-    }
-
-    private Uri saveBitmap(Bitmap bm) {
-        File tmpDir = new File(Environment.getExternalStorageDirectory() + "/Ask");
-        if (!tmpDir.exists()) {
-            tmpDir.mkdir();
-        }
-        File img = new File(tmpDir.getAbsolutePath() + "okkk.png");
-        try {
-            FileOutputStream fos = new FileOutputStream(img);
-            bm.compress(Bitmap.CompressFormat.PNG, 85, fos);
-            fos.flush();
-            fos.close();
-            return Uri.fromFile(img);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
 
@@ -411,9 +425,9 @@ public class UserCenterActivity extends BaseSlideBack {
         final String url = ConstantUtil.SERVICE_PATH + "photo_design.php";
         MultipartBody.Builder mbody = new MultipartBody.Builder().setType(MultipartBody.FORM);
         String str = BitmapUtils.compressImageUpload(file.getPath());//得到压缩过的文件路径
-            File compress_file = new File(str);//得到新文件
-            mbody.addFormDataPart("image" , compress_file.getName(), RequestBody.create(MediaType.parse("application/octet-stream"), compress_file));//添加到mbody中
-            mbody.addFormDataPart("uid",uid+"");
+        File compress_file = new File(str);//得到新文件
+        mbody.addFormDataPart("image", compress_file.getName(), RequestBody.create(MediaType.parse("application/octet-stream"), compress_file));//添加到mbody中
+        mbody.addFormDataPart("uid", uid + "");
         RequestBody requestBody = mbody.build();
         Request request = new Request.Builder()
                 .url(url)
@@ -429,13 +443,15 @@ public class UserCenterActivity extends BaseSlideBack {
             public void onFailure(Call call, IOException e) {
                 Log.e("error", "uploadMultiFile() e=" + e);
             }
+
             public void onResponse(Call call, Response response) throws IOException {
-                  Message msg = new Message();
-                  msg.obj = response.body().string();
-                  handler.sendMessage(msg);
+                Message msg = new Message();
+                msg.obj = response.body().string();
+                handler.sendMessage(msg);
             }
         });
     }
+
     public String str_trim(String str) {//去除字符串中的所有空格(用来去掉服务器返回路径中的空格)
         return str.replaceAll(" ", "");
     }

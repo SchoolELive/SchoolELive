@@ -66,11 +66,11 @@ public class AlbumImageDetailActivity extends BaseSlideBack {
             btn_ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getApplication(), UserCenterActivity.class);
-                    //mDatas.get(mPosition)是 uri
-                    intent.putExtra("image_uri", mDatas.get(mPosition).toString());
-                    setResult(CODE_APP_REQUEST, intent);
-                    startActivity(intent);
+                    Intent intent = getIntent();
+                    String selImageUri = intent.getStringExtra("imgUri");
+                    Intent selHeadImage = new Intent(AlbumImageDetailActivity.this, UserCenterActivity.class);
+                    selHeadImage.putExtra("headImage", selHeadImage);
+                    startActivity(selHeadImage);
                     finish();
                 }
             });

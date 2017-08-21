@@ -103,5 +103,11 @@ public class ConstantUtil {
     //其他
     public static int ALLOWANCE_OTHER = 4;
 
+    /**
+     * Activity标识
+     */
+    public static int MAIN_ACTIVITY = 1;
+    public static int USERALBUM_ACTIVITY = 2;
+    public static int USERCENTET_ACTIVITY = 3;
 }
 

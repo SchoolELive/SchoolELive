@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_hot"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:weightSum="1">
-    <!--Top bar-->
-    <include layout="@layout/include_toolbar" />
+    android:layout_height="wrap_content"
+    android:background="@drawable/side_nav_bar"
+    android:orientation="vertical">
+    <!--<include-->
+    <!--layout="@layout/include_publish_list"/>-->
 
-    <TextView
+    <CheckBox
+        android:id="@+id/cb_album_list_downloadable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-90px"
-        android:text="我的相册"
-        android:textColor="#ffffff"
-        android:textSize="50px"
-        android:textStyle="bold" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:checked="true"
+        android:text="预览图片时显示保存图片按钮"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp"
+        android:visibility="gone" />
 
-    <com.xiaoyu.schoolelive.custom.CustomUserAlbum
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_album_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:photo_day="7"
-        app:photo_month="7"
-        app:photo_year="2017">
-    </com.xiaoyu.schoolelive.custom.CustomUserAlbum>
+        android:background="@color/white" />
+
+
 </LinearLayout>
