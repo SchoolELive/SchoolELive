@@ -62,6 +62,9 @@ dependencies {
     //网络连接依赖库
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
 
+
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'//下拉刷新
+
     testCompile 'junit:junit:4.12'
 
     compile project(path: ':PhotoPicker-PhotoPicker')

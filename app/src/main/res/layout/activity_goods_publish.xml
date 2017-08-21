@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -16,12 +17,14 @@
             android:text="宝贝名称：" />
 
         <EditText
+            android:id="@+id/goods_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="至多10个字" />
     </LinearLayout>
 
     <LinearLayout
+        android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -32,6 +35,7 @@
             android:text="简单介绍：" />
 
         <EditText
+            android:id="@+id/goods_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="至多30个字" />
@@ -40,30 +44,48 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_margin="2dp"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="出售方式：" />
 
-        <RadioButton
+        <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="一口价" />
+            android:orientation="horizontal">
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="可议价" />
+            <RadioButton
+                android:id="@+id/fixed_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:checked="true"
+                android:text="一口价" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="竞拍" />
+            <RadioButton
+                android:id="@+id/negotiable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="可议价" />
+
+            <RadioButton
+                android:id="@+id/auction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="竞拍" />
+        </RadioGroup>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/auction_ll"
+        android:visibility="gone"
+        android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -84,6 +106,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_margin="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -100,21 +123,28 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_margin="2dp"
+        android:id="@+id/price_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="售价：" />
 
         <EditText
+            android:id="@+id/goods_price"
+            android:digits="0123456789."
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="请输入商品价格"
+            />
     </LinearLayout>
 
     <LinearLayout
+        android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -135,6 +165,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/price_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="发布" />

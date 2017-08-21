@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment implements EasyPermissions.Permission
         /*
         * 刷新按钮
         * */
-//        swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
+        swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
 //        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 //            public void onRefresh() {
 //

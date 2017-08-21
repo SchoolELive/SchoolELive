@@ -266,7 +266,7 @@ public class UserAddMsgActivity extends BaseSlideBack {
 //    private void upLoad_with_image() {
 //        final String url = ConstantUtil.SERVICE_PATH + "upload.php";
 //        MultipartBody.Builder mbody = new MultipartBody.Builder().setType(MultipartBody.FORM);
-//        for (int i = 0; i < photos.size(); i++) {
+  //      for (int i = 0; i < photos.size(); i++) {
 //            File file = new File(photos.get(i));//得到选择的图片
 //            String str = BitmapUtils.compressImageUpload(file.getPath());//得到压缩过的文件路径
 //            File compress_file = new File(str);//得到新文件

@@ -265,6 +265,16 @@ public class MainActivity extends BaseMainSlide{
 
         //得到用户的Id
         intent_getUid = getIntent();
+        int towhere = intent_getUid.getIntExtra("toAddGoods",0);
+        if(towhere == 2){
+            //mainFragmentAllRemove();
+            //在程序中加入Fragment
+            fragmentManager = getSupportFragmentManager();
+            //开启一个Fragment事务
+            fragmentTransaction = fragmentManager.beginTransaction();
+            mainSetSecondFrament();
+
+        }
         uid = intent_getUid.getLongExtra("uid",0);
     }
     //处理获取的Intent数据

@@ -95,12 +95,16 @@ public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.View
         return mData;
     }
 
+
+
+
     public static DisplayImageOptions NORMAL_OPTION = new DisplayImageOptions.Builder()
             .cacheInMemory(true)
+            .cacheOnDisk(true)
+            .bitmapConfig(Bitmap.Config.RGB_565)
             .showImageOnLoading(R.mipmap.ic_launcher)
             .showImageForEmptyUri(R.mipmap.ic_launcher)
             .showImageOnFail(R.mipmap.ic_launcher)
-            .cacheOnDisc(true)
             .build();
 
 //    public void addGoods(Goods goods) {
@@ -111,7 +115,8 @@ public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.View
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
-        layoutParams.height = mHeights.get(position);
+        //int height = 500 + (int)(Math.random()*650);//350 到 650之间的随机数
+        layoutParams.height = 600;
         holder.itemView.setLayoutParams(layoutParams);
 
         initImageLoader(mContext);
@@ -124,8 +129,9 @@ public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.View
         //获取商品浏览量
         holder.mGoodsPageViews.setText(goods.getPageViews() + "");
         //显示图片
+
         ImageLoader.getInstance().displayImage(bean.getImgsrc(),
-                holder.mImageView, NORMAL_OPTION);
+               holder.mImageView, NORMAL_OPTION);//设置图片
 
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -171,7 +177,7 @@ public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.View
         }
     }
 
-    private void initImageLoader(Context context) {
+    private void initImageLoader(Context context) {//初始化ImageLoader
         int memoryCacheSize = (int) (Runtime.getRuntime().maxMemory() / 5);
         MemoryCache memoryCache;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {

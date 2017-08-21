@@ -8,8 +8,9 @@ import android.graphics.Bitmap;
 import com.xiaoyu.schoolelive.util.Bimp;
 
 import java.io.IOException;
+import java.io.Serializable;
 
-public class ImageBean {
+public class ImageBean implements Serializable{
     public String id;
     public String path;
     private Bitmap bitmap;

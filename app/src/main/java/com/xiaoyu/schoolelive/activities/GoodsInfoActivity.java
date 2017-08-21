@@ -5,8 +5,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,13 +22,27 @@ import com.bumptech.glide.Glide;
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.custom.CustomDialog;
 import com.xiaoyu.schoolelive.data.Goods;
+import com.xiaoyu.schoolelive.util.ACache;
 import com.xiaoyu.schoolelive.util.ConstantUtil;
+import com.xiaoyu.schoolelive.util.HttpUtil;
 import com.xiaoyu.schoolelive.util.ShowShareUtil;
+import com.xiaoyu.schoolelive.util.WidgetUtil;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import cn.bingoogolapple.bgabanner.BGABanner;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by NeekChaw on 2017-07-29.
@@ -48,37 +65,76 @@ public class GoodsInfoActivity extends AppCompatActivity implements View.OnClick
     private Button btn_yj_mai;
     private Button btn_yj_chat;
     private Goods goods;
+    private TextView mGoodsName;//名称
     private TextView mGoodsPageViews;
     private TextView mGoodsHot;
     private TextView mGoodsNew;
     private TextView mGoodsTop;
+    private TextView mGoodsIntro;//商品介绍
     private View mGoodsPai;
     private View mGoodsYKJ;
     private View mGoodsYJ;
+    private View mGoodIntro_view;
     private BGABanner mGoodsImages;
     final String[] mItems = new String[]{"卖家详情", "关注卖家", "收藏宝贝", "分享宝贝", "举报"};
     final String[] mAgainstItems = new String[]{"泄露隐私", "人身攻击", "淫秽色情", "垃圾广告", "敏感信息", "其他"};
 
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            ACache aCache = ACache.get(getApplicationContext());
+            Bundle bundle = msg.getData();
+            String goods_path = bundle.getString("goods_path");
+            String goods_id = bundle.getString("goods_id");
+            List<String> Image_List = new ArrayList<>();
+            List<String> wordsList = new ArrayList<>();
+            try{
+                JSONArray jsonArray = new JSONArray(goods_path);
+                aCache.put(goods_id+"",jsonArray,3*ACache.TIME_DAY);//将数据放到缓存中
+                for (int i = 0; i < jsonArray.length();i++){
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    Image_List.add(ConstantUtil.SERVICE_PATH+ WidgetUtil.str_trim(jsonObject.getString("path")));
+                    wordsList.add("小雨科技");
+                }
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+            mGoodsImages.setData(Image_List, wordsList);
+        }
+    };
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_info);
         goods = new Goods();
         initView();
-        setGoodsImages();
+
     }
 
     public void initView() {
         Intent intent = getIntent();
 
         findById();
+        //  Toast.makeText(getApplicationContext(),intent.getStringExtra("tmp_goodsname"),Toast.LENGTH_SHORT).show();
+        //setGoodsName(intent.getStringExtra("tmp_goodsname"));
         //设置商品类型
         setGoodsType(intent.getIntExtra("tmp_goodsType", 0));
+
+        //设置商品名称
+        setGoodsName(intent.getIntExtra("tmp_goodsType", 0),intent.getStringExtra("tmp_goodsname"));
+
+        //设置商品介绍
+        setGoodsIntro(intent.getIntExtra("tmp_goodsType", 0) ,intent.getStringExtra("tmp_intro"));
         //设置浏览量
         mGoodsPageViews.setText(intent.getStringExtra("tmp_pageViews"));
         //设置商品标签
         setGoodsStyle(intent.getIntExtra("tmp_goodsStyle", 0));
         //设置商品价格
         setGoodsPrice(intent, intent.getIntExtra("tmp_goodsType", 0));
+
+        String goods_id = intent.getStringExtra("tmp_goodsid");
+
+        setGoodsImages(goods_id);
+
 
         btn_more.setOnClickListener(this);
         btn_pai.setOnClickListener(this);
@@ -110,9 +166,10 @@ public class GoodsInfoActivity extends AppCompatActivity implements View.OnClick
         mPrice = (TextView) findViewById(R.id.yikoujia_price);
         //可议价价格
         mRefPrice = (TextView) findViewById(R.id.yj_price);
+
     }
 
-    public void setGoodsImages() {
+    public void setGoodsImages(final String goods_id) {
         mGoodsImages.setAdapter(new BGABanner.Adapter<ImageView, String>() {
             @Override
             public void fillBannerItem(BGABanner banner, ImageView itemView, String model, int position) {
@@ -125,18 +182,72 @@ public class GoodsInfoActivity extends AppCompatActivity implements View.OnClick
                         .into(itemView);
             }
         });
+        ACache aCache = ACache.get(getApplicationContext());
+        if(aCache.getAsJSONArray(""+goods_id) != null){//如果缓存中存在,直接在缓存中读取
+            List<String> Image_List = new ArrayList<>();
+            List<String> wordsList = new ArrayList<>();
+            try{
+                JSONArray jsonArray = aCache.getAsJSONArray(""+goods_id);
+                for (int i = 0; i < jsonArray.length();i++){
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    Image_List.add(ConstantUtil.SERVICE_PATH+ WidgetUtil.str_trim(jsonObject.getString("path")));
+                    wordsList.add("小雨科技");
+                }
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+            mGoodsImages.setData(Image_List, wordsList);
+        }else {//缓存中不存在，向服务器发送请求
+            final RequestBody requestBody = new FormBody.Builder()
+                    .add("goods_id",goods_id)
+                    .build();
+            HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH + "query_goods_image.php", requestBody, new Callback() {
+                public void onFailure(Call call, IOException e) {
 
-        List<String> imgList = new ArrayList<>();
-        imgList.add("http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered11.png");
-        imgList.add("http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered12.png");
-        imgList.add("http://7xk9dj.com1.z0.glb.clouddn.com/refreshlayout/images/staggered13.png");
-        List<String> wordsList = new ArrayList<>();
-        wordsList.add("提示文字1");
-        wordsList.add("提示文字2");
-        wordsList.add("提示文字3");
-        mGoodsImages.setData(imgList, wordsList);
+                }
+                public void onResponse(Call call, Response response) throws IOException {
+                    Message msg = new Message();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("goods_id",goods_id);
+                    bundle.putString("goods_path",response.body().string());
+                    msg.setData(bundle);
+                    handler.sendMessage(msg);
+                }
+            });
+
+        }
+
+
+
     }
+    public void setGoodsName(int type,String goodsName){
+        if (type == ConstantUtil.Goods_Type_pai) {
+            mGoodsName = (TextView)mGoodsPai.findViewById(R.id.goods_name);
+            mGoodsName.setText(goodsName);
+        } else if (type == ConstantUtil.Goods_Type_yj) {
+            mGoodsName = (TextView)mGoodsYJ.findViewById(R.id.goods_name);
+            mGoodsName.setText(goodsName);
+        } else if (type == ConstantUtil.Goods_Type_ykj) {
+            mGoodsName = (TextView)mGoodsYKJ.findViewById(R.id.goods_name);
+            mGoodsName.setText(goodsName);}
 
+    }
+    public void setGoodsIntro(int type,String goodsName){
+        if (type == ConstantUtil.Goods_Type_pai) {
+            mGoodIntro_view = mGoodsPai.findViewById(R.id.inc_goods_intro);
+            mGoodsIntro = (TextView)mGoodIntro_view.findViewById(R.id.goods_intro);
+            mGoodsIntro.setText(goodsName);
+        } else if (type == ConstantUtil.Goods_Type_yj) {
+            mGoodIntro_view = mGoodsYJ.findViewById(R.id.inc_goods_intro);
+            mGoodsIntro = (TextView)mGoodIntro_view.findViewById(R.id.goods_intro);
+            mGoodsIntro.setText(goodsName);
+        } else if (type == ConstantUtil.Goods_Type_ykj) {
+            mGoodIntro_view = mGoodsYKJ.findViewById(R.id.inc_goods_intro);
+            mGoodsIntro = (TextView)mGoodIntro_view.findViewById(R.id.goods_intro);
+            mGoodsIntro.setText(goodsName);
+        }
+
+    }
     public void setGoodsStyle(int type) {
         if (type == ConstantUtil.Goods_All) {
             mGoodsHot.setVisibility(View.VISIBLE);
@@ -162,10 +273,13 @@ public class GoodsInfoActivity extends AppCompatActivity implements View.OnClick
 
     public void setGoodsType(int type) {
         if (type == ConstantUtil.Goods_Type_pai) {
+            mGoodsName = (TextView)mGoodsPai.findViewById(R.id.goods_name);
             mGoodsPai.setVisibility(View.VISIBLE);
         } else if (type == ConstantUtil.Goods_Type_yj) {
+            mGoodsName = (TextView)mGoodsYJ.findViewById(R.id.goods_name);
             mGoodsYJ.setVisibility(View.VISIBLE);
         } else if (type == ConstantUtil.Goods_Type_ykj) {
+            mGoodsName = (TextView)mGoodsYKJ.findViewById(R.id.goods_name);
             mGoodsYKJ.setVisibility(View.VISIBLE);
         }
     }
@@ -181,6 +295,7 @@ public class GoodsInfoActivity extends AppCompatActivity implements View.OnClick
             mPrice.setText(intent.getStringExtra("tmp_ykjPrice"));
         }
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override

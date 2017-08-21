@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/goods_name"
         android:textSize="@dimen/bar_text_size"
-        android:text="水桶"/>
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +33,9 @@
             android:textColor="@color/red"
             android:textSize="@dimen/bar_text_size"/>
     </LinearLayout>
-    <include layout="@layout/include_goods_intro" />
+    <include
+        android:id="@+id/inc_goods_intro"
+        layout="@layout/include_goods_intro" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

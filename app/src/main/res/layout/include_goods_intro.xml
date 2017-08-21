@@ -9,10 +9,10 @@
         android:text="宝贝介绍："
         />
     <TextView
+        android:id="@+id/goods_intro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/ui_10_dip"
-        android:id="@+id/goods_intro"
         android:textSize="15dp"
-        android:text="八成新。。。"/>
+        />
 </LinearLayout>

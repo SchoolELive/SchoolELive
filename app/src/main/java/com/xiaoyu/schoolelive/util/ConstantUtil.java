@@ -75,9 +75,11 @@ public class ConstantUtil {
      * 商品类型 ：一口价  可议价  竞拍
      */
     //一口价
-    public static int Goods_Type_ykj = 1;
+    public static int Goods_Type_ykj = 0;
     //可议价
-    public static int Goods_Type_yj = 2;
+    public static int Goods_Type_yj = 1;
     //竞拍
-    public static int Goods_Type_pai = 3;
+    public static int Goods_Type_pai = 2;
+
+    public static int Goods_Piece = 5;//旧货每次刷新加载多少条
 }
