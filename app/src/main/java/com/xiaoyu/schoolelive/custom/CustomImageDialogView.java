@@ -5,10 +5,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.xiaoyu.schoolelive.R;
+import com.xiaoyu.schoolelive.util.TouchListener;
 
 /**
  * Created by Administrator on 2017/7/11.
@@ -45,11 +47,11 @@ public class CustomImageDialogView extends Dialog {
             final CustomImageDialogView dialog = new CustomImageDialogView(context, R.style.Dialog);
             View layout = inflater.inflate(R.layout.custom_image_dialog, null);
             dialog.addContentView(layout, new WindowManager.LayoutParams(
-                    android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-                    , android.view.ViewGroup.LayoutParams.WRAP_CONTENT));
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                    , ViewGroup.LayoutParams.MATCH_PARENT));
             dialog.setContentView(layout);
             ImageView img = (ImageView) layout.findViewById(R.id.dialog_img);
-
+            img.setOnTouchListener(new TouchListener(img));
             img.setImageBitmap(getImage());
             return dialog;
         }

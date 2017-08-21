@@ -28,13 +28,11 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-import static com.xiaoyu.schoolelive.activities.UserAlbumActivity.mNormalImageOptions;
-
 /**
  * Created by NeekChaw on 2017-07-28.
  */
 public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.ViewHolder> {
-
+    public DisplayImageOptions mNormalImageOptions;
     private Context mContext;
     //private List<ImageBean> mList = new ArrayList<>();
     private List<Goods> mData = new ArrayList<>();
@@ -60,7 +58,7 @@ public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.View
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.item_image_text, parent, false);
+                .inflate(R.layout.custom_goods_thum, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;

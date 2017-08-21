@@ -233,7 +233,6 @@ public class PartJobAdapter extends RecyclerView.Adapter<PartJobAdapter.ViewHold
             return;
         }
     }
-
     @Override
     public int getItemCount() {
         return mData == null ? 0 : mData.size();
@@ -246,6 +245,7 @@ public class PartJobAdapter extends RecyclerView.Adapter<PartJobAdapter.ViewHold
         mData.add(partJob);
         notifyItemInserted(0);
     }
+
 
 
     public interface OnItemClickListener {
