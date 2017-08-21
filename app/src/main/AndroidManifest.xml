@@ -127,6 +127,7 @@
         <activity android:name=".activities.UserAddGoodsActivity" />
         <activity android:name=".activities.PartJobInfoActivity" />
         <activity android:name=".activities.UserAddPartJobActivity" />
+        <activity android:name=".custom.CustomBGAPhotoPreviewActivity" />
     </application>
 
 </manifest>

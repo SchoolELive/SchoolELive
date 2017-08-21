@@ -22,6 +22,7 @@ import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.base.BaseMainSlide;
 import com.xiaoyu.schoolelive.custom.CustomFloatingDraftButton;
 import com.xiaoyu.schoolelive.util.AnimationUtil;
+import com.xiaoyu.schoolelive.util.ConstantUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -69,6 +70,7 @@ public class MainActivity extends BaseMainSlide {
                 //drawer.closeDrawer(GravityCompat.START);
                 intent = new Intent(MainActivity.this, UserCenterActivity.class);
                 intent.putExtra("uid", uid);
+                intent.putExtra("acFrom", ConstantUtil.MAIN_ACTIVITY);
                 startActivity(intent);
             }
         });
