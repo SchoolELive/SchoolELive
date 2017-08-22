@@ -102,9 +102,9 @@ public class UserCenterActivity extends BaseSlideBack {
         //initBigPhoto();
 
         Intent intent = getIntent();
-        if (intent.getIntExtra("acFrom", 0) == ConstantUtil.MAIN_ACTIVITY) {
+        if (intent.getIntExtra("acFrom", 0) == 0) {
             uid = intent.getLongExtra("uid", 0);
-        } else if (intent.getExtras().getInt("acFrom") == ConstantUtil.USERALBUM_ACTIVITY) {
+        } else if (intent.getExtras().getInt("acFrom") == 1) {
             Glide.with(this)
                     //.load(getIntent().getStringExtra("photoUrl"))
                     .load(getIntent().getExtras().getByteArray("photoByte"))

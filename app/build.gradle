@@ -65,4 +65,5 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'junit:junit:4.12'
     testCompile 'junit:junit:4.12'
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'//下拉刷新
 }

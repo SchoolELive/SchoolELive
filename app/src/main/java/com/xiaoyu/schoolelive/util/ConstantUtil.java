@@ -81,5 +81,35 @@ public class ConstantUtil {
     //竞拍
     public static int Goods_Type_pai = 2;
 
-    public static int Goods_Piece = 5;//旧货每次刷新加载多少条
+    /**
+     * 性别
+     */
+    //男
+    public static int MAN = 1;
+    //女
+    public static int WOMEN = 2;
+    //不限
+    public static int ALL_SEX = 3;
+
+    /**
+     * 兼职待遇
+     */
+    //餐补
+    public static int ALLOWANCE_MEAL = 1;
+    //住宿
+    public static int ALLOWANCE_LIVE = 2;
+    //交通补助
+    public static int ALLOWANCE_TRAFFIC = 3;
+    //其他
+    public static int ALLOWANCE_OTHER = 4;
+
+    /**
+     * Activity标识
+     */
+    public static int MAIN_ACTIVITY = 1;
+    public static int USERALBUM_ACTIVITY = 2;
+    public static int USERCENTET_ACTIVITY = 3;
+
+    public static int Goods_Piece = 5;//每次刷新加载商品件数
 }
+

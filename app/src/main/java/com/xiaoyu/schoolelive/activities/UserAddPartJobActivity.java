@@ -253,24 +253,31 @@ public class UserAddPartJobActivity extends AppCompatActivity implements View.On
 
     private int getSexNeed(String sex) {
         if (sex.equals("男")) {
-            return ConstantUtil.MAN;
+            //return ConstantUtil.MAN;
+            return 1;
         } else if (sex.equals("女")) {
-            return ConstantUtil.WOMEN;
+            //return ConstantUtil.WOMEN;
+            return 0;
         } else if (sex.equals("不限")) {
-            return ConstantUtil.ALL_SEX;
+           // return ConstantUtil.ALL_SEX;
+            return 1;
         }
         return 0;
     }
 
     private int getAllowanceType() {
         if (allowance_Meal.isChecked()) {
-            return ConstantUtil.ALLOWANCE_MEAL;
+            //return ConstantUtil.ALLOWANCE_MEAL;
+            return 1;
         } else if (allowance_Live.isChecked()) {
-            return ConstantUtil.ALLOWANCE_LIVE;
+            //return ConstantUtil.ALLOWANCE_LIVE;
+            return 1;
         } else if (allowance_Traffic.isChecked()) {
-            return ConstantUtil.ALLOWANCE_TRAFFIC;
+           // return ConstantUtil.ALLOWANCE_TRAFFIC;
+            return 1;
         } else if (allowance_Other.isChecked()) {
-            return ConstantUtil.ALLOWANCE_OTHER;
+           // return ConstantUtil.ALLOWANCE_OTHER;
+            return 1;
         }
         return 0;
     }
