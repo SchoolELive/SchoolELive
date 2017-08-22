@@ -102,9 +102,9 @@ public class UserCenterActivity extends BaseSlideBack {
         //initBigPhoto();
 
         Intent intent = getIntent();
-        if (intent.getIntExtra("acFrom", 0) == 0) {
+        if (intent.getIntExtra("acFrom", 0) == ConstantUtil.MAIN_ACTIVITY) {
             uid = intent.getLongExtra("uid", 0);
-        } else if (intent.getExtras().getInt("acFrom") == 1) {
+        } else if (intent.getExtras().getInt("acFrom") == ConstantUtil.USERALBUM_ACTIVITY) {
             Glide.with(this)
                     //.load(getIntent().getStringExtra("photoUrl"))
                     .load(getIntent().getExtras().getByteArray("photoByte"))
@@ -433,7 +433,7 @@ public class UserCenterActivity extends BaseSlideBack {
                 .url(url)
                 .post(requestBody)
                 .build();
-        final okhttp3.OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
+        final OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
         OkHttpClient okHttpClient = httpBuilder
                 //设置超时
                 .connectTimeout(10, TimeUnit.SECONDS)
