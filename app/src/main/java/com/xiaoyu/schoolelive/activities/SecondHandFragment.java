@@ -152,9 +152,10 @@ public class SecondHandFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     //@Override
     protected void initData() {
-        mRecyclerView.setLayoutManager(new
-                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        mAdapter = new WaterFallAdapter(getActivity());
+        StaggeredGridLayoutManager sgl = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(sgl);
+
+        mAdapter = new WaterFallAdapter(getActivity(),goodsList);
         mRecyclerView.setAdapter(mAdapter);
         if(Common_msg_cache.get_goods_Cache(getContext()) != null){//判断缓存中是否存在旧货信息
             ArrayList<Goods> cache_goods = Common_msg_cache.get_goods_Cache(getContext());

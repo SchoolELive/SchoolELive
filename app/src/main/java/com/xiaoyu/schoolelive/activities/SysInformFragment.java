@@ -68,15 +68,15 @@ public class SysInformFragment extends Fragment {
         });
     }
     private void getSysInformData() {
-        SysInform inform = new SysInform();
         for (int i = 0; i < 10; i++) {
+            SysInform inform = new SysInform();
             inform.setSysInform_image(R.drawable.ic_home_black_24dp);
             inform.setSysInform_name("校园E生活官方");
             inform.setSysInform_data("2017-08-13  12:51:44");
             inform.setSysInform_content("第一条通知发布啦!!!");
             mData.add(inform);
         }
-        mAdapter.getList().addAll(mData);
+//        mAdapter.getList().addAll(mData);
         mAdapter.notifyDataSetChanged();
     }
 

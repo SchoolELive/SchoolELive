@@ -6,7 +6,6 @@
     android:clickable="true"
     android:orientation="vertical"
     tools:context="com.xiaoyu.schoolelive.activities.CheckInActivity">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -29,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:background="@color/__picker_pager_bg"
+            android:background="@drawable/ic_menu_share"
             android:layout_gravity="center"
             android:layout_width="24dp"
             android:layout_height="24dp" />
@@ -71,6 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
         <TextView
+            android:id="@+id/intoShop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15dp"
@@ -82,9 +82,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
@@ -98,23 +97,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="3dp"/>
         </LinearLayout>
-        <!--<LinearLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:orientation="vertical">-->
-        <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:text="明星周边"-->
-        <!--/>-->
-        <!--<TextView-->
-        <!--android:id="@+id/store_view2"-->
-        <!--android:background="#ffffff"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="3dp"/>-->
-        <!--</LinearLayout>-->
     </LinearLayout>
 
 </LinearLayout>

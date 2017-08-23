@@ -1,6 +1,8 @@
 package com.xiaoyu.schoolelive.adapter;
+
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,10 +25,8 @@ import java.util.List;
 import butterknife.ButterKnife;
 
 import static java.lang.System.currentTimeMillis;
-import static java.lang.System.in;
 
-
-public class HeaderBottomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //item类型
     public static final int ITEM_TYPE_HEADER = 0;
     public static final int ITEM_TYPE_CONTENT = 1;
@@ -37,13 +37,12 @@ public class HeaderBottomAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private LayoutInflater mLayoutInflater;
     private Context mContext;
     private List<ShopData> mShopData;
-    private int mHeaderCount=1;//头部View个数
+    private int mHeaderCount=0;//头部View个数
     private int mBottomCount=0;//底部View个数
-    public HeaderBottomAdapter(Context context,List<ShopData> datas) {
+    public ShopAdapter(Context context,List<ShopData> datas) {
         this.mContext = context;
         this.mShopData = datas;
         mLayoutInflater = LayoutInflater.from(context);
-
     }
     //判断当前item是否是HeadView
     public boolean isHeaderView(int position) {
@@ -111,6 +110,7 @@ public class HeaderBottomAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     public void onClick(View v) {
                         int pos = holder.getLayoutPosition();
                         mOnItemClickListener.onItemClick(holder.itemView, pos);
+                        //Toast.makeText(mContext,"点击",Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(mContext, ShopItemDetailActivity.class);
                         //intent.putExtra("shop_image",mShopData.get(position).getImage());
                         intent.putExtra("shop_name",mShopData.get(position).getName());
