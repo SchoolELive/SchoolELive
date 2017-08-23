@@ -234,8 +234,8 @@ public class CustomBGAPhotoPreviewActivity extends BGAPPToolbarActivity implemen
                         UserCenterActivity.bigImg = cpBitmap;
                         Intent i = new Intent(CustomBGAPhotoPreviewActivity.this, UserCenterActivity.class);
                         Bundle bundle = new Bundle();
-                        //bundle.putInt("acFrom", ConstantUtil.USERALBUM_ACTIVITY);
-                        bundle.putInt("acFrom", 1);
+                        bundle.putInt("acFrom", ConstantUtil.USERALBUM_ACTIVITY);
+                        //bundle.putInt("acFrom", );
                         bundle.putByteArray("photoByte", b);
                         //bundle.putByteArray("bigPhotoByte",mBigImgByte);
                         i.putExtras(bundle);
