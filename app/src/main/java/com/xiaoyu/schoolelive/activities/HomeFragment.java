@@ -53,6 +53,7 @@ public class HomeFragment extends Fragment implements EasyPermissions.Permission
 
     }
 
+
     @Override
     public void onPause() {
         super.onPause();
@@ -69,6 +70,7 @@ public class HomeFragment extends Fragment implements EasyPermissions.Permission
     }
 
     public void initRV() {
+
         mPublishRv = (RecyclerView) view.findViewById(R.id.rv_moment_list_moments);
         mDownLoadableCb = (CheckBox) view.findViewById(R.id.cb_moment_list_downloadable);
         //查看大图是否显示下载图标
@@ -78,9 +80,24 @@ public class HomeFragment extends Fragment implements EasyPermissions.Permission
         mPublishAdapter.setOnRVItemLongClickListener(this);
         mPublishAdapter.setDelegate(HomeFragment.this);
         mPublishRv.addOnScrollListener(new BGARVOnScrollListener(getActivity()));
-        mPublishRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        //添加下面这段话
+        LinearLayoutManager linearLayout = new LinearLayoutManager(getContext());
+        mPublishRv.setLayoutManager(linearLayout);
+        linearLayout.setRecycleChildrenOnDetach(true);
+        RecyclerView.RecycledViewPool pool = mPublishRv.getRecycledViewPool();
+        mPublishRv.setRecycledViewPool(pool);
+        //结束
+
         mPublishRv.setAdapter(mPublishAdapter);
         addNetImageTestData();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPublishRv = null;
+        mPublishAdapter = null;
     }
 
     @Override

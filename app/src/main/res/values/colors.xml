@@ -21,7 +21,7 @@
     <color name="pink">#F699B4</color>
     <color name="primary_dark">#ffaa44</color>
     <color name="simple_green">#36D7B6</color>
-    <color name="simple_blue">#3DBFF0</color>
+    <color name="simple_blue">#3dbff0</color>
     <!--兼职类型-->
     <!--演员-->
     <color name="yanyuan">#248888</color>
@@ -61,4 +61,16 @@
     <color name="afterworkpaid">#F05D5E</color>
 
     <color name="kong">#00000000</color>
+    <color name="primary_material_light">#81c1ef</color>
+    <color name="statusColor">#81c1ef</color>
+
+    <!--浮动按钮颜色-->
+    <color name="float_btn_normal">#96D986</color>
+    <color name="float_btn_press">#339BE6</color>
+
+    <color name="float_btn_publish">#3D8AD4</color>
+    <color name="float_btn_secondhand">#2E92DA</color>
+    <color name="float_btn_partjob">#57AEF1</color>
+    <color name="float_btn_inform">#76B4ED</color>
+    <color name="float_btn_share">#81C1EF</color>
 </resources>
