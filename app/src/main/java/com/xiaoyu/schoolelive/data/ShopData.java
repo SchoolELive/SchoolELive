@@ -3,7 +3,6 @@ package com.xiaoyu.schoolelive.data;
 /**
  * Created by Administrator on 2017/8/18.
  */
-
 public class ShopData {
     int shop_image;
     String shop_name;

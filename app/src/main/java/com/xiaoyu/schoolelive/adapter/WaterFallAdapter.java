@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,18 +32,25 @@ import butterknife.ButterKnife;
 /**
  * Created by NeekChaw on 2017-07-28.
  */
-public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.ViewHolder> {
+public class WaterFallAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public DisplayImageOptions mNormalImageOptions;
     private Context mContext;
     //private List<ImageBean> mList = new ArrayList<>();
     private List<Goods> mData = new ArrayList<>();
     private List<Integer> mHeights;
 
+    private LayoutInflater mLayoutInflater;
+    public static final int ITEM_TYPE_HEADER = 0;
+    public static final int ITEM_TYPE_CONTENT = 1;
+    private int mHeaderCount=1;//头部View个数
+
     private String[] mItems = {"关注卖家", "收藏宝贝", "举报"};
     final String[] mAgainstItems = new String[]{"泄露隐私", "人身攻击", "淫秽色情", "垃圾广告", "敏感信息", "其他"};
 
-    public WaterFallAdapter(Context context) {
+    public WaterFallAdapter(Context context,List<Goods> datas) {
         this.mContext = context;
+        this.mData = datas;
+        mLayoutInflater = LayoutInflater.from(context);
     }
 
     public void getRandomHeight(List<Goods> mList) {
@@ -52,21 +60,48 @@ public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.View
             mHeights.add((int) (500 + Math.random() * 400));
         }
     }
-
+    //判断当前item是否是HeadView
+    public boolean isHeaderView(int position) {
+        return mHeaderCount != 0 && position < mHeaderCount;
+    }
+    //内容长度
+    public int getContentItemCount(){
+        return mData == null ? 0 : mData.size() - mHeaderCount;
+    }
+    //判断当前item类型
+    @Override
+    public int getItemViewType(int position) {
+        int dataItemCount = getContentItemCount();
+        if (mHeaderCount != 0 && position < mHeaderCount) {
+            //头部View
+            return ITEM_TYPE_HEADER;
+        } else {
+            //内容View
+            return ITEM_TYPE_CONTENT;
+        }
+    }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType ==ITEM_TYPE_HEADER) {
+            View v = mLayoutInflater.inflate(R.layout.include_secondhand_head, parent, false);
 
-        View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.custom_goods_thum, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-
-        return viewHolder;
+            return new HeaderViewHolder(v);
+        } else if (viewType == ITEM_TYPE_CONTENT) {
+            return new ViewHolder(mLayoutInflater.inflate(R.layout.custom_goods_thum, parent, false));
+        }
+        return null;
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData == null ? 0 : mData.size();
+    }
+    //头部 ViewHolder
+    public static class HeaderViewHolder extends RecyclerView.ViewHolder {
+        public HeaderViewHolder(View itemView) {
+            super(itemView);
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -79,7 +114,7 @@ public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.View
         TextView mGoodsHot;
         @Bind(R.id.goods_new)
         TextView mGoodsNew;
-        @Bind(R.id.goods_attention_count)
+        @Bind(R.id.goods_attention_count_thum)
         TextView mGoodsPageViews;
 
         public ViewHolder(View view) {
@@ -92,9 +127,6 @@ public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.View
     public List<Goods> getList() {
         return mData;
     }
-
-
-
 
     public static DisplayImageOptions NORMAL_OPTION = new DisplayImageOptions.Builder()
             .cacheInMemory(true)
@@ -109,46 +141,49 @@ public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.View
 //        mData.add(goods);
 //        notifyDataSetChanged();
 //    }
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof HeaderViewHolder) {
 
-    @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
-        ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
-        //int height = 500 + (int)(Math.random()*650);//350 到 650之间的随机数
-        layoutParams.height = 600;
-        holder.itemView.setLayoutParams(layoutParams);
+        } else if (holder instanceof ViewHolder) {
+            ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
+            //int height = 500 + (int)(Math.random()*650);//350 到 650之间的随机数
+            layoutParams.height = 600;
+            holder.itemView.setLayoutParams(layoutParams);
 
-        initImageLoader(mContext);
-        Goods goods = mData.get(position);
-        //获取封面图片
-        ImageBean bean = goods.getTopImages();
-        //获取商品类型
-        int GoodsStyle = goods.getGoodsStyle();
-        setGoodsStyle(holder, GoodsStyle);
-        //获取商品浏览量
-        holder.mGoodsPageViews.setText(goods.getPageViews() + "");
-        //显示图片
+            initImageLoader(mContext);
+            Goods goods = mData.get(position);
+            //获取封面图片
+            ImageBean bean = goods.getTopImages();
+            //获取商品类型
+            int GoodsStyle = goods.getGoodsStyle();
+            setGoodsStyle((ViewHolder) holder, GoodsStyle);
+            //获取商品浏览量
+            ((ViewHolder)holder).mGoodsPageViews.setText(goods.getPageViews() + "");
+            //显示图片
 
-        ImageLoader.getInstance().displayImage(bean.getImgsrc(),
-               holder.mImageView, NORMAL_OPTION);//设置图片
+            ImageLoader.getInstance().displayImage(bean.getImgsrc(),
+                    ((ViewHolder)holder).mImageView, NORMAL_OPTION);//设置图片
 
-        if (onItemClickListener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = holder.getLayoutPosition();
-                    onItemClickListener.onItemClick(holder.itemView, position);
+            // 如果设置了回调，则设置点击事件
+            if (onItemClickListener != null) {
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = holder.getLayoutPosition();
+                        onItemClickListener.onItemClick(holder.itemView, position);
 
-                }
-            });
-            //LongClick
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    int position = holder.getLayoutPosition();
-                    onItemClickListener.onItemLongClick(holder.itemView, position);
-                    return false;
-                }
-            });
+                    }
+                });
+                //LongClick
+                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        int position = holder.getLayoutPosition();
+                        onItemClickListener.onItemLongClick(holder.itemView, position);
+                        return false;
+                    }
+                });
+            }
         }
     }
 
@@ -210,5 +245,16 @@ public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.View
         this.onItemClickListener = listener;
     }
 
+    @Override
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
 
+        ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
+        if (lp != null
+                && lp instanceof StaggeredGridLayoutManager.LayoutParams
+                && holder.getLayoutPosition() == 0){
+            StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
+            p.setFullSpan(true);
+        }
+    }
 }

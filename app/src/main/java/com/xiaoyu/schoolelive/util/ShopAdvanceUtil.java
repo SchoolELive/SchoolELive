@@ -14,7 +14,6 @@ import android.support.v7.widget.RecyclerView.State;
 public class ShopAdvanceUtil extends RecyclerView.ItemDecoration{
     private static final int[] ATTRS = new int[] { android.R.attr.listDivider };
     private Drawable mDivider;
-
     public ShopAdvanceUtil(Context context) {
         final TypedArray a = context.obtainStyledAttributes(ATTRS);
         mDivider = a.getDrawable(0);

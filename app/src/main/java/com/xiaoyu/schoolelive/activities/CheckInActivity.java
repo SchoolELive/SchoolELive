@@ -1,35 +1,20 @@
 package com.xiaoyu.schoolelive.activities;
 
-import android.graphics.Color;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.adapter.HeaderBottomAdapter;
-import com.xiaoyu.schoolelive.adapter.MyPagerAdapter;
 import com.xiaoyu.schoolelive.data.ShopData;
 import com.xiaoyu.schoolelive.util.ShopAdvanceUtil;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-
-import static java.lang.System.currentTimeMillis;
 
 public class CheckInActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
