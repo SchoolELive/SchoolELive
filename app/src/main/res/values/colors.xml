@@ -63,7 +63,7 @@
     <color name="kong">#00000000</color>
     <color name="primary_material_light">#81c1ef</color>
     <color name="statusColor">#81c1ef</color>
-
+    <color name="themecolor">#81c1ef</color>
     <!--浮动按钮颜色-->
     <color name="float_btn_normal">#96D986</color>
     <color name="float_btn_press">#339BE6</color>
@@ -73,4 +73,18 @@
     <color name="float_btn_partjob">#57AEF1</color>
     <color name="float_btn_inform">#76B4ED</color>
     <color name="float_btn_share">#81C1EF</color>
+
+    <color name="all_button">#339BE6</color>
+
+    <color name="viewcolor">#ececec</color>
+
+    <!--日期选择-->
+    <color name="date_select">#f3b096</color>
+    <color name="time_select">#f3b096</color>
+
+    <color name="bg_edit">#E4EDF2</color>
+    <color name="bg_all_pub">#F5F1EE</color>
+    <color name="text_color">#747371</color>
+    <color name="hint_color">#BAB8B5</color>
+    <color name="goods_color">#F5AD4F</color>
 </resources>

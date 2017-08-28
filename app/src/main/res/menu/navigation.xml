@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_home32"
         android:title="@string/title_home" />
 
     <item
@@ -12,16 +12,16 @@
         android:title="@string/title_business" />
     <item
         android:id="@+id/navigation_secondhand"
-        android:icon="@drawable/ic_menu_share"
+        android:icon="@drawable/ic_goods32"
         android:title="@string/title_secondhand"
         />
     <item
         android:id="@+id/navigation_partjob"
-        android:icon="@drawable/ic_menu_gallery"
+        android:icon="@drawable/ic_menu_partjob32"
         android:title="@string/title_partjob"/>
     <item
         android:id="@+id/navigation_sysinform"
-        android:icon="@drawable/ic_menu_send"
+        android:icon="@drawable/ic_menu_inform32"
         android:title="@string/title_sysinform" />
 
 </menu>

@@ -13,4 +13,6 @@
     <dimen name="ui_3_dip">3dp</dimen>
     <dimen name="ui_2_dip">3dp</dimen>
     <dimen name="user_content_left">50dp</dimen>
+    <dimen name="btn_height">35dp</dimen>
+    <dimen name="goods_edit">150dp</dimen>
 </resources>

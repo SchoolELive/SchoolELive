@@ -1,27 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillViewport="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include layout="@layout/include_goods_info_head" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <include layout="@layout/include_goods_info_content" />
+        <include layout="@layout/include_goods_info_head" />
 
-    //底部选项
-    <include
-        android:id="@+id/goodsType_pai"
-        layout="@layout/include_goods_info_pai_buttom"
-        android:visibility="gone" />
+        <include layout="@layout/include_goods_info_content" />
 
-    <include
-        android:id="@+id/goodsType_ykj"
-        layout="@layout/include_goods_info_ykj_buttom"
-        android:visibility="gone" />
+        //底部选项
 
-    <include
-        android:id="@+id/goodsType_yj"
-        layout="@layout/include_goods_info_yj_buttom"
-        android:visibility="gone" />
+        <include
+            android:id="@+id/goodsType_pai"
+            layout="@layout/include_goods_info_pai_buttom"
+            android:visibility="gone" />
 
-</LinearLayout>
+        <include
+            android:id="@+id/goodsType_ykj"
+            layout="@layout/include_goods_info_ykj_buttom"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/goodsType_yj"
+            layout="@layout/include_goods_info_yj_buttom"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</ScrollView>

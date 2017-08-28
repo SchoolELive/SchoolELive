@@ -217,7 +217,7 @@ public class MainActivity extends BaseMainSlide {
         //判断用户是否登录，
         if (!boo) {
             //显示未登录图像
-            actionBar.setHomeAsUpIndicator(R.drawable.icon_main_home);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_default_head32);
         } else {
             //显示已登录用户的头像
         }
@@ -368,7 +368,7 @@ public class MainActivity extends BaseMainSlide {
     }
 
     public void mainSetSecondFrament() {
-        getSupportActionBar().setTitle("旧货");
+        getSupportActionBar().setTitle("淘宝");
         HomeFragment.isDis = false;
         fragmentTransaction.replace(R.id.main_menu_content, secondHandFragment, "secondhand").commit();
 

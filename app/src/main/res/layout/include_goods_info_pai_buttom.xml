@@ -5,13 +5,24 @@
     android:layout_marginTop="5dp"
     android:orientation="vertical">
 
-
-    <TextView
-        android:id="@+id/goods_name"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/ui_10_dip"
-        android:textSize="@dimen/bar_text_size" />
+        android:layout_margin="@dimen/ui_10_dip">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_goodsname24" />
+
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/goods_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:textSize="18dp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/textview_border"
+            android:textColor="@color/white"
             android:text=" 竞拍 " />
 
         <TextView
@@ -98,7 +110,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_weight="1"
-            android:background="@color/light"
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:layout_marginRight="@dimen/ui_10_dip"
+            android:layout_marginBottom="@dimen/ui_5_dip"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_bg"
             android:gravity="center"
             android:text="竞价"
             android:textSize="@dimen/bar_text_size" />

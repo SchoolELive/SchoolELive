@@ -10,13 +10,11 @@ import android.content.Loader;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.ContactsContract;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -30,7 +28,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+import com.xiaoyu.schoolelive.R;
+import com.xiaoyu.schoolelive.base.BaseSlideBack;
+import com.xiaoyu.schoolelive.util.ConstantUtil;
+import com.xiaoyu.schoolelive.util.HttpUtil;
 
 import java.io.IOException;
 
@@ -38,10 +39,6 @@ import okhttp3.Call;
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import com.xiaoyu.schoolelive.R;
-import com.xiaoyu.schoolelive.base.BaseSlideBack;
-import com.xiaoyu.schoolelive.util.ConstantUtil;
-import com.xiaoyu.schoolelive.util.HttpUtil;
 
 
 public class LoginActivity extends BaseSlideBack implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -200,9 +197,9 @@ public class LoginActivity extends BaseSlideBack implements LoaderManager.Loader
         //标题栏
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("登录");
+        //ActionBar actionBar = getSupportActionBar();
+        //actionBar.setDisplayHomeAsUpEnabled(true);
+        //actionBar.setTitle("登录");
 
         register = (Button) findViewById(R.id.btn_regist);
         login_sp = getSharedPreferences("User_info", MODE_APPEND);

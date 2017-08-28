@@ -42,7 +42,7 @@
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#FFF"
+        android:textColor="@color/simple_blue"
         android:textSize="20sp"
         android:text="紫炎"
         android:layout_above="@+id/email"
