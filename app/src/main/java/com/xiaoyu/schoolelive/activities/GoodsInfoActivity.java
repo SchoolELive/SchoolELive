@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -35,7 +34,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 import okhttp3.Call;
@@ -175,7 +173,7 @@ public class GoodsInfoActivity extends AppCompatActivity implements View.OnClick
             public void fillBannerItem(BGABanner banner, ImageView itemView, String model, int position) {
                 Glide.with(GoodsInfoActivity.this)
                         .load(model)
-                        .placeholder(R.mipmap.ic_launcher)
+                        .placeholder(R.drawable.gif_ad_holder)
                         .error(R.mipmap.ic_launcher)
                         .centerCrop()
                         .dontAnimate()

@@ -7,7 +7,8 @@
     android:orientation="vertical">
     <!--<include-->
     <!--layout="@layout/include_publish_list"/>-->
-
+    <include
+        layout="@layout/include_toolbar"/>
     <CheckBox
         android:id="@+id/cb_album_list_downloadable"
         android:layout_width="wrap_content"

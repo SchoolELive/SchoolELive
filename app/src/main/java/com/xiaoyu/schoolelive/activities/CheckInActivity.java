@@ -8,10 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.adapter.HeaderBottomAdapter;
 import com.xiaoyu.schoolelive.data.ShopData;
 import com.xiaoyu.schoolelive.util.ShopAdvanceUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,9 +37,10 @@ public class CheckInActivity extends AppCompatActivity {
         //商城
         shopItem();
     }
+
     //商城
-    public void shopItem(){
-        mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView_one);
+    public void shopItem() {
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_one);
 
         mShopData = new ArrayList<ShopData>();
 
@@ -48,7 +51,7 @@ public class CheckInActivity extends AppCompatActivity {
         gridLayoutManager = new GridLayoutManager(CheckInActivity.this, 2);
         //设置分割线
         mRecyclerView.addItemDecoration(new ShopAdvanceUtil(this));
-
+        //mRecyclerView.
         mRecyclerView.setLayoutManager(gridLayoutManager);//这里用线性宫格显示 类似于grid view
         //设置头部和底部的item单独占据一行
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -62,6 +65,7 @@ public class CheckInActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(adapter);
         initEvent();
     }
+
     //引入标题栏
     private void checkInToolBar() {
         //标题栏
@@ -72,8 +76,9 @@ public class CheckInActivity extends AppCompatActivity {
         actionBar.setTitle("签到中心");
 
     }
+
     //初始化界面
-    private void checkIninit(){
+    private void checkIninit() {
 
 //        viewPager = (ViewPager) findViewById(R.id.viewpager);
 //        LayoutInflater inflater = getLayoutInflater();
@@ -116,24 +121,27 @@ public class CheckInActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void initEvent() {
         adapter.setOnItemClickListener(new HeaderBottomAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 
             }
+
             @Override
             public void onItemLongClick(View view, int position) {
 
             }
         });
     }
-    public void getdata(){
+
+    public void getdata() {
         for (int i = 0; i < 20; i++) {
             ShopData inform = new ShopData();
             inform.setImage(R.drawable.back);
             inform.setName("好东西");
-            inform.setPrice(i+"");
+            inform.setPrice(i + "");
             mShopData.add(inform);
         }
         adapter.notifyDataSetChanged();

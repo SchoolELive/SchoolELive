@@ -126,6 +126,8 @@
         <activity android:name=".activities.CheckInActivity" />
         <activity android:name=".activities.ShopActivity" />
         <activity android:name=".activities.ShopItemDetailActivity"></activity>
+        <activity android:name=".activities.SignCalenderActivity">
+        </activity>
     </application>
 
 </manifest>
