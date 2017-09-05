@@ -53,9 +53,16 @@ public class PartJobInfoActivity extends AppCompatActivity {
         workStartDate.setText(intent.getStringExtra("tmp_workStartDate"));
         workEndDate.setText(intent.getStringExtra("tmp_workEndDate"));
         workWages.setText(intent.getStringExtra("tmp_workWages"));
+        workNeed.setText(intent.getStringExtra("tmp_workNeed"));
+        workContactMan.setText(intent.getStringExtra("tmp_work_content_man"));
+        workContactNum.setText(intent.getStringExtra("tmp_work_content_num"));
+        workStartHours.setText(intent.getStringExtra("tmp_workStartHours"));
+        workEndHours.setText(intent.getStringExtra("tmp_workEndHours"));
+        infoPublishDate.setText(intent.getStringExtra("tmp_post_time"));
     }
 
     private void findById() {
+        infoPublishDate = (TextView)findViewById(R.id.infoPublishDate);
         workType = (TextView) findViewById(R.id.workType);
         workName = (TextView) findViewById(R.id.workName);
         workPlace = (TextView) findViewById(R.id.workPlace);
@@ -64,6 +71,11 @@ public class PartJobInfoActivity extends AppCompatActivity {
         wagesType = (TextView) findViewById(R.id.wagesType);
         workStartDate = (TextView) findViewById(R.id.workStartDate);
         workEndDate = (TextView) findViewById(R.id.workEndDate);
+        workNeed = (TextView)findViewById(R.id.workNeed);
+        workContactMan = (TextView)findViewById(R.id.workContactMan);
+        workContactNum = (TextView)findViewById(R.id.workContactNum);
+        workStartHours = (TextView)findViewById(R.id.workStartHours);
+        workEndHours = (TextView)findViewById(R.id.workEndHours);
     }
 
     public void setWorkType(int type) {

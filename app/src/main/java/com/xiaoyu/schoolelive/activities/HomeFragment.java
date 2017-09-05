@@ -53,7 +53,6 @@ public class HomeFragment extends Fragment implements EasyPermissions.Permission
 
     }
 
-
     @Override
     public void onPause() {
         super.onPause();
@@ -70,7 +69,6 @@ public class HomeFragment extends Fragment implements EasyPermissions.Permission
     }
 
     public void initRV() {
-
         mPublishRv = (RecyclerView) view.findViewById(R.id.rv_moment_list_moments);
         mDownLoadableCb = (CheckBox) view.findViewById(R.id.cb_moment_list_downloadable);
         //查看大图是否显示下载图标

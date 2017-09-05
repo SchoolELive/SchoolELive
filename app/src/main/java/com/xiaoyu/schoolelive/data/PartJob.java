@@ -1,9 +1,11 @@
 package com.xiaoyu.schoolelive.data;
 
+import java.io.Serializable;
+
 /**
  * Created by NeekChaw on 2017-08-02.
  */
-public class PartJob {
+public class PartJob implements Serializable{
     int workType;
     int wagesType;
     int wagesPay;
@@ -23,6 +25,8 @@ public class PartJob {
     String pubWorkApartment;
     String infoPublishDate;
     String contactPerson;
+    String job_id;//兼职的id
+    String post_time;//发布时间
 
     public int getWorkManNeed() {
         return workManNeed;
@@ -176,4 +180,19 @@ public class PartJob {
         this.contactPerson = contactPerson;
     }
 
+    public void setJob_id(String job_id) {
+        this.job_id = job_id;
+    }
+
+    public String getJob_id() {
+        return job_id;
+    }
+
+    public String getPost_time() {
+        return post_time;
+    }
+
+    public void setPost_time(String post_time) {
+        this.post_time = post_time;
+    }
 }
