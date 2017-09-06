@@ -1,12 +1,16 @@
 package com.xiaoyu.schoolelive.activities;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,14 +18,25 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.adapter.PartJobAdapter;
 import com.xiaoyu.schoolelive.data.PartJob;
 import com.xiaoyu.schoolelive.util.ConstantUtil;
+import com.xiaoyu.schoolelive.util.HttpUtil;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by lenovo on 2017/8/16.
@@ -62,6 +77,21 @@ public class UserAddPartJobActivity extends AppCompatActivity implements View.On
     List<PartJob> mData = new ArrayList<>();
     PartJobAdapter mPartJobAdapter = new PartJobAdapter(UserAddPartJobActivity.this, mData);
     Button pub_partJob;
+    private ProgressDialog progressDialog;
+    private Handler handler = new android.os.Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1:
+                    progressDialog.dismiss();
+                    Intent intent = new Intent(UserAddPartJobActivity.this, MainActivity.class);
+                    intent.putExtra("toPartJob", 1);
+                    startActivity(intent);
+                    break;
+            }
+        }
+    };
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +99,7 @@ public class UserAddPartJobActivity extends AppCompatActivity implements View.On
         findById();
         setListener();
         getSysTime();
+
     }
 
     private void findById() {
@@ -79,13 +110,14 @@ public class UserAddPartJobActivity extends AppCompatActivity implements View.On
         btn_workStartHours = (Button) findViewById(R.id.pub_workStartHours);
         btn_workEndHours = (Button) findViewById(R.id.pub_workEndHours);
 
+
         pub_workName = (TextView) findViewById(R.id.pub_workName);
         pub_workWages = (TextView) findViewById(R.id.pub_workWages);
         pub_workPlace = (TextView) findViewById(R.id.pub_workPlace);
         pub_workNeed = (TextView) findViewById(R.id.pub_workNeed);
         pub_workManNeed = (TextView) findViewById(R.id.pub_workManNeed);
-        pub_workContactMan = (TextView) findViewById(R.id.pub_workContactMan);
-        pub_workContactNum = (TextView) findViewById(R.id.pub_workContactNum);
+        pub_workContactMan = (TextView) findViewById(R.id.pub_workContactMan);//联系人
+        pub_workContactNum = (TextView) findViewById(R.id.pub_workContactNum);//联系方式
         pub_workType = (Spinner) findViewById(R.id.workTypeOptions);
         pub_wagesType = (Spinner) findViewById(R.id.wagesTypeOptions);
         pub_wagesPay = (Spinner) findViewById(R.id.wagesPayOptions);
@@ -153,6 +185,11 @@ public class UserAddPartJobActivity extends AppCompatActivity implements View.On
                 }, 0, 0, true).show();
                 break;
             case R.id.pub_partJob:
+                progressDialog = new ProgressDialog(UserAddPartJobActivity.this);
+                progressDialog.setMessage("上传中...");
+                progressDialog.setCancelable(true);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.show();
                 getInputInfo();
                 break;
         }
@@ -168,7 +205,7 @@ public class UserAddPartJobActivity extends AppCompatActivity implements View.On
         String workPlace = String.valueOf(pub_workPlace.getText());
         String workName = String.valueOf(pub_workName.getText());
         String workWages = String.valueOf(pub_workWages.getText());
-        String workNeed = String.valueOf(pub_workNeed.getText());
+        String workNeed = String.valueOf(pub_workNeed.getText());//工作需求
         String workContactNum = String.valueOf(pub_workContactNum.getText());
         String workContactMan = String.valueOf(pub_workContactMan.getText());
         String workStartDate = String.valueOf(btn_workStartDate.getText());
@@ -186,10 +223,52 @@ public class UserAddPartJobActivity extends AppCompatActivity implements View.On
         partJob.setWorkEndDate(workEndDate);
         partJob.setWorkType(workType);
 
-        Intent intent = new Intent(UserAddPartJobActivity.this, MainActivity.class);
-        intent.putExtra("toPartJob", 1);
+        //Intent intent = new Intent(UserAddPartJobActivity.this, MainActivity.class);
+       // intent.putExtra("toPartJob", 1);
 
-        startActivity(intent);
+        //startActivity(intent);
+        //Toast.makeText(getApplicationContext(),"cc",Toast.LENGTH_SHORT).show();
+        if(workPlace==""||workName==""||workWages==""||workNeed==""||workContactMan==""||workContactNum==""||workStartDate==""||workEndDate==""||workStartHours==""||workEndHours==""){
+            Toast.makeText(getApplication(),"请将您的资料填写完整",Toast.LENGTH_SHORT).show();
+            return;
+        }else {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+
+            String job_id = simpleDateFormat.format(new Date());//兼职id
+            RequestBody requestBody = new FormBody.Builder()
+                    .add("job_id",job_id)
+                    .add("work_name",workName)
+                    .add("work_type",workType+"")
+                    .add("wage_type",wagesType+"")
+                    .add("wage_pay",wagesPay+"")//工资结算方式
+                    .add("work_wage",workWages)
+                    .add("work_need",workNeed)//工作需求
+                    .add("work_place",workPlace)
+                    .add("start_date",workStartDate)
+                    .add("end_date",workEndDate)
+                    .add("start_hours",workStartHours)
+                    .add("end_hours",workEndHours)
+                    .add("work_content_man",workContactMan)
+                    .add("work_content_num",workContactNum)
+                    .build();
+            HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH + "get_job_info.php", requestBody, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.i("iii",e.getMessage());
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Message message = new Message();
+                   message.what = 1;//发布兼职信息成功
+                    handler.sendMessage(message);
+
+                }
+            });
+
+
+        }
+
     }
 
     private int getWorkType(String type) {
@@ -275,4 +354,5 @@ public class UserAddPartJobActivity extends AppCompatActivity implements View.On
         }
         return 0;
     }
+
 }

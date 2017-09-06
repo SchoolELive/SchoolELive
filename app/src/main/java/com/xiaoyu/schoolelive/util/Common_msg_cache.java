@@ -2,6 +2,7 @@ package com.xiaoyu.schoolelive.util;
 import android.content.Context;
 
 import com.xiaoyu.schoolelive.data.Goods;
+import com.xiaoyu.schoolelive.data.PartJob;
 import com.xiaoyu.schoolelive.data.Publish;
 import java.util.ArrayList;
 /**
@@ -56,4 +57,19 @@ public  class Common_msg_cache {
     public static void add_goods_cache_status(Context context,int toIndex){//更新当前加载状态
         set_goods_cache_status(context,toIndex);
     }
+    //设置兼职的缓存
+    public static void add_jobs_Cache(Context context, ArrayList<PartJob> list){//序列化之后才能添加
+        ACache aCache = ACache.get(context);
+        aCache.put("jobs_cache",list);
+    }
+    //得到兼职的缓存
+    public static ArrayList<PartJob> get_jobs_Cache(Context context){//得到缓存的商品信息
+        ACache aCache = ACache.get(context);
+        ArrayList<PartJob> cache_goods = (ArrayList<PartJob>)aCache.getAsObject("jobs_cache");
+        return cache_goods;
+    }
+    public static void refresh_jobs_Caches(Context context,ArrayList<PartJob> partJobs){
+        add_jobs_Cache(context,partJobs);
+    }
+
 }
