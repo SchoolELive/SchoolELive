@@ -2,7 +2,6 @@ package com.xiaoyu.schoolelive.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.activities.ShopActivity;
-import com.xiaoyu.schoolelive.activities.ShopItemDetailActivity;
 import com.xiaoyu.schoolelive.data.ShopData;
 
 import java.text.SimpleDateFormat;
@@ -22,8 +20,6 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
-
-import static java.lang.System.currentTimeMillis;
 
 public class ShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //item类型
@@ -38,6 +34,12 @@ public class ShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<ShopData> mShopData;
     private int mHeaderCount = 0;//头部View个数
     private int mBottomCount = 0;//底部View个数
+
+    private Date date_check = null, ymd_check = null;
+    private SimpleDateFormat ymd_now = null, date_now = null;
+    private Button checkin;
+    private TextView myCheckGold, intoShop;
+    private Button qiandao;
 
     public ShopAdapter(Context context, List<ShopData> datas) {
         this.mContext = context;
@@ -76,23 +78,15 @@ public class ShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    private Date date_check = null, ymd_check = null;
-    private SimpleDateFormat ymd_now = null, date_now = null;
-    private Button checkInButton;
-    private TextView myCheckGold, intoShop;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == ITEM_TYPE_HEADER) {
-            View v = mLayoutInflater.inflate(R.layout.include_recycle_header, parent, false);
-            ////初始化头部控件及事件
-            checkInButton(v, mContext);
 
-            return new HeaderViewHolder(v);
         } else if (viewType == ITEM_TYPE_CONTENT) {
             return new ContentViewHolder(mLayoutInflater.inflate(R.layout.item_recycle_layout, parent, false));
         } else if (viewType == ITEM_TYPE_BOTTOM) {
-            //return new ContentViewHolder(mLayoutInflater.inflate(R.layout.include_recycle_bottom, parent, false));
+
             return null;
         }
         return null;
@@ -103,9 +97,6 @@ public class ShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (holder instanceof HeaderViewHolder) {
 
         } else if (holder instanceof ContentViewHolder) {
-            ((ContentViewHolder) holder).image.setImageResource(mShopData.get(position).getImage());
-            ((ContentViewHolder) holder).name.setText(mShopData.get(position).getName());
-            ((ContentViewHolder) holder).price.setText(mShopData.get(position).getPrice());
 
             // 如果设置了回调，则设置点击事件
             if (mOnItemClickListener != null) {
@@ -115,12 +106,6 @@ public class ShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     public void onClick(View v) {
                         int pos = holder.getLayoutPosition();
                         mOnItemClickListener.onItemClick(holder.itemView, pos);
-                        //Toast.makeText(mContext,"点击",Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(mContext, ShopItemDetailActivity.class);
-                        //intent.putExtra("shop_image",mShopData.get(position).getImage());
-                        intent.putExtra("shop_name", mShopData.get(position).getName());
-                        intent.putExtra("shop_price", mShopData.get(position).getPrice());
-                        mContext.startActivity(intent);
                     }
                 });
 
@@ -134,42 +119,14 @@ public class ShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     }
                 });
             }
-//        } else if (holder instanceof BottomViewHolder) {
-//
+
         }
     }
 
     //初始化头部控件及事件
     private void checkInButton(View v, final Context context) {
-        myCheckGold = (TextView) v.findViewById(R.id.myCheckGold);
 
-        checkInButton = (Button) v.findViewById(R.id.checkInButton);
         intoShop = (TextView) v.findViewById(R.id.intoShop);
-
-        checkInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(mContext, SignCalenderActivity.class);
-//                mContext.startActivity(intent);
-//                Date ymd = new Date(currentTimeMillis());
-//                if (ymd_check == null){
-//                    ymd_check = ymd;
-//                }else{
-//                    Long time = ymd.getTime() - ymd_check.getTime();
-//                    if (time < 5000){
-//                        new AlertDialog.Builder(context)
-//                                .setTitle("您今天已经签到过了！！！")
-//                                .setPositiveButton("确定",null)
-//                                .show();
-//                    }else if(time >= 5000){
-//                        ymd_check = ymd;
-//                        int as = Integer.parseInt(myCheckGold.getText().toString()) + 2;
-//                        String str = String.valueOf(as);
-//                        myCheckGold.setText(str);
-//                    }
-//                }
-            }
-        });
 
         intoShop.setOnClickListener(new View.OnClickListener() {
             @Override

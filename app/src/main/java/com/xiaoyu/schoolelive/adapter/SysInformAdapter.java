@@ -9,11 +9,10 @@ import android.widget.TextView;
 
 import com.thinkcool.circletextimageview.CircleTextImageView;
 import com.xiaoyu.schoolelive.R;
-import com.xiaoyu.schoolelive.data.PartJob;
 import com.xiaoyu.schoolelive.data.SysInform;
 
-import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.ButterKnife;
 
 /**
