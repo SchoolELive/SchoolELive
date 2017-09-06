@@ -1,8 +1,8 @@
 package com.xiaoyu.schoolelive.activities;
 
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.xiaoyu.schoolelive.R;
-import com.xiaoyu.schoolelive.adapter.HeaderBottomAdapter;
+import com.xiaoyu.schoolelive.adapter.CheckInAdapter;
 import com.xiaoyu.schoolelive.data.ShopData;
 import com.xiaoyu.schoolelive.util.ShopAdvanceUtil;
 
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class CheckInActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
-    private HeaderBottomAdapter adapter;
+    private CheckInAdapter adapter;
     private List<ShopData> mShopData;
     private GridLayoutManager gridLayoutManager;
 
@@ -32,8 +32,7 @@ public class CheckInActivity extends AppCompatActivity {
         //标题栏
         checkInToolBar();
         //初始化界面
-//        checkIninit();
-
+        //checkIninit();
         //商城
         shopItem();
     }
@@ -42,9 +41,9 @@ public class CheckInActivity extends AppCompatActivity {
     public void shopItem() {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_one);
 
-        mShopData = new ArrayList<ShopData>();
+        mShopData = new ArrayList<>();
 
-        adapter = new HeaderBottomAdapter(this, mShopData);
+        adapter = new CheckInAdapter(this, mShopData);
 
         getdata();
 
@@ -78,9 +77,8 @@ public class CheckInActivity extends AppCompatActivity {
     }
 
     //初始化界面
-    private void checkIninit() {
-
-//        viewPager = (ViewPager) findViewById(R.id.viewpager);
+//    private void checkIninit() {
+//                viewPager = (ViewPager) findViewById(R.id.viewpager);
 //        LayoutInflater inflater = getLayoutInflater();
 //
 //        view1 = inflater.inflate(R.layout.include_shop_around, null);
@@ -88,11 +86,11 @@ public class CheckInActivity extends AppCompatActivity {
 //
 //        store_view1 = (TextView) findViewById(R.id.store_view1);
 //        store_view2 = (TextView) findViewById(R.id.store_view2);
-
+//
 //        viewList = new ArrayList<View>();// 将要分页显示的View装入数组中
 //        viewList.add(view1);
 //        viewList.add(view2);
-
+//
 //        viewPager.setAdapter(new MyPagerAdapter(viewList));
 //        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 //            @Override
@@ -110,7 +108,7 @@ public class CheckInActivity extends AppCompatActivity {
 //            public void onPageScrollStateChanged(int state) {
 //            }
 //        });
-    }
+//    }
 
     //标题栏菜单点击逻辑
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -123,7 +121,7 @@ public class CheckInActivity extends AppCompatActivity {
     }
 
     private void initEvent() {
-        adapter.setOnItemClickListener(new HeaderBottomAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new CheckInAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 
