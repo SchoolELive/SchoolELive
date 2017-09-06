@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.xiaoyu.schoolelive.R;
 import com.xiaoyu.schoolelive.activities.ShopActivity;
 import com.xiaoyu.schoolelive.activities.ShopItemDetailActivity;
+import com.xiaoyu.schoolelive.activities.SignCalenderActivity;
 import com.xiaoyu.schoolelive.data.ShopData;
 import com.xiaoyu.schoolelive.data.SysInform;
 import com.xiaoyu.schoolelive.data.Task;
@@ -33,7 +34,7 @@ import static java.lang.System.currentTimeMillis;
 import static java.lang.System.in;
 
 
-public class HeaderBottomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CheckInAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //item类型
     //头部
     public static final int ITEM_TYPE_HEADER = 0;
@@ -53,7 +54,7 @@ public class HeaderBottomAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private GoldTaskAdapter goldTaskAdapter;
     private int mHeaderCount = 2;//头部View个数
     private int mBottomCount = 0;//底部View个数
-    public HeaderBottomAdapter(Context context,List<ShopData> datas) {
+    public CheckInAdapter(Context context, List<ShopData> datas) {
         this.mContext = context;
         this.mShopData = datas;
         mLayoutInflater = LayoutInflater.from(context);
@@ -171,24 +172,26 @@ public class HeaderBottomAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         checkInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Date ymd = new Date(currentTimeMillis());
-                if (ymd_check == null){
-                    myCheckGold.setText(String.valueOf(Integer.parseInt(myCheckGold.getText().toString()) + 2));
-                    ymd_check = ymd;
-                }else{
-                    Long time = ymd.getTime() - ymd_check.getTime();
-                    if (time < 5000){
-                        new AlertDialog.Builder(context)
-                                .setTitle("您今天已经签到过了！！！")
-                                .setPositiveButton("确定",null)
-                                .show();
-                    }else if(time >= 5000){
-                        ymd_check = ymd;
-                        int as = Integer.parseInt(myCheckGold.getText().toString()) + 2;
-                        String str = String.valueOf(as);
-                        myCheckGold.setText(str);
-                    }
-                }
+                Intent intent = new Intent(mContext, SignCalenderActivity.class);
+                mContext.startActivity(intent);
+//                Date ymd = new Date(currentTimeMillis());
+//                if (ymd_check == null){
+//                    myCheckGold.setText(String.valueOf(Integer.parseInt(myCheckGold.getText().toString()) + 2));
+//                    ymd_check = ymd;
+//                }else{
+//                    Long time = ymd.getTime() - ymd_check.getTime();
+//                    if (time < 5000){
+//                        new AlertDialog.Builder(context)
+//                                .setTitle("您今天已经签到过了！！！")
+//                                .setPositiveButton("确定",null)
+//                                .show();
+//                    }else if(time >= 5000){
+//                        ymd_check = ymd;
+//                        int as = Integer.parseInt(myCheckGold.getText().toString()) + 2;
+//                        String str = String.valueOf(as);
+//                        myCheckGold.setText(str);
+//                    }
+//                }
             }
         });
 
