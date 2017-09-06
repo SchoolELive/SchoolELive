@@ -151,23 +151,23 @@ public class ShopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             public void onClick(View v) {
 //                Intent intent = new Intent(mContext, SignCalenderActivity.class);
 //                mContext.startActivity(intent);
-                Date ymd = new Date(currentTimeMillis());
-                if (ymd_check == null){
-                    ymd_check = ymd;
-                }else{
-                    Long time = ymd.getTime() - ymd_check.getTime();
-                    if (time < 5000){
-                        new AlertDialog.Builder(context)
-                                .setTitle("您今天已经签到过了！！！")
-                                .setPositiveButton("确定",null)
-                                .show();
-                    }else if(time >= 5000){
-                        ymd_check = ymd;
-                        int as = Integer.parseInt(myCheckGold.getText().toString()) + 2;
-                        String str = String.valueOf(as);
-                        myCheckGold.setText(str);
-                    }
-                }
+//                Date ymd = new Date(currentTimeMillis());
+//                if (ymd_check == null){
+//                    ymd_check = ymd;
+//                }else{
+//                    Long time = ymd.getTime() - ymd_check.getTime();
+//                    if (time < 5000){
+//                        new AlertDialog.Builder(context)
+//                                .setTitle("您今天已经签到过了！！！")
+//                                .setPositiveButton("确定",null)
+//                                .show();
+//                    }else if(time >= 5000){
+//                        ymd_check = ymd;
+//                        int as = Integer.parseInt(myCheckGold.getText().toString()) + 2;
+//                        String str = String.valueOf(as);
+//                        myCheckGold.setText(str);
+//                    }
+//                }
             }
         });
 

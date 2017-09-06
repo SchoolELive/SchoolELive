@@ -55,7 +55,7 @@ public class MainActivity extends BaseMainSlide{
     CustomFloatingDraftButton floatingDraftButton;
     @Bind(R.id.floatingActionButton_liveness)
     FloatingActionButton addMsgFloatingButton;
-    @Bind(R.id.floatingActionButton_2)
+    @Bind(R.id.floatingActionButton_goods)
     FloatingActionButton addGoodsFloatingButton;
     @Bind(R.id.floatingActionButton_partjob)
     FloatingActionButton addPartJobFloatingButton;
@@ -238,7 +238,6 @@ public class MainActivity extends BaseMainSlide{
     public void mainAddPJFragment(){
         HomeFragment.isDis = false;
         SysInformFragment.SysInformIsDisplay = false;
-
         partJobFragment = new PartJobFragment();
         fragmentManager = getSupportFragmentManager();
         //开启一个Fragment事务
@@ -297,7 +296,6 @@ public class MainActivity extends BaseMainSlide{
             //开启一个Fragment事务
             fragmentTransaction = fragmentManager.beginTransaction();
             mainSetSecondFrament();
-
         }
         uid = intent_getUid.getLongExtra("uid",0);
     }
@@ -356,6 +354,7 @@ public class MainActivity extends BaseMainSlide{
                     drawer.openDrawer(GravityCompat.START);
                 }
                 return true;
+
             case R.id.findButton:
                 intent = new Intent(MainActivity.this,FindActivity.class);
                 startActivity(intent);
@@ -367,12 +366,14 @@ public class MainActivity extends BaseMainSlide{
     public void mainSetHomeFrament(){
         getSupportActionBar().setTitle("主页");
         HomeFragment.isDis = true;
+        homeFragment = new HomeFragment();
         SysInformFragment.SysInformIsDisplay = false;
         fragmentTransaction.replace(R.id.main_menu_content, homeFragment, "home").commit();
     }
     public void mainSetPatjobFrament(){
         getSupportActionBar().setTitle("兼职");
         HomeFragment.isDis = false;
+        partJobFragment = new PartJobFragment();
         SysInformFragment.SysInformIsDisplay = false;
         fragmentTransaction.replace(R.id.main_menu_content, partJobFragment, "partjob").commit();
     }
@@ -380,6 +381,7 @@ public class MainActivity extends BaseMainSlide{
         getSupportActionBar().setTitle("旧货");
         HomeFragment.isDis = false;
         SysInformFragment.SysInformIsDisplay = false;
+       //secondHandFragment = new SecondHandFragment();
         fragmentTransaction.replace(R.id.main_menu_content, secondHandFragment, "secondhand").commit();
 
     }
@@ -387,12 +389,14 @@ public class MainActivity extends BaseMainSlide{
         getSupportActionBar().setTitle("商家");
         HomeFragment.isDis = false;
         SysInformFragment.SysInformIsDisplay = false;
+        businessFragment = new BusinessFragment();
         fragmentTransaction.replace(R.id.main_menu_content, businessFragment, "business").commit();
     }
     public void mainSetSysinformFrament(){
         getSupportActionBar().setTitle("通知");
         HomeFragment.isDis = false;
         SysInformFragment.SysInformIsDisplay = false;
+        sysInformFragment = new SysInformFragment();
         fragmentTransaction.replace(R.id.main_menu_content, sysInformFragment,"inform").commit();
     }
 

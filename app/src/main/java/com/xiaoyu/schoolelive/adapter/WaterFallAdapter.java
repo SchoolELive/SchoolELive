@@ -55,13 +55,13 @@ public class WaterFallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         mLayoutInflater = LayoutInflater.from(context);
     }
 
-    public void getRandomHeight(List<Goods> mList) {
-        mHeights = new ArrayList<>();
-        for (int i = 0; i < mList.size(); i++) {
-            //随机的获取一个范围为200-600直接的高度
-            mHeights.add((int) (500 + Math.random() * 400));
-        }
-    }
+//    public void getRandomHeight(List<Goods> mList) {
+//        mHeights = new ArrayList<>();
+//        for (int i = 0; i < mList.size(); i++) {
+//            //随机的获取一个范围为200-600直接的高度
+//            mHeights.add((int) (500 + Math.random() * 400));
+//        }
+//    }
 
     //判断当前item是否是HeadView
     public boolean isHeaderView(int position) {
@@ -77,7 +77,7 @@ public class WaterFallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public int getItemViewType(int position) {
         int dataItemCount = getContentItemCount();
-        if (mHeaderCount != 0 && position < mHeaderCount) {
+        if (mHeaderCount != 0 && position < mHeaderCount && position == 0) {
             //头部View
             return ITEM_TYPE_HEADER;
         } else {
@@ -118,14 +118,14 @@ public class WaterFallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             return new HeaderViewHolder(v);
         } else if (viewType == ITEM_TYPE_CONTENT) {
-            return new ViewHolder(mLayoutInflater.inflate(R.layout.custom_goods_thum, parent, false));
+            return new contentViewHolder(mLayoutInflater.inflate(R.layout.custom_goods_thum, parent, false));
         }
         return null;
     }
 
     @Override
     public int getItemCount() {
-        return mData == null ? 0 : mData.size();
+        return mData == null ? 0 : mData.size() - mHeaderCount;
     }
 
     //头部 ViewHolder
@@ -135,7 +135,7 @@ public class WaterFallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class contentViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.imageview)
         ImageView mImageView;
@@ -148,7 +148,7 @@ public class WaterFallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         @Bind(R.id.goods_attention_count_thum)
         TextView mGoodsPageViews;
 
-        public ViewHolder(View view) {
+        public contentViewHolder(View view) {
             //需要设置super
             super(view);
             ButterKnife.bind(this, view);
@@ -172,10 +172,10 @@ public class WaterFallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 //        mData.add(goods);
 //        notifyDataSetChanged();
 //    }
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder,final int position) {
         if (holder instanceof HeaderViewHolder) {
 
-        } else if (holder instanceof ViewHolder) {
+        } else if (holder instanceof contentViewHolder) {
             ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
             //int height = 500 + (int)(Math.random()*650);//350 到 650之间的随机数
             layoutParams.height = 600;
@@ -187,13 +187,13 @@ public class WaterFallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ImageBean bean = goods.getTopImages();
             //获取商品类型
             int GoodsStyle = goods.getGoodsStyle();
-            setGoodsStyle((ViewHolder) holder, GoodsStyle);
+            setGoodsStyle((contentViewHolder) holder, GoodsStyle);
             //获取商品浏览量
-            ((ViewHolder) holder).mGoodsPageViews.setText(goods.getPageViews() + "");
+            ((contentViewHolder) holder).mGoodsPageViews.setText(goods.getPageViews() + "");
             //显示图片
 
             ImageLoader.getInstance().displayImage(bean.getImgsrc(),
-                    ((ViewHolder) holder).mImageView, NORMAL_OPTION);//设置图片
+                    ((contentViewHolder) holder).mImageView, NORMAL_OPTION);//设置图片
 
             // 如果设置了回调，则设置点击事件
             if (onItemClickListener != null) {
@@ -218,7 +218,7 @@ public class WaterFallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    private void setGoodsStyle(ViewHolder holder, int type) {
+    private void setGoodsStyle(contentViewHolder holder, int type) {
         if (type == ConstantUtil.Goods_All) {
             holder.mGoodsHot.setVisibility(View.VISIBLE);
             holder.mGoodsNew.setVisibility(View.VISIBLE);

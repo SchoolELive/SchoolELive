@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -45,12 +46,10 @@ import okhttp3.Response;
  * Created by Administrator on 2017/7/15.
  */
 public class SecondHandFragment extends Fragment {
-    @Bind(R.id.goods_recycler_view)
-    RecyclerView mRecyclerView;
     public ArrayList<Goods> goodsList = new ArrayList();
     private WaterFallAdapter mAdapter;
     private RefreshLayout refreshLayout;
-
+    private RecyclerView mRecyclerView;
 
     public Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -85,7 +84,7 @@ public class SecondHandFragment extends Fragment {
                     mAdapter.getList().add(goodsList.get(i));//第一次进来加载5条
                 }
                 //mAdapter.getList().addAll(goodsList);
-                mAdapter.getRandomHeight(goodsList);
+                //mAdapter.getRandomHeight(goodsList);
                 mAdapter.notifyDataSetChanged();
                 Toast.makeText(getContext(), "存入缓存成功", Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
@@ -154,14 +153,24 @@ public class SecondHandFragment extends Fragment {
 
     //@Override
     protected void initView(View view, Bundle savedInstanceState) {
-        ButterKnife.bind(this, view);
+        mRecyclerView = (RecyclerView)view.findViewById(R.id.goods_recycler_view);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     //@Override
     protected void initData() {
-        StaggeredGridLayoutManager sgl = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(sgl);
+
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+
+        mRecyclerView.setLayoutManager(gridLayoutManager);
+//设置头部和底部的item单独占据一行
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+
+                return (mAdapter.isHeaderView(position)) ? gridLayoutManager.getSpanCount() : 1;
+            }
+        });
 
         mAdapter = new WaterFallAdapter(getActivity(), goodsList);
         mRecyclerView.setAdapter(mAdapter);
@@ -171,7 +180,7 @@ public class SecondHandFragment extends Fragment {
             for (int i = 0; i < index; i++) {
                 mAdapter.getList().add(cache_goods.get(i));
             }
-            mAdapter.getRandomHeight(cache_goods);
+           // mAdapter.getRandomHeight(cache_goods);
             mAdapter.notifyDataSetChanged();
         } else {
             getGoodsData();//从服务器获取数据，并存入缓存中
@@ -256,7 +265,7 @@ public class SecondHandFragment extends Fragment {
 
 
         mAdapter.getList().addAll(goodsList);
-        mAdapter.getRandomHeight(goodsList);
+        //mAdapter.getRandomHeight(goodsList);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -282,7 +291,7 @@ public class SecondHandFragment extends Fragment {
                 }
                 Common_msg_cache.add_goods_cache_status(getContext(), index + ConstantUtil.Goods_Piece);
             }
-            mAdapter.getRandomHeight(cache_goods);
+          //  mAdapter.getRandomHeight(cache_goods);
             mAdapter.notifyDataSetChanged();
             Toast.makeText(getContext(), "缓存中读取", Toast.LENGTH_SHORT).show();
         }
@@ -306,7 +315,7 @@ public class SecondHandFragment extends Fragment {
                 }
                 Common_msg_cache.add_goods_cache_status(context, index + ConstantUtil.Goods_Piece);
             }
-            mAdapter.getRandomHeight(cache_goods);
+            //mAdapter.getRandomHeight(cache_goods);
             mAdapter.notifyDataSetChanged();
             Toast.makeText(context, "缓存中读取", Toast.LENGTH_SHORT).show();
         }

@@ -137,7 +137,11 @@ public class ShopActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new ShopAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
+                if (position == 0) {
+                    handler.sendEmptyMessage(1);
+                }else if(position == 1){
+                    handler.sendEmptyMessage(2);
+                }
             }
             @Override
             public void onItemLongClick(View view, int position) {
