@@ -1,9 +1,7 @@
 package com.xiaoyu.schoolelive.activities;
 
-import android.animation.ObjectAnimator;
-import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -13,20 +11,16 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.xiaoyu.schoolelive.base.BaseMainSlide;
 import com.xiaoyu.schoolelive.R;
+import com.xiaoyu.schoolelive.base.BaseMainSlide;
 import com.xiaoyu.schoolelive.custom.CustomFloatingDraftButton;
-import com.xiaoyu.schoolelive.data.UserCenter;
 import com.xiaoyu.schoolelive.util.AnimationUtil;
 
 import butterknife.Bind;
@@ -238,7 +232,6 @@ public class MainActivity extends BaseMainSlide{
     public void mainAddPJFragment(){
         HomeFragment.isDis = false;
         SysInformFragment.SysInformIsDisplay = false;
-
         partJobFragment = new PartJobFragment();
         fragmentManager = getSupportFragmentManager();
         //开启一个Fragment事务
@@ -297,7 +290,6 @@ public class MainActivity extends BaseMainSlide{
             //开启一个Fragment事务
             fragmentTransaction = fragmentManager.beginTransaction();
             mainSetSecondFrament();
-
         }
 
     }
@@ -356,6 +348,7 @@ public class MainActivity extends BaseMainSlide{
                     drawer.openDrawer(GravityCompat.START);
                 }
                 return true;
+
             case R.id.findButton:
                 intent = new Intent(MainActivity.this,FindActivity.class);
                 startActivity(intent);
@@ -367,12 +360,14 @@ public class MainActivity extends BaseMainSlide{
     public void mainSetHomeFrament(){
         getSupportActionBar().setTitle("主页");
         HomeFragment.isDis = true;
+        homeFragment = new HomeFragment();
         SysInformFragment.SysInformIsDisplay = false;
         fragmentTransaction.replace(R.id.main_menu_content, homeFragment, "home").commit();
     }
     public void mainSetPatjobFrament(){
         getSupportActionBar().setTitle("兼职");
         HomeFragment.isDis = false;
+        partJobFragment = new PartJobFragment();
         SysInformFragment.SysInformIsDisplay = false;
         fragmentTransaction.replace(R.id.main_menu_content, partJobFragment, "partjob").commit();
     }
@@ -380,6 +375,7 @@ public class MainActivity extends BaseMainSlide{
         getSupportActionBar().setTitle("旧货");
         HomeFragment.isDis = false;
         SysInformFragment.SysInformIsDisplay = false;
+       //secondHandFragment = new SecondHandFragment();
         fragmentTransaction.replace(R.id.main_menu_content, secondHandFragment, "secondhand").commit();
 
     }
@@ -387,12 +383,14 @@ public class MainActivity extends BaseMainSlide{
         getSupportActionBar().setTitle("商家");
         HomeFragment.isDis = false;
         SysInformFragment.SysInformIsDisplay = false;
+        businessFragment = new BusinessFragment();
         fragmentTransaction.replace(R.id.main_menu_content, businessFragment, "business").commit();
     }
     public void mainSetSysinformFrament(){
         getSupportActionBar().setTitle("通知");
         HomeFragment.isDis = false;
         SysInformFragment.SysInformIsDisplay = false;
+        sysInformFragment = new SysInformFragment();
         fragmentTransaction.replace(R.id.main_menu_content, sysInformFragment,"inform").commit();
     }
 

@@ -1,6 +1,5 @@
 package com.xiaoyu.schoolelive.activities;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
@@ -14,16 +13,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xiaoyu.schoolelive.R;
-import com.xiaoyu.schoolelive.adapter.HeaderBottomAdapter;
 import com.xiaoyu.schoolelive.adapter.MyPagerAdapter;
 import com.xiaoyu.schoolelive.adapter.ShopAdapter;
-import com.xiaoyu.schoolelive.adapter.SysInformAdapter;
 import com.xiaoyu.schoolelive.data.ShopData;
-import com.xiaoyu.schoolelive.data.SysInform;
 import com.xiaoyu.schoolelive.util.ShopAdvanceUtil;
 
 import java.util.ArrayList;
@@ -137,7 +132,11 @@ public class ShopActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new ShopAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
+                if (position == 0) {
+                    handler.sendEmptyMessage(1);
+                }else if(position == 1){
+                    handler.sendEmptyMessage(2);
+                }
             }
             @Override
             public void onItemLongClick(View view, int position) {

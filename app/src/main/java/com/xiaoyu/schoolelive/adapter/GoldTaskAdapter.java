@@ -1,55 +1,56 @@
 package com.xiaoyu.schoolelive.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.thinkcool.circletextimageview.CircleTextImageView;
 import com.xiaoyu.schoolelive.R;
-import com.xiaoyu.schoolelive.data.SysInform;
+import com.xiaoyu.schoolelive.data.Task;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2017/8/13.
+ * Created by Administrator on 2017/8/24.
  */
 
-public class SysInformAdapter extends RecyclerView.Adapter<SysInformAdapter.ViewHolder> {
+public class GoldTaskAdapter extends RecyclerView.Adapter<GoldTaskAdapter.ViewHolder> {
     private Context mContext;
-    private List<SysInform> mData;
+    private List<Task> mData;
 
     private SysInformAdapter.OnItemClickListener onItemClickListener;
 
-    public SysInformAdapter(Context c, List<SysInform> data) {
+    public GoldTaskAdapter(Context c, List<Task> data) {
         this.mContext = c;
         this.mData = data;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        CircleTextImageView sysInform_image;
-        TextView sysInform_name;
-        TextView sysInform_data;
-        TextView sysInform_content;
-
+        CircleTextImageView goldTask_image;
+        TextView goldTask_name;
+        TextView goldTask_content;
+        Button goldTask_get;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            sysInform_image = (CircleTextImageView) itemView.findViewById(R.id.sysInform_image);
-            sysInform_name = (TextView) itemView.findViewById(R.id.sysInform_name);
-            sysInform_data = (TextView) itemView.findViewById(R.id.sysInform_data);
-            sysInform_content = (TextView) itemView.findViewById(R.id.sysInform_content);
+            goldTask_image = (CircleTextImageView) itemView.findViewById(R.id.goldTask_image);
+            goldTask_name = (TextView) itemView.findViewById(R.id.goldTask_name);
+            goldTask_content = (TextView) itemView.findViewById(R.id.goldTask_content);
+            goldTask_get = (Button)itemView.findViewById(R.id.goldTask_get);
 
             ButterKnife.bind(this, itemView);
         }
     }
 
-    public List<SysInform> getList() {
+    public List<Task> getList() {
         return mData;
     }
 
@@ -57,20 +58,19 @@ public class SysInformAdapter extends RecyclerView.Adapter<SysInformAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // 实例化展示的View
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_sysinform, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_goldtask, parent, false);
         // 实例化viewholder
-        SysInformAdapter.ViewHolder viewHolder = new SysInformAdapter.ViewHolder(v);
+        GoldTaskAdapter.ViewHolder viewHolder = new GoldTaskAdapter.ViewHolder(v);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final SysInformAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final GoldTaskAdapter.ViewHolder holder, int position) {
 
-        holder.sysInform_image.setImageResource(mData.get(position).getSysInform_image());
-        holder.sysInform_name.setText(mData.get(position).getSysInform_name());
-        holder.sysInform_data.setText(mData.get(position).getSysInform_data());
-        holder.sysInform_content.setText(mData.get(position).getSysInform_content());
+        holder.goldTask_image.setImageResource(mData.get(position).getGoldTask_image());
+        holder.goldTask_name.setText(mData.get(position).getGoldTask_name());
+        holder.goldTask_content.setText(mData.get(position).getGoldTask_content());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +91,7 @@ public class SysInformAdapter extends RecyclerView.Adapter<SysInformAdapter.View
                 return true;
             }
         });
+
     }
 
     @Override

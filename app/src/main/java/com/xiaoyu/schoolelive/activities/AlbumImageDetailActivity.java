@@ -24,7 +24,6 @@ import static com.xiaoyu.schoolelive.activities.UserCenterActivity.CODE_APP_REQU
 
 public class AlbumImageDetailActivity extends BaseSlideBack {
 
-
     private ArrayList<String> mDatas;
     private int mPosition;
     private int mLocationX;

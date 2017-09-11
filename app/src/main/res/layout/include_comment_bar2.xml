@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="10dp"
-        android:background="#E8E8E8"
-        />
+    <!--<View-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="10dp"-->
+        <!--android:background="#E8E8E8"-->
+        <!--/>-->
 
     <LinearLayout
         android:layout_width="match_parent"

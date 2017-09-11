@@ -8,22 +8,21 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.xiaoyu.schoolelive.R;
-import com.xiaoyu.schoolelive.adapter.HeaderBottomAdapter;
+import com.xiaoyu.schoolelive.adapter.CheckInAdapter;
 import com.xiaoyu.schoolelive.data.ShopData;
 import com.xiaoyu.schoolelive.util.ShopAdvanceUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class CheckInActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
-    private HeaderBottomAdapter adapter;
+    private CheckInAdapter adapter;
     private List<ShopData> mShopData;
     private GridLayoutManager gridLayoutManager;
-
+    private LinearLayout shop_ll,task_ll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,24 +33,26 @@ public class CheckInActivity extends AppCompatActivity {
         //初始化界面
 //        checkIninit();
 
-        //商城
+        //初始化界面
         shopItem();
     }
-
     //商城
-    public void shopItem() {
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_one);
+    public void shopItem(){
+        task_ll = (LinearLayout)findViewById(R.id.task_ll);
+        shop_ll = (LinearLayout)findViewById(R.id.shop_ll);
+
+        mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView_one);
 
         mShopData = new ArrayList<ShopData>();
 
-        adapter = new HeaderBottomAdapter(this, mShopData);
+        adapter = new CheckInAdapter(this, mShopData);
 
         getdata();
 
         gridLayoutManager = new GridLayoutManager(CheckInActivity.this, 2);
         //设置分割线
         mRecyclerView.addItemDecoration(new ShopAdvanceUtil(this));
-        //mRecyclerView.
+
         mRecyclerView.setLayoutManager(gridLayoutManager);//这里用线性宫格显示 类似于grid view
         //设置头部和底部的item单独占据一行
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -62,10 +63,27 @@ public class CheckInActivity extends AppCompatActivity {
             }
         });
 
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > task_ll.getHeight() && dy < 300){
+                    task_ll.setVisibility(View.VISIBLE);
+                    shop_ll.setVisibility(View.INVISIBLE);
+                }else if(dy > 325){
+                    task_ll.setVisibility(View.INVISIBLE);
+                    shop_ll.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         mRecyclerView.setAdapter(adapter);
         initEvent();
     }
-
     //引入标题栏
     private void checkInToolBar() {
         //标题栏
@@ -76,9 +94,8 @@ public class CheckInActivity extends AppCompatActivity {
         actionBar.setTitle("签到中心");
 
     }
-
     //初始化界面
-    private void checkIninit() {
+    private void checkIninit(){
 
 //        viewPager = (ViewPager) findViewById(R.id.viewpager);
 //        LayoutInflater inflater = getLayoutInflater();
@@ -121,27 +138,24 @@ public class CheckInActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     private void initEvent() {
-        adapter.setOnItemClickListener(new HeaderBottomAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new CheckInAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 
             }
-
             @Override
             public void onItemLongClick(View view, int position) {
 
             }
         });
     }
-
-    public void getdata() {
+    public void getdata(){
         for (int i = 0; i < 20; i++) {
             ShopData inform = new ShopData();
-            inform.setImage(R.drawable.back);
+            inform.setImage(R.drawable.dw_1);
             inform.setName("好东西");
-            inform.setPrice(i + "");
+            inform.setPrice(i+"");
             mShopData.add(inform);
         }
         adapter.notifyDataSetChanged();
