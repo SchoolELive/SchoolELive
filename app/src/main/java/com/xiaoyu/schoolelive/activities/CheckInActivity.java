@@ -153,7 +153,7 @@ public class CheckInActivity extends AppCompatActivity {
     public void getdata(){
         for (int i = 0; i < 20; i++) {
             ShopData inform = new ShopData();
-            inform.setImage(R.drawable.back);
+            inform.setImage(R.drawable.dw_1);
             inform.setName("好东西");
             inform.setPrice(i+"");
             mShopData.add(inform);
