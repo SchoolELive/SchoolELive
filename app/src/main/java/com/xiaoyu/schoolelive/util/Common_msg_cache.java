@@ -1,5 +1,6 @@
 package com.xiaoyu.schoolelive.util;
 import android.content.Context;
+import android.widget.Toast;
 
 import com.xiaoyu.schoolelive.data.Goods;
 import com.xiaoyu.schoolelive.data.PartJob;
@@ -68,8 +69,18 @@ public  class Common_msg_cache {
         ArrayList<PartJob> cache_goods = (ArrayList<PartJob>)aCache.getAsObject("jobs_cache");
         return cache_goods;
     }
+
+
+    /*
+    * 更新缓存
+    * */
     public static void refresh_jobs_Caches(Context context,ArrayList<PartJob> partJobs){
         add_jobs_Cache(context,partJobs);
+    }
+
+    public static void refresh_goods_Caches(Context context,ArrayList<Goods> goods){
+        set_goods_Cache(context,goods);
+
     }
 
 }

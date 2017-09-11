@@ -125,7 +125,7 @@ public class WaterFallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        return mData == null ? 0 : mData.size();
+        return mData == null ? 0 : mData.size()+1;
     }
 
     //头部 ViewHolder
@@ -182,7 +182,7 @@ public class WaterFallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder.itemView.setLayoutParams(layoutParams);
 
             initImageLoader(mContext);
-            Goods goods = mData.get(position);
+            Goods goods = mData.get(position-1);
             //获取封面图片
             ImageBean bean = goods.getTopImages();
             //获取商品类型
@@ -200,7 +200,7 @@ public class WaterFallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int position = holder.getLayoutPosition();
+                        int position = holder.getLayoutPosition()-1;
                         onItemClickListener.onItemClick(holder.itemView, position);
 
                     }
@@ -209,7 +209,7 @@ public class WaterFallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-                        int position = holder.getLayoutPosition();
+                        int position = holder.getLayoutPosition()-1;
                         onItemClickListener.onItemLongClick(holder.itemView, position);
                         return false;
                     }

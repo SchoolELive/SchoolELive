@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 
 
 public class MainActivity extends BaseMainSlide{
-    private Intent intent,intent_getUid;
+    private Intent intent,get_Intent;
     private long uid;//用户的id
     public static boolean boo = false;
     private DrawerLayout drawer;
@@ -55,7 +55,7 @@ public class MainActivity extends BaseMainSlide{
     CustomFloatingDraftButton floatingDraftButton;
     @Bind(R.id.floatingActionButton_liveness)
     FloatingActionButton addMsgFloatingButton;
-    @Bind(R.id.floatingActionButton_2)
+    @Bind(R.id.floatingActionButton_goods)
     FloatingActionButton addGoodsFloatingButton;
     @Bind(R.id.floatingActionButton_partjob)
     FloatingActionButton addPartJobFloatingButton;
@@ -288,9 +288,9 @@ public class MainActivity extends BaseMainSlide{
         str_content = intent.getStringExtra("tmp_content");
 
         //得到用户的Id
-        intent_getUid = getIntent();
-        int towhere = intent_getUid.getIntExtra("toAddGoods",0);
-        if(towhere == 2){
+        get_Intent = getIntent();
+        int topartjob = get_Intent.getIntExtra("toAddGoods",0);
+        if(topartjob == 2){
             //mainFragmentAllRemove();
             //在程序中加入Fragment
             fragmentManager = getSupportFragmentManager();
@@ -299,7 +299,7 @@ public class MainActivity extends BaseMainSlide{
             mainSetSecondFrament();
 
         }
-        uid = intent_getUid.getLongExtra("uid",0);
+
     }
     //处理获取的Intent数据
     public void mainDealIntent(){

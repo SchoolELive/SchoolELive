@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -91,7 +92,8 @@ public class GoodsInfoActivity extends AppCompatActivity implements View.OnClick
                 aCache.put(goods_id+"",jsonArray,3*ACache.TIME_DAY);//将数据放到缓存中
                 for (int i = 0; i < jsonArray.length();i++){
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    Image_List.add(ConstantUtil.SERVICE_PATH+ WidgetUtil.str_trim(jsonObject.getString("path")));
+                    Log.i("iiii",ConstantUtil.SERVICE_PATH+ WidgetUtil.str_trim(jsonObject.getString("goods_path")));
+                    Image_List.add(ConstantUtil.SERVICE_PATH+ WidgetUtil.str_trim(jsonObject.getString("goods_path")));
                     wordsList.add("小雨科技");
                 }
             }catch (JSONException e){
@@ -188,7 +190,7 @@ public class GoodsInfoActivity extends AppCompatActivity implements View.OnClick
                 JSONArray jsonArray = aCache.getAsJSONArray(""+goods_id);
                 for (int i = 0; i < jsonArray.length();i++){
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    Image_List.add(ConstantUtil.SERVICE_PATH+ WidgetUtil.str_trim(jsonObject.getString("path")));
+                    Image_List.add(ConstantUtil.SERVICE_PATH+ WidgetUtil.str_trim(jsonObject.getString("goods_path")));
                     wordsList.add("小雨科技");
                 }
             }catch (JSONException e){

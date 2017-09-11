@@ -70,7 +70,7 @@ public class UserAddGoodsActivity extends BaseSlideBack implements RadioGroup.On
     private EditText goods_description;//货物介绍
     private EditText goods_price;
     private List<String> photos = null;
-    private  ProgressDialog progressDialog;
+    private  ProgressDialog progressDialog ;
 
     Handler handler = new Handler() {
         @Override
@@ -99,7 +99,6 @@ public class UserAddGoodsActivity extends BaseSlideBack implements RadioGroup.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_publish);
-
         //初始化控件
         initView();
         //方式选择
@@ -136,7 +135,6 @@ public class UserAddGoodsActivity extends BaseSlideBack implements RadioGroup.On
             }
         });
         iv_crop = (ImageView) findViewById(R.id.iv_crop);
-
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         photoAdapter = new PhotoAdapter(this, selectedPhotos);
 
@@ -260,9 +258,8 @@ public class UserAddGoodsActivity extends BaseSlideBack implements RadioGroup.On
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e("aa", "uploadMultiFile() e=" + e);
+                Log.e("iii", "uploadMultiFile() e=" + e);
             }
-
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Goods goods = new Goods();
@@ -275,11 +272,13 @@ public class UserAddGoodsActivity extends BaseSlideBack implements RadioGroup.On
                 goods.setPageViews(Integer.valueOf(goods_price.getText().toString()));  //设置商品浏览量
                 goods.setGoodsStyle(ConstantUtil.Goods_New); //设置顶热新商品属性
                 goods.setGoodsType(ConstantUtil.Goods_Type_yj); //设置商品出售方式
+                goods.setPrice(Integer.valueOf(goods_price.getText().toString()));
                 Common_msg_cache.add_goods_Cache(getApplicationContext(),goods);
                 //请求到数据之后在handler里面更新ui
                 Message msg = new Message();
                 msg.what = 3;
                 handler.sendMessage(msg);
+
             }
         });
 
