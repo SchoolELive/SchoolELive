@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.xiaoyu.schoolelive.R;
-import com.xiaoyu.schoolelive.adapter.HeaderBottomAdapter;
+import com.xiaoyu.schoolelive.adapter.CheckInAdapter;
 import com.xiaoyu.schoolelive.data.ShopData;
 import com.xiaoyu.schoolelive.util.ShopAdvanceUtil;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class CheckInActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
-    private HeaderBottomAdapter adapter;
+    private CheckInAdapter adapter;
     private List<ShopData> mShopData;
     private GridLayoutManager gridLayoutManager;
     private LinearLayout shop_ll,task_ll;
@@ -45,7 +45,7 @@ public class CheckInActivity extends AppCompatActivity {
 
         mShopData = new ArrayList<ShopData>();
 
-        adapter = new HeaderBottomAdapter(this, mShopData);
+        adapter = new CheckInAdapter(this, mShopData);
 
         getdata();
 
@@ -139,7 +139,7 @@ public class CheckInActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     private void initEvent() {
-        adapter.setOnItemClickListener(new HeaderBottomAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new CheckInAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 

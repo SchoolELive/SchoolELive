@@ -87,4 +87,7 @@
     <color name="text_color">#747371</color>
     <color name="hint_color">#BAB8B5</color>
     <color name="goods_color">#F5AD4F</color>
+
+    <!--商店兑换主题颜色-->
+    <color name="shop_exchange">#BE974C</color>
 </resources>

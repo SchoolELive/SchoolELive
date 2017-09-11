@@ -1,9 +1,7 @@
 package com.xiaoyu.schoolelive.activities;
 
-import android.animation.ObjectAnimator;
-import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -13,20 +11,16 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.xiaoyu.schoolelive.base.BaseMainSlide;
 import com.xiaoyu.schoolelive.R;
+import com.xiaoyu.schoolelive.base.BaseMainSlide;
 import com.xiaoyu.schoolelive.custom.CustomFloatingDraftButton;
-import com.xiaoyu.schoolelive.data.UserCenter;
 import com.xiaoyu.schoolelive.util.AnimationUtil;
 
 import butterknife.Bind;
