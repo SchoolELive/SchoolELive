@@ -23,7 +23,7 @@ public class ConstantUtil {
     public static int PartJob_FUWUYUAN = 11;
     public static int PartJob_XIAOYUAN = 12;
     public static int PartJob_QITA = 13;
-
+    public static int PartJob_SHITANG=14;
     /**
      * 工资计算方式
      */

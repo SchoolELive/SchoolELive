@@ -26,6 +26,7 @@
         <item>服务员</item>
         <!--校园-->
         <item>校内</item>
+        <item>食堂</item>
     </string-array>
 
     <string-array name="wagesTypeOptions">
@@ -47,4 +48,11 @@
         <item>男</item>
         <item>女</item>
     </string-array>
+    <string-array name="workAllowance">
+        <item>餐补</item>
+        <item>住宿</item>
+        <item>交通补贴</item>
+        <item>其他</item>
+    </string-array>
+
 </resources>

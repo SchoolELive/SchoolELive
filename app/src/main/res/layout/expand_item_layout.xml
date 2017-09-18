@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:columnWidth="90dp"
+        android:descendantFocusability="afterDescendants"
+        android:gravity="center"
+        android:horizontalSpacing="10dp"
+        android:listSelector="#00000000"
+        android:numColumns="auto_fit"
+        android:padding="5dp"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp" />
+    <!--android:listSelector="#00000000"意思是点击时默认的橘黄色改为透明色-->
+    <include layout="@layout/line" />
+
+    <Button
+        android:id="@+id/btn_all"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/bottom_selector"
+        android:text="全部"
+        android:textColor="@color/hint_color"
+        android:textSize="18dp" />
+
+    <include layout="@layout/line" />
+
+</merge>

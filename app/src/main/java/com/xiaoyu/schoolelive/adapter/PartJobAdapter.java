@@ -5,31 +5,50 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.thinkcool.circletextimageview.CircleTextImageView;
 import com.xiaoyu.schoolelive.R;
+import com.xiaoyu.schoolelive.custom.ExpandableView;
+import com.xiaoyu.schoolelive.custom.ExpandleItemView;
 import com.xiaoyu.schoolelive.data.PartJob;
 import com.xiaoyu.schoolelive.util.ConstantUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.ButterKnife;
+import cn.bingoogolapple.bgabanner.BGABanner;
 
 /**
  * Created by NeekChaw on 2017-08-02.
  */
 
-public class PartJobAdapter extends RecyclerView.Adapter<PartJobAdapter.ViewHolder> {
+
+public class PartJobAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private List<PartJob> mData;
+    private static final int ITEM_TYPE_HEADER = 0;
+    private static final int ITEM_TYPE_CONTENT = 1;
+    private int mHeaderCount = 1;//头部View个数
 
     private PartJobAdapter.OnItemClickListener onItemClickListener;
 
     public PartJobAdapter(Context c, List<PartJob> data) {
         this.mContext = c;
         this.mData = data;
+    }
+
+    //头部 ViewHolder
+    public static class HeaderViewHolder extends RecyclerView.ViewHolder {
+        public HeaderViewHolder(View itemView) {
+            super(itemView);
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -61,51 +80,116 @@ public class PartJobAdapter extends RecyclerView.Adapter<PartJobAdapter.ViewHold
         return mData;
     }
 
+    //内容长度
+    public int getContentItemCount() {
+        return mData == null ? 0 : mData.size() - mHeaderCount;
+    }
+
+    //判断当前item类型
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // 实例化展示的View
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_partjob_thum, parent, false);
-        // 实例化viewholder
-        ViewHolder viewHolder = new ViewHolder(v);
-
-        return viewHolder;
-
+    public int getItemViewType(int position) {
+        int dataItemCount = getContentItemCount();
+        if (mHeaderCount != 0 && position < mHeaderCount) {
+            //头部View
+            return ITEM_TYPE_HEADER;
+        } else {
+            //内容View
+            return ITEM_TYPE_CONTENT;
+        }
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        // 绑定数据
-        setWorkType(holder, position, mData.get(position).getWorkType());
-        setWagesType(holder, position, mData.get(position).getWagesType());
-        setWagesPaid(holder, position, mData.get(position).getWagesPay());
-        //holder.workType.setText(mData.get(position).getWorkType());
-        holder.workName.setText(mData.get(position).getWorkName());
-        holder.workPlace.setText(mData.get(position).getWorkPlace());
-        holder.workWages.setText(mData.get(position).getWorkWages());
-        holder.workStartDate.setText(mData.get(position).getWorkStartDate());
-        holder.workEndDate.setText(mData.get(position).getWorkEndDate());
-        //holder.wagesType.setText(mData.get(position).getWagesType());
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == ITEM_TYPE_HEADER) {
+            //分类列表
+            ExpandableView mExpandableView;
+            Map<String, ExpandleItemView> mExpandleItemViews;
+            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                if (onItemClickListener != null) {
-                    int pos = holder.getLayoutPosition();
-                    onItemClickListener.onItemClick(holder.itemView, pos);
+            String[] mWorkTypeOptions = mContext.getResources().getStringArray(R.array.workTypeOptions);
+            String[] mWorkAllowance = mContext.getResources().getStringArray(R.array.workAllowance);
+            String[] mWorkPayOptions = mContext.getResources().getStringArray(R.array.workPayOptions);
+
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.include_partjob_head, parent, false);
+            mExpandableView = new ExpandableView(mContext);
+            mExpandableView = (ExpandableView) v.findViewById(R.id.expandview);
+            mExpandleItemViews = new LinkedHashMap<>();
+            mExpandleItemViews.put("工作类型", new ExpandleItemView("工作类型", mContext, Arrays.asList(mWorkTypeOptions)));
+            mExpandleItemViews.put("待遇福利", new ExpandleItemView("待遇福利", mContext, Arrays.asList(mWorkAllowance)));
+            mExpandleItemViews.put("结算方式", new ExpandleItemView("结算方式", mContext, Arrays.asList(mWorkPayOptions)));
+            mExpandableView.initViews(new ArrayList<>(mExpandleItemViews.values()));
+
+            //View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.include_partjob_head, parent, false);
+            BGABanner mAdImages;
+            mAdImages = (BGABanner) v.findViewById(R.id.partjob_Ad_Banner);
+
+            mAdImages.setAdapter(new BGABanner.Adapter<ImageView, String>() {
+                @Override
+                public void fillBannerItem(BGABanner banner, ImageView itemView, String model, int position) {
+                    Glide.with(mContext)
+                            .load(model)
+                            .placeholder(R.drawable.gif_ad_holder)
+                            .error(R.mipmap.ic_launcher)
+                            .centerCrop()
+                            .dontAnimate()
+                            .into(itemView);
                 }
-            }
-        });
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (onItemClickListener != null) {
-                    int pos = holder.getLayoutPosition();
-                    onItemClickListener.onItemLongClick(holder.itemView, pos);
-                } //表示此事件已经消费，不会触发单击事件
-                return true;
-            }
-        });
+            });
 
+            List<String> Image_List = new ArrayList<>();
+            List<String> wordsList = new ArrayList<>();
+            Image_List.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504509481&di=90f71e005c64f0ce96a0c70a88ddda31&imgtype=jpg&er=1&src=http%3A%2F%2Fi.dimg.cc%2F98%2Fb6%2F89%2F5d%2F7b%2Fcc%2F5a%2F99%2Fa6%2F71%2F51%2F94%2Fdc%2Fdf%2Fd7%2Fa6.jpg");
+            wordsList.add("虚位以待");
+
+            mAdImages.setData(Image_List, wordsList);
+            // 实例化viewholder
+            return new HeaderViewHolder(v);
+
+        } else if (viewType == ITEM_TYPE_CONTENT) {
+            // 实例化展示的View
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_partjob_thum, parent, false);
+            return new ViewHolder(v);
+        }
+        return null;
+    }
+
+
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof HeaderViewHolder) {
+
+        } else if (holder instanceof ViewHolder) {
+            // 绑定数据
+            setWorkType((ViewHolder) holder, position - 1, mData.get(position - 1).getWorkType());
+            setWagesType((ViewHolder) holder, position - 1, mData.get(position - 1).getWagesType());
+            setWagesPaid((ViewHolder) holder, position - 1, mData.get(position - 1).getWagesPay());
+            //holder.workType.setText(mData.get(position).getWorkType());
+            ((ViewHolder) holder).workName.setText(mData.get(position - 1).getWorkName());
+            ((ViewHolder) holder).workPlace.setText(mData.get(position - 1).getWorkPlace());
+            ((ViewHolder) holder).workWages.setText(mData.get(position - 1).getWorkWages());
+            ((ViewHolder) holder).workStartDate.setText(mData.get(position - 1).getWorkStartDate());
+            ((ViewHolder) holder).workEndDate.setText(mData.get(position - 1).getWorkEndDate());
+            //holder.wagesType.setText(mData.get(position).getWagesType());
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    if (onItemClickListener != null) {
+                        int pos = holder.getLayoutPosition() - 1;
+                        onItemClickListener.onItemClick(holder.itemView, pos);
+                    }
+                }
+            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (onItemClickListener != null) {
+                        int pos = holder.getLayoutPosition() - 1;
+                        onItemClickListener.onItemLongClick(holder.itemView, pos);
+                    } //表示此事件已经消费，不会触发单击事件
+                    return true;
+                }
+            });
+        }
     }
 
     public void setWorkType(final ViewHolder holder, int position, int type) {
@@ -181,6 +265,12 @@ public class PartJobAdapter extends RecyclerView.Adapter<PartJobAdapter.ViewHold
             holder.workType.setTextColorResource(R.color.yanyuan);
             return;
         }
+        if (type == ConstantUtil.PartJob_SHITANG) {
+            holder.workType.setText(R.string.shitang);
+            holder.workType.setBorderColorResource(R.color.shitang);
+            holder.workType.setTextColorResource(R.color.shitang);
+            return;
+        }
         if (type == ConstantUtil.PartJob_QITA) {
             holder.workType.setText(R.string.qita);
             holder.workType.setBorderColorResource(R.color.qita);
@@ -211,6 +301,7 @@ public class PartJobAdapter extends RecyclerView.Adapter<PartJobAdapter.ViewHold
             return;
         }
     }
+
     public void setWagesPaid(final ViewHolder holder, int position, int type) {
         if (type == ConstantUtil.WagesPay_DAY) {
             holder.wagesPay.setText(R.string.daypaid);
@@ -233,6 +324,7 @@ public class PartJobAdapter extends RecyclerView.Adapter<PartJobAdapter.ViewHold
             return;
         }
     }
+
     @Override
     public int getItemCount() {
         return mData == null ? 0 : mData.size();
@@ -245,7 +337,6 @@ public class PartJobAdapter extends RecyclerView.Adapter<PartJobAdapter.ViewHold
         mData.add(partJob);
         notifyItemInserted(0);
     }
-
 
 
     public interface OnItemClickListener {
@@ -262,6 +353,5 @@ public class PartJobAdapter extends RecyclerView.Adapter<PartJobAdapter.ViewHold
     public void setOnItemClickListener(PartJobAdapter.OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }
-
 
 }

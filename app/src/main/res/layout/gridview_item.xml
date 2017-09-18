@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    style="?android:attr/borderlessButtonStyle"
+    android:id="@+id/item_text"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@drawable/btn_selctor"
+    android:clickable="false"
+    android:focusable="false"
+    android:gravity="center">
+
+</Button>

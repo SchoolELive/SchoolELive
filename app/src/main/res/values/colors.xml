@@ -49,6 +49,8 @@
     <color name="xiaoyuan">#48B8D0</color>
     <!--其他-->
     <color name="qita">#63b931</color>
+    <!--食堂-->
+    <color name="shitang">#BE974C</color>
 
     <!--兼职工资结算类型-->
     <!--日结-->
@@ -90,4 +92,5 @@
 
     <!--商店兑换主题颜色-->
     <color name="shop_exchange">#BE974C</color>
+    <color name="grey_bg">#90eeeeee</color>
 </resources>

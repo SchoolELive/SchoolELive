@@ -51,8 +51,10 @@
     <string name="fuwuyuan">服务员</string>
     <!--校园-->
     <string name="xiaoyuan">校内</string>
+    <string name="shitang">食堂</string>
     <!--其他-->
     <string name="qita">其他</string>
+
 
     <!--工资计算方式-->
     <string name="perhour"> 元/小时</string>

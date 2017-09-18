@@ -62,7 +62,7 @@ public class PartJobInfoActivity extends AppCompatActivity {
     }
 
     private void findById() {
-        infoPublishDate = (TextView)findViewById(R.id.infoPublishDate);
+        infoPublishDate = (TextView) findViewById(R.id.infoPublishDate);
         workType = (TextView) findViewById(R.id.workType);
         workName = (TextView) findViewById(R.id.workName);
         workPlace = (TextView) findViewById(R.id.workPlace);
@@ -71,11 +71,11 @@ public class PartJobInfoActivity extends AppCompatActivity {
         wagesType = (TextView) findViewById(R.id.wagesType);
         workStartDate = (TextView) findViewById(R.id.workStartDate);
         workEndDate = (TextView) findViewById(R.id.workEndDate);
-        workNeed = (TextView)findViewById(R.id.workNeed);
-        workContactMan = (TextView)findViewById(R.id.workContactMan);
-        workContactNum = (TextView)findViewById(R.id.workContactNum);
-        workStartHours = (TextView)findViewById(R.id.workStartHours);
-        workEndHours = (TextView)findViewById(R.id.workEndHours);
+        workNeed = (TextView) findViewById(R.id.workNeed);
+        workContactMan = (TextView) findViewById(R.id.workContactMan);
+        workContactNum = (TextView) findViewById(R.id.workContactNum);
+        workStartHours = (TextView) findViewById(R.id.workStartHours);
+        workEndHours = (TextView) findViewById(R.id.workEndHours);
     }
 
     public void setWorkType(int type) {
@@ -129,6 +129,10 @@ public class PartJobInfoActivity extends AppCompatActivity {
         }
         if (type == ConstantUtil.PartJob_QITA) {
             workType.setText(R.string.qita);
+            return;
+        }
+        if (type == ConstantUtil.PartJob_SHITANG) {
+            workType.setText(R.string.shitang);
             return;
         }
     }

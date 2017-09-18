@@ -102,15 +102,15 @@ public class HomeFragment extends Fragment implements EasyPermissions.Permission
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.activity_main_menu_home, container, false);
-        //初始化"最火"分界面及对应adapter
-        initRV();
-        //设置首页标题栏
-        setHomeTab();
-
         /*
         * 刷新按钮
         * */
         swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
+        //设置首页标题栏
+        setHomeTab();
+        //初始化"最火"分界面及对应adapter
+        initRV();
+
 //        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 //            public void onRefresh() {
 //

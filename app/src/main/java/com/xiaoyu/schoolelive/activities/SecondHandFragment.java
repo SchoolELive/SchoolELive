@@ -80,10 +80,10 @@ public class SecondHandFragment extends Fragment {
                     goods.setGoodsStyle(ConstantUtil.Goods_New); //设置顶热新商品属性
                     goods.setGoodsType(goods_type); //设置商品出售方式
                     setPrice(goods, goods.getGoodsType(), goods_price);//设置商品价格
-                   // goodsList.add(goods);
+                    // goodsList.add(goods);
                     cache_goods.add(goods);
                 }
-                Common_msg_cache.set_goods_Cache(getContext(),cache_goods);//将商品信息存入缓存
+                Common_msg_cache.set_goods_Cache(getContext(), cache_goods);//将商品信息存入缓存
                 Common_msg_cache.set_goods_cache_status(getContext(), ConstantUtil.Goods_Piece);//第一次将数据添加到缓存中的时候，将加载状态设置为0
                 for (int i = 0; i < ConstantUtil.Goods_Piece; i++) {
                     mAdapter.getList().add(cache_goods.get(i));//第一次进来加载5条
@@ -169,6 +169,8 @@ public class SecondHandFragment extends Fragment {
         StaggeredGridLayoutManager sgl = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(sgl);
         mAdapter = new WaterFallAdapter(getActivity(), goodsList);
+
+
         mRecyclerView.setAdapter(mAdapter);
         if (Common_msg_cache.get_goods_Cache(getContext()) != null) {//判断缓存中是否存在旧货信息
             ArrayList<Goods> cache_goods = Common_msg_cache.get_goods_Cache(getContext());
@@ -187,7 +189,7 @@ public class SecondHandFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 Goods goods = new Goods();
                 ArrayList<Goods> cache_goods = Common_msg_cache.get_goods_Cache(getContext());
-               // goods = goodsList.get(position);
+                // goods = goodsList.get(position);
                 goods = cache_goods.get(position);
                 Intent intent = new Intent(getActivity(), GoodsInfoActivity.class);
                 intent.putExtra("tmp_goodsid", goods.getGoods_id());//传递商品id
@@ -212,15 +214,15 @@ public class SecondHandFragment extends Fragment {
         if (goods.getGoodsType() == ConstantUtil.Goods_Type_ykj) {
             intent.putExtra("tmp_ykjPrice", String.valueOf(goods.getPrice()));
         } else if (goods.getGoodsType() == ConstantUtil.Goods_Type_yj) {
-           // intent.putExtra("tmp_yjPrice", String.valueOf(goods.getRefPrice()));
+            // intent.putExtra("tmp_yjPrice", String.valueOf(goods.getRefPrice()));
             intent.putExtra("tmp_yjPrice", String.valueOf(goods.getPrice()));
         } else if (goods.getGoodsType() == ConstantUtil.Goods_Type_pai) {
-           // intent.putExtra("tmp_basePrice", String.valueOf(goods.getBasePrice()));
-           // intent.putExtra("tmp_nowPrice", String.valueOf(goods.getNowPrice()));
-           // intent.putExtra("tmp_minPrice", String.valueOf(goods.getMinPrice()));
-             intent.putExtra("tmp_basePrice", String.valueOf(goods.getPrice()));
-             intent.putExtra("tmp_nowPrice", String.valueOf(goods.getPrice()));
-             intent.putExtra("tmp_minPrice", String.valueOf(goods.getPrice()));
+            // intent.putExtra("tmp_basePrice", String.valueOf(goods.getBasePrice()));
+            // intent.putExtra("tmp_nowPrice", String.valueOf(goods.getNowPrice()));
+            // intent.putExtra("tmp_minPrice", String.valueOf(goods.getMinPrice()));
+            intent.putExtra("tmp_basePrice", String.valueOf(goods.getPrice()));
+            intent.putExtra("tmp_nowPrice", String.valueOf(goods.getPrice()));
+            intent.putExtra("tmp_minPrice", String.valueOf(goods.getPrice()));
         }
     }
 
@@ -239,8 +241,9 @@ public class SecondHandFragment extends Fragment {
     private void getGoodsData() {//向服务器请求数据
         HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH + "query_goods.php", new Callback() {
             public void onFailure(Call call, IOException e) {
-            Log.i("iii",e.getMessage());
+                Log.i("iii", e.getMessage());
             }
+
             public void onResponse(Call call, Response response) throws IOException {
                 String str = response.body().string();
                 Message msg = new Message();
@@ -315,12 +318,14 @@ public class SecondHandFragment extends Fragment {
             Toast.makeText(context, "缓存中读取", Toast.LENGTH_SHORT).show();
         }
     }
-    public   void refresh_goods_cache(){
+
+    public void refresh_goods_cache() {
         final ArrayList<Goods> cache_goods_refresh = new ArrayList<>();
         HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH + "query_goods.php", new Callback() {
             public void onFailure(Call call, IOException e) {
-                Log.i("iii",e.getMessage());
+                Log.i("iii", e.getMessage());
             }
+
             public void onResponse(Call call, Response response) throws IOException {
                 try {
                     JSONArray jsonArray = new JSONArray(response.body().string());
@@ -347,8 +352,8 @@ public class SecondHandFragment extends Fragment {
                         // goodsList.add(goods);
                         cache_goods_refresh.add(goods);
                     }
-                    Common_msg_cache.refresh_goods_Caches(getContext(),cache_goods_refresh);
-                   // Toast.makeText(getContext(),"更新缓存成功",Toast.LENGTH_LONG).show();
+                    Common_msg_cache.refresh_goods_Caches(getContext(), cache_goods_refresh);
+                    // Toast.makeText(getContext(),"更新缓存成功",Toast.LENGTH_LONG).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

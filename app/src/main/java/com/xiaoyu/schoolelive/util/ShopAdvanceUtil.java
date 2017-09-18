@@ -41,7 +41,7 @@ public class ShopAdvanceUtil extends RecyclerView.ItemDecoration {
             final int right = child.getRight() + params.rightMargin
                     + mDivider.getIntrinsicWidth();
             final int top = child.getBottom() + params.bottomMargin;
-            final int bottom = top + 5;
+            final int bottom = top + 2;
             mDivider.setBounds(left, top, right, bottom);
             mDivider.draw(c);
         }
@@ -56,7 +56,7 @@ public class ShopAdvanceUtil extends RecyclerView.ItemDecoration {
             final int top = child.getTop() - params.topMargin;
             final int bottom = child.getBottom() + params.bottomMargin;
             final int left = child.getRight() + params.rightMargin;
-            final int right = left + 5;
+            final int right = left + 2;
             mDivider.setBounds(left, top, right, bottom);
             mDivider.draw(c);
         }

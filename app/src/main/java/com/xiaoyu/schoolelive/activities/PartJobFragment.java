@@ -40,10 +40,10 @@ import okhttp3.Response;
 public class PartJobFragment extends Fragment {
     RecyclerView mRecyclerView;
 
-    private  ArrayList<PartJob> mData;
+    private ArrayList<PartJob> mData;
     private PartJobAdapter mAdapter;
     private View view;
-    public Handler handler = new Handler(){
+    public Handler handler = new Handler() {
         /*for (int i = 0; i < 10; i++) {
             partJob.setWorkType(ConstantUtil.PartJob_YANYUAN);
             partJob.setWagesType(ConstantUtil.WagesType_PERDAY);
@@ -56,12 +56,12 @@ public class PartJobFragment extends Fragment {
             mData.add(partJob);
         }*/
         public void handleMessage(Message msg) {
-            String str = (String)msg.obj;
-            switch (msg.what){
+            String str = (String) msg.obj;
+            switch (msg.what) {
                 case 1:
-                    try{
+                    try {
                         JSONArray jsonArray = new JSONArray(str);
-                        for (int i = 0; i < jsonArray.length();i++){
+                        for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             PartJob partJob = new PartJob();
                             String job_id = jsonObject.getString("job_id");
@@ -96,8 +96,8 @@ public class PartJobFragment extends Fragment {
                             partJob.setPost_time(post_time);
                             mData.add(partJob);//添加兼职信息
                         }
-                        Common_msg_cache.add_jobs_Cache(getContext(),mData);//将兼职信息放入缓存
-                    }catch (JSONException e){
+                        Common_msg_cache.add_jobs_Cache(getContext(), mData);//将兼职信息放入缓存
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     mAdapter.notifyDataSetChanged();
@@ -105,6 +105,7 @@ public class PartJobFragment extends Fragment {
             }
         }
     };
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,13 +158,21 @@ public class PartJobFragment extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         mData = new ArrayList<>();
         mAdapter = new PartJobAdapter(getActivity(), mData);
+
+        //添加下面这段话
+        mRecyclerView.setLayoutManager(layoutManager);
+        layoutManager.setRecycleChildrenOnDetach(true);
+        RecyclerView.RecycledViewPool pool = mRecyclerView.getRecycledViewPool();
+        mRecyclerView.setRecycledViewPool(pool);
+        //结束
+
         mRecyclerView.setAdapter(mAdapter);
-        if(Common_msg_cache.get_jobs_Cache(getContext())!=null){
+        if (Common_msg_cache.get_jobs_Cache(getContext()) != null) {
             ArrayList<PartJob> partJobs = Common_msg_cache.get_jobs_Cache(getContext());
             mAdapter.getList().addAll(partJobs);
             //refresh_jobs_cache();//从缓存中读取之后更新缓存
-            Toast.makeText(getContext(),"更新缓存成功",Toast.LENGTH_SHORT).show();
-        }else {
+            Toast.makeText(getContext(), "更新缓存成功", Toast.LENGTH_SHORT).show();
+        } else {
             getPartJobData();
         }
 
@@ -171,7 +180,6 @@ public class PartJobFragment extends Fragment {
 
 
     private void getPartJobData() {
-
         HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH + "query_job_info.php", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -180,7 +188,7 @@ public class PartJobFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-               Message msg = new Message();
+                Message msg = new Message();
                 msg.what = 1;//查询兼职成功时返回1
                 msg.obj = response.body().string();
                 handler.sendMessage(msg);
@@ -205,12 +213,12 @@ public class PartJobFragment extends Fragment {
                 intent.putExtra("tmp_workPlace", partJob.getWorkPlace());
                 intent.putExtra("tmp_workStartDate", partJob.getWorkStartDate());
                 intent.putExtra("tmp_workEndDate", partJob.getWorkEndDate());
-                intent.putExtra("tmp_workNeed",partJob.getWorkNeed());
-                intent.putExtra("tmp_work_content_man",partJob.getContactPerson());
-                intent.putExtra("tmp_work_content_num",partJob.getContactNum());
+                intent.putExtra("tmp_workNeed", partJob.getWorkNeed());
+                intent.putExtra("tmp_work_content_man", partJob.getContactPerson());
+                intent.putExtra("tmp_work_content_num", partJob.getContactNum());
                 intent.putExtra("tmp_workStartHours", partJob.getWorkEndDate());
-                intent.putExtra("tmp_workEndHours",partJob.getWorkNeed());
-                intent.putExtra("tmp_post_time",partJob.getPost_time());
+                intent.putExtra("tmp_workEndHours", partJob.getWorkNeed());
+                intent.putExtra("tmp_post_time", partJob.getPost_time());
                 startActivity(intent);
             }
 
@@ -220,12 +228,14 @@ public class PartJobFragment extends Fragment {
             }
         });
     }
-    public void refresh_jobs_cache(){//每次加载之后更新缓存
+
+    public void refresh_jobs_cache() {//每次加载之后更新缓存
         final ArrayList<PartJob> cache_jobs_refresh = new ArrayList<>();
         HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH + "query_job_info.php", new Callback() {
             public void onFailure(Call call, IOException e) {
 
             }
+
             public void onResponse(Call call, Response response) throws IOException {
                 try {
                     JSONArray jsonArray = new JSONArray(response.body().string());
