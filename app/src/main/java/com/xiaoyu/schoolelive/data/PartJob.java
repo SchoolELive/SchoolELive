@@ -5,13 +5,14 @@ import java.io.Serializable;
 /**
  * Created by NeekChaw on 2017-08-02.
  */
-public class PartJob implements Serializable{
+public class PartJob implements Serializable {
     int workType;
     int wagesType;
     int wagesPay;
     int workManNeed;
     int workSexNeed;
     int hasJoinMan;
+    int[] workAllowance;
     String contactNum;
     String workWages;
     String workPlace;
@@ -27,6 +28,15 @@ public class PartJob implements Serializable{
     String contactPerson;
     String job_id;//兼职的id
     String post_time;//发布时间
+
+
+    public int[] getWorkAllowance() {
+        return workAllowance;
+    }
+
+    public void setWorkAllowance(int[] workAllowance) {
+        this.workAllowance = workAllowance;
+    }
 
     public int getWorkManNeed() {
         return workManNeed;

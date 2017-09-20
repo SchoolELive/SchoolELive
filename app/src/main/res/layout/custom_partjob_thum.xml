@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingTop="@dimen/ui_10_dip"
-    android:paddingBottom="@dimen/ui_10_dip">
+    android:paddingBottom="@dimen/ui_10_dip"
+    android:paddingTop="@dimen/ui_10_dip">
 
     <com.thinkcool.circletextimageview.CircleTextImageView
         android:id="@+id/workType"
@@ -30,19 +30,22 @@
             android:layout_marginBottom="@dimen/ui_5_dip"
             android:textColor="@color/black"
             android:textSize="17dp" />
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/ui_3_dip">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="工作地点："/>
-    <TextView
-        android:id="@+id/workPlace"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ui_3_dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="工作地点：" />
+
+            <TextView
+                android:id="@+id/workPlace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
 
         <LinearLayout
@@ -97,9 +100,43 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="26dp" />
+            android:layout_height="26dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_eat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/ui_5_dip"
+                android:src="@drawable/ic_eat24"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/img_sleep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/ui_5_dip"
+                android:src="@drawable/ic_sleep24"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/img_traffic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/ui_5_dip"
+                android:src="@drawable/ic_traffic24"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/img_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/ui_5_dip"
+                android:src="@drawable/ic_other24"
+                android:visibility="gone" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/wagesPay"

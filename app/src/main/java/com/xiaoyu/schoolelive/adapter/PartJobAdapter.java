@@ -61,6 +61,10 @@ public class PartJobAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView workName;
         TextView workStartDate;
         TextView workEndDate;
+        ImageView allowance_eat;
+        ImageView allowance_sleep;
+        ImageView allowance_traffic;
+        ImageView allowance_other;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -72,6 +76,11 @@ public class PartJobAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             workName = (TextView) itemView.findViewById(R.id.workName);
             workStartDate = (TextView) itemView.findViewById(R.id.workStartDate);
             workEndDate = (TextView) itemView.findViewById(R.id.workEndDate);
+
+            allowance_eat = (ImageView) itemView.findViewById(R.id.img_eat);
+            allowance_sleep = (ImageView) itemView.findViewById(R.id.img_sleep);
+            allowance_traffic = (ImageView) itemView.findViewById(R.id.img_traffic);
+            allowance_other = (ImageView) itemView.findViewById(R.id.img_other);
             ButterKnife.bind(this, itemView);
         }
     }
@@ -159,9 +168,14 @@ public class PartJobAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         } else if (holder instanceof ViewHolder) {
             // 绑定数据
+            //设置工作类型
             setWorkType((ViewHolder) holder, position - 1, mData.get(position - 1).getWorkType());
+            //设置工资单位
             setWagesType((ViewHolder) holder, position - 1, mData.get(position - 1).getWagesType());
+            //设置结算方式
             setWagesPaid((ViewHolder) holder, position - 1, mData.get(position - 1).getWagesPay());
+            //设置待遇福利
+            setWorkAllowance((ViewHolder) holder, position - 1, mData.get(position - 1).getWorkAllowance());
             //holder.workType.setText(mData.get(position).getWorkType());
             ((ViewHolder) holder).workName.setText(mData.get(position - 1).getWorkName());
             ((ViewHolder) holder).workPlace.setText(mData.get(position - 1).getWorkPlace());
@@ -189,6 +203,25 @@ public class PartJobAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     return true;
                 }
             });
+        }
+    }
+
+    public void setWorkAllowance(final ViewHolder holder, int i, int[] allowances) {
+        if (allowances != null) {
+            for (int index = 0; index < allowances.length; index++) {
+                //餐补  住宿  交通  其他
+                if (allowances[index] == ConstantUtil.ALLOWANCE_MEAL) {
+                    holder.allowance_eat.setVisibility(View.VISIBLE);
+                } else if (allowances[index] == ConstantUtil.ALLOWANCE_LIVE) {
+                    holder.allowance_sleep.setVisibility(View.VISIBLE);
+                } else if (allowances[index] == ConstantUtil.ALLOWANCE_TRAFFIC) {
+                    holder.allowance_traffic.setVisibility(View.VISIBLE);
+                } else if (allowances[index] == ConstantUtil.ALLOWANCE_OTHER) {
+                    holder.allowance_other.setVisibility(View.VISIBLE);
+                }
+            }
+        } else {
+            return;
         }
     }
 

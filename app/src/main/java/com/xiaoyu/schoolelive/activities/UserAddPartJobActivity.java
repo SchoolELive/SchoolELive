@@ -71,6 +71,8 @@ public class UserAddPartJobActivity extends AppCompatActivity implements View.On
     CheckBox allowance_Live;
     CheckBox allowance_Traffic;
     CheckBox allowance_Other;
+    int[] mAllowances = {ConstantUtil.ALLOWANCE_NONE, ConstantUtil.ALLOWANCE_NONE,
+            ConstantUtil.ALLOWANCE_NONE, ConstantUtil.ALLOWANCE_NONE};
     //发布
     public static PartJob partJob;
     RecyclerView mPratJobRV;
@@ -78,10 +80,10 @@ public class UserAddPartJobActivity extends AppCompatActivity implements View.On
     PartJobAdapter mPartJobAdapter = new PartJobAdapter(UserAddPartJobActivity.this, mData);
     Button pub_partJob;
     private ProgressDialog progressDialog;
-    private Handler handler = new android.os.Handler(){
+    private Handler handler = new android.os.Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
                     progressDialog.dismiss();
                     Intent intent = new Intent(UserAddPartJobActivity.this, MainActivity.class);
@@ -200,7 +202,7 @@ public class UserAddPartJobActivity extends AppCompatActivity implements View.On
         int wagesType = getWagesType(pub_wagesType.getSelectedItem().toString());
         int wagesPay = getWagesPay(pub_wagesPay.getSelectedItem().toString());
         int workSexNeed = getSexNeed(pub_workSexNeed.getSelectedItem().toString());
-        int workAllowances = getAllowanceType();
+        int[] workAllowances = getAllowanceType(mAllowances);
         // int workManNeed = Integer.parseInt(pub_workManNeed.getText().toString());
         String workPlace = String.valueOf(pub_workPlace.getText());
         String workName = String.valueOf(pub_workName.getText());
@@ -222,45 +224,46 @@ public class UserAddPartJobActivity extends AppCompatActivity implements View.On
         partJob.setWorkStartDate(workStartDate);
         partJob.setWorkEndDate(workEndDate);
         partJob.setWorkType(workType);
+        partJob.setWorkAllowance(workAllowances);
 
         //Intent intent = new Intent(UserAddPartJobActivity.this, MainActivity.class);
-       // intent.putExtra("toPartJob", 1);
+        // intent.putExtra("toPartJob", 1);
 
         //startActivity(intent);
         //Toast.makeText(getApplicationContext(),"cc",Toast.LENGTH_SHORT).show();
-        if(workPlace==""||workName==""||workWages==""||workNeed==""||workContactMan==""||workContactNum==""||workStartDate==""||workEndDate==""||workStartHours==""||workEndHours==""){
-            Toast.makeText(getApplication(),"请将您的资料填写完整",Toast.LENGTH_SHORT).show();
+        if (workPlace == "" || workName == "" || workWages == "" || workNeed == "" || workContactMan == "" || workContactNum == "" || workStartDate == "" || workEndDate == "" || workStartHours == "" || workEndHours == "") {
+            Toast.makeText(getApplication(), "请将您的资料填写完整", Toast.LENGTH_SHORT).show();
             return;
-        }else {
+        } else {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
 
             String job_id = simpleDateFormat.format(new Date());//兼职id
             RequestBody requestBody = new FormBody.Builder()
-                    .add("job_id",job_id)
-                    .add("work_name",workName)
-                    .add("work_type",workType+"")
-                    .add("wage_type",wagesType+"")
-                    .add("wage_pay",wagesPay+"")//工资结算方式
-                    .add("work_wage",workWages)
-                    .add("work_need",workNeed)//工作需求
-                    .add("work_place",workPlace)
-                    .add("start_date",workStartDate)
-                    .add("end_date",workEndDate)
-                    .add("start_hours",workStartHours)
-                    .add("end_hours",workEndHours)
-                    .add("work_content_man",workContactMan)
-                    .add("work_content_num",workContactNum)
+                    .add("job_id", job_id)
+                    .add("work_name", workName)
+                    .add("work_type", workType + "")
+                    .add("wage_type", wagesType + "")
+                    .add("wage_pay", wagesPay + "")//工资结算方式
+                    .add("work_wage", workWages)
+                    .add("work_need", workNeed)//工作需求
+                    .add("work_place", workPlace)
+                    .add("start_date", workStartDate)
+                    .add("end_date", workEndDate)
+                    .add("start_hours", workStartHours)
+                    .add("end_hours", workEndHours)
+                    .add("work_content_man", workContactMan)
+                    .add("work_content_num", workContactNum)
                     .build();
             HttpUtil.sendHttpRequest(ConstantUtil.SERVICE_PATH + "get_job_info.php", requestBody, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Log.i("iii",e.getMessage());
+                    Log.i("iii", e.getMessage());
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Message message = new Message();
-                   message.what = 1;//发布兼职信息成功
+                    message.what = 1;//发布兼职信息成功
                     handler.sendMessage(message);
 
                 }
@@ -298,6 +301,8 @@ public class UserAddPartJobActivity extends AppCompatActivity implements View.On
             return ConstantUtil.PartJob_FUWUYUAN;
         } else if (type.equals("校内")) {
             return ConstantUtil.PartJob_XIAOYUAN;
+        } else if (type.equals("食堂")) {
+            return ConstantUtil.PartJob_SHITANG;
         }
         return 0;
     }
@@ -341,18 +346,19 @@ public class UserAddPartJobActivity extends AppCompatActivity implements View.On
         return 0;
     }
 
-    private int getAllowanceType() {
-        if (allowance_Meal.isChecked()) {
-            return ConstantUtil.ALLOWANCE_MEAL;
-        } else if (allowance_Live.isChecked()) {
-            return ConstantUtil.ALLOWANCE_LIVE;
-        } else if (allowance_Traffic.isChecked()) {
-            return ConstantUtil.ALLOWANCE_TRAFFIC;
-        } else if (allowance_Other.isChecked()) {
-            return ConstantUtil.ALLOWANCE_OTHER;
-
+    private int[] getAllowanceType(int[] allowances) {
+        for (int index = 0; index < mAllowances.length; index++) {
+            if (allowance_Meal.isChecked()) {
+                allowances[index] = ConstantUtil.ALLOWANCE_MEAL;
+            } else if (allowance_Live.isChecked()) {
+                allowances[index] = ConstantUtil.ALLOWANCE_LIVE;
+            } else if (allowance_Traffic.isChecked()) {
+                allowances[index] = ConstantUtil.ALLOWANCE_TRAFFIC;
+            } else if (allowance_Other.isChecked()) {
+                allowances[index] = ConstantUtil.ALLOWANCE_OTHER;
+            }
         }
-        return 0;
+        return allowances;
     }
 
 }

@@ -60,9 +60,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:paddingRight="@dimen/ui_3_dip"
                         android:textColor="@color/red"
-                        android:textSize="18dp"
-                        android:paddingRight="@dimen/ui_3_dip"/>
+                        android:textSize="18dp" />
 
                     <TextView
                         android:id="@+id/wagesType"
@@ -188,6 +188,33 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="50人"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/ui_5_dip">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingRight="@dimen/ui_5_dip"
+                        android:src="@drawable/ic_allowance24" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="待遇福利：" />
+
+                    <TextView
+                        android:id="@+id/workAllowance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="餐补"
                         android:textColor="@color/black" />
                 </LinearLayout>
 
@@ -437,14 +464,36 @@
                     android:layout_gravity="center"
                     android:text="已报名的人" />
 
-                <TextView
-                    android:id="@+id/hasJoinMan"
+                <!--<TextView-->
+                <!--android:id="@+id/hasJoinMan"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:gravity="right"-->
+                <!--android:text="0"-->
+                <!--android:textColor="@color/black" />-->
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:gravity="right"
-                    android:text="0人"
-                    android:textColor="@color/black" />
+                    android:gravity="end"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/hasJoinMan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" 人"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <View
@@ -523,6 +572,7 @@
                 android:layout_marginBottom="@dimen/ui_10_dip">
 
                 <Button
+                    android:id="@+id/btn_sharejob"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/btn_height"
                     android:layout_marginLeft="@dimen/ui_5_dip"
@@ -532,6 +582,7 @@
                     android:textColor="@color/white" />
 
                 <Button
+                    android:id="@+id/btn_connectjob"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/btn_height"
                     android:layout_marginRight="@dimen/ui_10_dip"
@@ -540,6 +591,7 @@
                     android:textColor="@color/white" />
 
                 <Button
+                    android:id="@+id/btn_enrolljob"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/btn_height"
                     android:layout_marginRight="@dimen/ui_5_dip"

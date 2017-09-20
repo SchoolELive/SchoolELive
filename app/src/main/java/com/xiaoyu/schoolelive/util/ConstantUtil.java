@@ -23,7 +23,7 @@ public class ConstantUtil {
     public static int PartJob_FUWUYUAN = 11;
     public static int PartJob_XIAOYUAN = 12;
     public static int PartJob_QITA = 13;
-    public static int PartJob_SHITANG=14;
+    public static int PartJob_SHITANG = 14;
     /**
      * 工资计算方式
      */
@@ -100,8 +100,20 @@ public class ConstantUtil {
     public static int ALLOWANCE_LIVE = 2;
     //交通补助
     public static int ALLOWANCE_TRAFFIC = 3;
+    //餐 住
+    public static int ALLOWANCE_M_L = 4;
+    //餐 交
+    public static int ALLOWANCE_M_T = 5;
+    //交 住
+    public static int ALLOWANCE_L_T = 6;
+    //餐 住 交
+    public static int ALLOWANCE_M_L_T = 7;
+    //餐 住 交 其他
+    public static int ALLOWANCE_M_L_T_O = 8;
     //其他
     public static int ALLOWANCE_OTHER = 4;
+    //无
+    public static int ALLOWANCE_NONE = 0;
 
     /**
      * Activity标识
